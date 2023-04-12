@@ -14,7 +14,7 @@ github-repo: ncgr/Pangenomics-Bookdown
 ---
 
 
-# NCGR Differential Expression Workshop
+# National Center for Genome Resources {-}
 
 This publication was supported by an Institutional Development Award (IDeA) from the National Institute of General Medical Sciences of the National Institutes of Health under grant number P20GM103451. 
 
@@ -29,7 +29,7 @@ This publication was supported by an Institutional Development Award (IDeA) from
 ![](./Figures/ncgr.png){width=50%} 
 </center>
 
-# License and Copyright
+## License and Copyright {-}
 
 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0
 https://creativecommons.org/licenses/by-nc-nd/4.0/
