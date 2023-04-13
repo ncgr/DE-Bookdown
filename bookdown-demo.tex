@@ -4,6 +4,10 @@
 %
 \documentclass[
 ]{book}
+\title{Differential Expression Workshop NCGR}
+\author{}
+\date{\vspace{-2.5em}}
+
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{iftex}
@@ -33,6 +37,53 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Differential Expression Workshop NCGR},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
@@ -73,17 +124,6 @@
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{plainnat}
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
-\hypersetup{
-  pdftitle={Differential Expression Workshop NCGR},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-
-\title{Differential Expression Workshop NCGR}
-\author{}
-\date{\vspace{-2.5em}}
 
 \begin{document}
 \maketitle
@@ -129,8 +169,103 @@ Creative Commons Attribution-NonCommercial-NoDerivatives 4.0
 \hypertarget{de-chapter-7}{%
 \chapter{DE Chapter 7}\label{de-chapter-7}}
 
-\hypertarget{de-chapter-8}{%
-\chapter{DE Chapter 8}\label{de-chapter-8}}
+\hypertarget{pathway-enrichment-analysis}{%
+\chapter{Pathway Enrichment Analysis}\label{pathway-enrichment-analysis}}
+
+\hypertarget{parsing}{%
+\section{Parsing}\label{parsing}}
+
+Let's fix up the file headers
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sed} \StringTok{\textquotesingle{}s/\textbackslash{}/home\textbackslash{}/elavelle\textbackslash{}/DGE\_workshop\textbackslash{}/alignments\textbackslash{}///g\textquotesingle{}}\NormalTok{ SfromC.tsv }\KeywordTok{|} \FunctionTok{sed} \StringTok{\textquotesingle{}s/\textbackslash{}.sorted\textbackslash{}.bam//g\textquotesingle{}} \OperatorTok{\textgreater{}}\NormalTok{ SfromCsed.tsv}
+\end{Highlighting}
+\end{Shaded}
+
+Use a couple options to enable better viewing.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sed} \StringTok{\textquotesingle{}s/\textbackslash{}/home\textbackslash{}/elavelle\textbackslash{}/DGE\_workshop\textbackslash{}/alignments\textbackslash{}///g\textquotesingle{}}\NormalTok{ SfromC.tsv }\KeywordTok{|} \FunctionTok{sed} \StringTok{\textquotesingle{}s/\textbackslash{}.sorted\textbackslash{}.bam//g\textquotesingle{}} \OperatorTok{\textgreater{}}\NormalTok{ SfromCsed.tsv}
+\end{Highlighting}
+\end{Shaded}
+
+Let's filter out genes we are missing data for.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{awk} \StringTok{\textquotesingle{}$6 != "NA" \{print $0\}\textquotesingle{}}\NormalTok{ SfromCsed.tsv  }\OperatorTok{\textgreater{}}\NormalTok{ SfromCfiltered.tsv}
+\end{Highlighting}
+\end{Shaded}
+
+We've made a good results table. But the researchers didn't report DEGs based on adjusted p-value. To compare our results, let's sort by regular p-value.
+
+Preserve the header, run a generalized sort from the second line on, then concatenate the two back together.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head} \AttributeTok{{-}1}\NormalTok{ SfromCfiltered.tsv }\OperatorTok{\textgreater{}}\NormalTok{ header}
+\FunctionTok{tail} \AttributeTok{{-}n+2}\NormalTok{ SfromCfiltered.tsv }\KeywordTok{|} \FunctionTok{sort} \AttributeTok{{-}g} \AttributeTok{{-}k6} \OperatorTok{\textgreater{}}\NormalTok{ SfromCsorted.tsv}
+\FunctionTok{cat}\NormalTok{ header SfromCsorted.tsv }\OperatorTok{\textgreater{}}\NormalTok{ SfromCcomplete.tsv}
+\end{Highlighting}
+\end{Shaded}
+
+Download the file.
+
+\hypertarget{cytoscape-and-cluego}{%
+\section{Cytoscape and ClueGO}\label{cytoscape-and-cluego}}
+
+Open the app, and load the ClueGO plug-in: Apps --\textgreater{} App Manager
+Open the results table in a spreadsheet, copy the DEGs, an paste into clueGO.
+
+Selection in the ``Visual Style'' box sets the factors that will determine node properties. Keep the default selection, ``Groups''.
+
+Pick ontologies and set differing node shapes.
+
+Clicking on the ``Evidence'' button will display a decision tree clarifying evidence codes. Keep ``All'' checked for now.
+
+Check the ``Show only Pathways with pV \textless='' box. If you want the details on how p-values are calculated for GO terms, click the ``?'' icon.
+
+Expand the ``Statistical Options'' menu. In the first box, change the selection from the default (``Enrichment/Depletion'') to ``Enrichment. A left side to the hypergeometric test will include significantly depleted pathways.
+
+Run the analysis! It will take several minutes. When it's finished, look to the bottom right of the screen. Select the ``ClueGO Results (Cluster \#1)'' tab, and click the indicated icon to save ClueGO results tables to your machine.
+
+Open the new directory. Among the several files, we can find a .png with GO terms represented with a horizontal bar graph as they are shown in the ``Cluster \#1'' tab of in the software. Adjacent bars of the same color are terms that belong to the same group.
+
+The most generally useful file is ``NodeAttributeTables.txt''. The fields here indicate annotation source, p-values, and gene composition and for each gene. Note the ``GOLevels'' column and the ``Overview Term'' column on the far right. Let's return to Cytoscape to clarify what these mean.
+
+Each GO term has one or more associated levels. Only those with a level within the values in the ``GO Tree Interval'' have the potential to appear in the results. The boundaries of this window can be changed directly, or by dragging the ``Network Specificity'' bar.
+
+\hypertarget{additional-options}{%
+\section{Additional options}\label{additional-options}}
+
+Let's inspect some additional options.
+
+It's typically a good idea to check the ``Use GO Term Fusion'' box. This will improve runtime and simplify the results by eliminating redundancy.
+
+Below the ``GO Tree Interval'' box, there are two others. The ``GO Term/Pathway Selection'' box will set the criterion for what is a qualifying GO term.
+
+The ``GO Term/Pathway Network Connectivity'' scroll tab will set the kappa score threshold for what the edges that appear between nodes. Kappa score is a measure of relation any and all GO terms based on the number of associated genes they have in common. For more details regarding this calculation, click on the ``?'' icon.
+
+Expand the ``Grouping Options'' box. Recall the variable (True/False) of the last column (Overview Term) in the node attribute table file we looked at. Those with a ``True'' value (as well as a check mark next to the GO id in the ``Clue GO Results'' tab in Cytoscape) are the leading term in the group, only meaning it is the group with the lowest p-value.
+
+The criterion to determine the leading term can be changed via the ``Leading Group Term based on'' selection. The threshold of commonality for what constitutes a group can also be adjusted, if so chosen.
+
+Let's run the analysis again, selecting the KEGG ontology instead of the GO ontologies.
+
+\hypertarget{cluepedia}{%
+\section{CluePedia}\label{cluepedia}}
+
+Select the ``CluePedia'' tab, and click the network icon. This will add miniature gene nodes within the edges between nodes. As of now, however, it is not apparent which of them are upregulated and which are downregulated.
+
+Navigate to File --\textgreater{} Import --\textgreater{} Table from File, and select the document from which the gene list was originally input. In the new window, chose ``To selected networks only''. Under the ``Key Column for Network'' menu, pick ``Input Gene ID'', then ``OK''.
+
+In the control panel, on the left side of Cytoscape, select ''Style''. For column, choose ``Log2Fold change'' and for mapping type, select ``Continuous Mapping'' and click the spectrum map.
+
+In the window that appears, drag the handle position to 0 and change the color to grey or white. Then, drag the margins in to about a log2FoldChange of 2 and change their color. Change the arrows on the extremes to the same color.
+
+You can save the session by clicking the icon at the top right of the app, which will allow you to return to the visualization and settings of the analysis in another session.
 
 \hypertarget{de-chapter-9}{%
 \chapter{DE Chapter 9}\label{de-chapter-9}}
