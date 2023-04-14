@@ -1,85 +1,418 @@
-# Pathway Enrichment Analysis
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Additional visualization
 
-## Parsing
+## Graphing with ggplot2
 
-Let's fix up the file headers
+Handy gglot2 references:
 
-```{bash, eval=FALSE}
-sed 's/\/home\/elavelle\/DGE_workshop\/alignments\///g' SfromC.tsv | sed 's/\.sorted\.bam//g' > SfromCsed.tsv
+• ggplot2 gallery
+
+– http://www.r-graph-gallery.com/portfolio/ggplot2-package/
+
+• ggplot2 cheatsheets
+
+– http://ggplot2.tidyverse.org/reference/
+
+• ggplot2 documentation
+
+– https://cran.r-project.org/web/packages/ggplot2/ggplot2.pdf
+
+## Data and setup
+
+Reconnect to the DGE analysis screen.
+
+If you haven't already done so, activate the environment, open R, and load the ggplot2 library.
+```{R, eval=FALSE}
+source activate visualization
+
+R
+library(ggplot2)
 ```
 
-Use a couple options to enable better viewing.
-
-```{bash, eval=FALSE}
-sed 's/\/home\/elavelle\/DGE_workshop\/alignments\///g' SfromC.tsv | sed 's/\.sorted\.bam//g' > SfromCsed.tsv
+```{R, eval=FALSE}
+expr = read.table("SfromCcomplete.tsv", header = TRUE)
+head(expr)
 ```
 
-Let's filter out genes we are missing data for.
+## Scatter plots
 
-```{bash, eval=FALSE}
-awk '$6 != "NA" {print $0}' SfromCsed.tsv  > SfromCfiltered.tsv
+Let's compare replicates 1 and 2 for the control.
+
+Treatment (Brain water avoidance stress, 1 hr)
+Rep 1: SRR23869776
+Rep 2: SRR23869775
+Rep 3: SRR23869774
+
+Control
+Rep 1: SRR23869773
+Rep 2: SRR23869772
+Rep 3: SRR23869771
+
+The aesthetics (aes) map variables onto parts of the plot. In this case, the x and y axes. We'll put the plot into a variable then print the variable. Later on this will be valuable because we can add onto plots without regenerating them. We'll print the plot to a pdf file. Alpha makes the points transparent so that it is easier to see when you have a lot of points in the same place on the graph.
+
+```{R, eval=FALSE}
+pdf("expression_replicates.pdf")
+
+scatexpr = ggplot(expr, aes(x=SRR23869772, y=SRR23869773)) + geom_point(alpha=0.2)
+
+scatexpr
+
+dev.off()
 ```
 
-We've made a good results table. But the researchers didn't report DEGs based on adjusted p-value. To compare our results, let's sort by regular p-value.
+![Scatterplot Control Replicates 1 and 2](./Figures/expression_replicates-1.png){width=100%}
 
-Preserve the header, run a generalized sort from the second line on, then concatenate the two back together.
+Now let's add some color based on the padj values. Because padj is on a continuous scale, ggplot2 will give us a scale for color. If we had used a qualitative variable it would give us discrete colors.
 
-```{bash, eval=FALSE}
-head -1 SfromCfiltered.tsv > header
-tail -n+2 SfromCfiltered.tsv | sort -g -k6 > SfromCsorted.tsv
-cat header SfromCsorted.tsv > SfromCcomplete.tsv
+```{R, eval=FALSE}
+pdf("expression_replicates2.pdf")
+
+scatexpr2 = ggplot(expr, aes(x=SRR23869772, y=SRR23869773, color=padj)) + geom_point(alpha=0.2)
+
+scatexpr2
+
+dev.off()
+```
+![Scatterplot Control Replicates 1 and 2 (Color)](./Figures/expression_replicates2-1.png){width=100%}
+
+Exercise: Compare two other reps.
+
+Let's compare the averages of the treatment to the averages of the controls. We can add new columns and calculate the means. Note that the dollar sign after the data frame name signifies a column. The square brackets after the data frame name signifies rows and columns. Since we left the row blank it will calculate the averages row by row across the designated columns.
+
+```{R, eval=FALSE}
+
+expr$ControlAverage <- rowMeans(expr[ , c(8:10)])
+expr$TreatmentAverage <- rowMeans(expr[ , c(11:13)])
+
 ```
 
-Download the file.
+Exercise: Create a scatterplot between the treatment and control averages that you just made.
 
-## Cytoscape and ClueGO
+```{R, eval=FALSE,echo=FALSE}
+pdf("expression_replicates_averages.pdf")
 
-Open the app, and load the ClueGO plug-in: Apps --> App Manager
-Open the results table in a spreadsheet, copy the DEGs, an paste into clueGO.
+scatexpr3 = ggplot(expr, aes(x=ControlAverage, y=TreatmentAverage, color=padj)) + geom_point(alpha=0.2)
 
-Selection in the "Visual Style" box sets the factors that will determine node properties. Keep the default selection, "Groups".
+scatexpr3
 
-Pick ontologies and set differing node shapes.
+dev.off()
+```
 
-Clicking on the "Evidence" button will display a decision tree clarifying evidence codes. Keep "All" checked for now.
+![Scatterplot Treatment vs Control Averages](./Figures/expression_replicates_averages-1.png){width=100%}
 
-Check the "Show only Pathways with pV <=" box. If you want the details on how p-values are calculated for GO terms, click the “?” icon.
 
-Expand the "Statistical Options" menu. In the first box, change the selection from the default ("Enrichment/Depletion") to "Enrichment. A left side to the hypergeometric test will include significantly depleted pathways.
+## Volcano plot
 
-Run the analysis! It will take several minutes. When it’s finished, look to the bottom right of the screen. Select the "ClueGO Results (Cluster #1)" tab, and click the indicated icon to save ClueGO results tables to your machine.
+We can even make a volcano plot in ggplot2, which is really just a specialized scatter plot. The x axis is the log2 of the fold change (Fold_Change). This transformation creates the symetrical “V” shape of the Volcano Plot. The y axis is the negative log10 of the p value (padj), which makes lower number (more significant) higher on the plot. We'll also add a line at p=0.05 (on the graph this will be -log10(p)=1.3). Those above the line are significant. We'll color by padj. This time, we'll add layers to the base graph we put in the “volcano” variable rather than redoing the graph from scratch.
 
-Open the new directory. Among the several files, we can find a .png with GO terms represented with a horizontal bar graph as they are shown in the “Cluster #1” tab of in the software. Adjacent bars of the same color are terms that belong to the same group.
+```{R, eval=FALSE}
+neglog10padj = -log10(expr$padj)
+volcanoDF = data.frame(lg2FC = expr$log2FoldChange, negLG = neglog10padj, padj= expr$padj)
+```
 
-The most generally useful file is “NodeAttributeTables.txt”. The fields here indicate annotation source, p-values, and gene composition and for each gene. Note the "GOLevels” column and the “Overview Term” column on the far right. Let’s return to Cytoscape to clarify what these mean.
+```{R, eval=FALSE}
+pdf ("volcano.pdf")
+volcano1 = ggplot(volcanoDF, aes(x=lg2FC, y=negLG, color = padj)) +
+  geom_point() +
+  geom_hline(yintercept=1.3, color='gray') +
+  xlab("log2(Fold Change)") +
+  ylab("-log10(Adjusted p value)") +
+  ggtitle("Volcano Plot")
+volcano1
+dev.off()
+```
+![Volcano Plot](./Figures/volcano-1.png){width=100%}
 
-Each GO term has one or more associated levels. Only those with a level within the values in the “GO Tree Interval” have the potential to appear in the results. The boundaries of this window can be changed directly, or by dragging the “Network Specificity” bar.
+And now, let's play with the colors. We will color by the log2(Fold Change) instead of padj. We'll use a more recent color scheme, viridis (purple to yellow) which is gaining traction in gene expression circles. According to the developers (https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html), it was developed to be:
 
-## Additional options
+• Colorful, spanning as wide a palette as possible so as to make differences easy to see
 
-Let's inspect some additional options.
+• Perceptually uniform, meaning that values close to each other have similar-appearing colors and values far away from each other have more different-appearing colors, consistently across the range of values
 
-It’s typically a good idea to check the “Use GO Term Fusion” box. This will improve runtime and simplify the results by eliminating redundancy.
+• Robust to colorblindness, so that the above properties hold true for people with common forms of colorblindness, as well as in grey scale printing, and
 
-Below the “GO Tree Interval” box, there are two others. The “GO Term/Pathway Selection” box will set the criterion for what is a qualifying GO term.
+• Pretty, oh so pretty
+ 
+scale_color_gradient2(low = "blue", mid = "white", high = "red")
 
-The “GO Term/Pathway Network Connectivity” scroll tab will set the kappa score threshold for what the edges that appear between nodes. Kappa score is a measure of relation any and all GO terms based on the number of associated genes they have in common. For more details regarding this calculation, click on the “?” icon.
+```{R, eval=FALSE}
+pdf ("volcanoimproved.pdf")
+volcano_viridis = ggplot(volcanoDF, aes(x=lg2FC, y=negLG, color = lg2FC)) +
+  geom_point() +
+  geom_hline(yintercept=1.3, color='gray') +
+  xlab("log2(Fold Change)") +
+  ylab("-log10(Adjusted p value)") +
+  ggtitle("Volcano Plot") +
+  scale_color_viridis_c()
+volcano_viridis
+dev.off()
+```
 
-Expand the “Grouping Options” box. Recall the variable (True/False) of the last column (Overview Term) in the node attribute table file we looked at. Those with a “True” value (as well as a check mark next to the GO id in the “Clue GO Results” tab in Cytoscape) are the leading term in the group, only meaning it is the group with the lowest p-value.
+![Volcano Plot viridis](./Figures/volcanoimproved-1.png){width=100%}
 
-The criterion to determine the leading term can be changed via the “Leading Group Term based on” selection. The threshold of commonality for what constitutes a group can also be adjusted, if so chosen.
+## Boxplots
 
-Let's run the analysis again, selecting the KEGG ontology instead of the GO ontologies.
+In expression data, you often want to print a boxplot of some of your interesting genes based on differential expression and/or the biology of the gene. They show the mean and the interquartile range. The whiskers go to the farthest distal value from the nearest quartile that is no farther than 1.5 * IQR beyond the nearest quartile. Any outliers are plotted as individual dots. 
 
-## CluePedia
+Let's take a closer look at that gene that stood out before (Camk2n1).
 
-Select the "CluePedia" tab, and click the network icon. This will add miniature gene nodes within the edges between nodes. As of now, however, it is not apparent which of them are upregulated and which are downregulated.
+First, get the row for the Camk2n1 gene using the subset command.
+```{R, eval=FALSE}
 
-Navigate to File –> Import –> Table from File, and select the document from which the gene list was originally input. In the new window, chose “To selected networks only”. Under the “Key Column for Network” menu, pick “Input Gene ID”, then “OK”.
+df_camk2n1 = subset(expr, Row.names == "Camk2n1")
 
-In the control panel, on the left side of Cytoscape, select ”Style”. For column, choose “Log2Fold change” and for mapping type, select “Continuous Mapping” and click the spectrum map.
+```
 
-In the window that appears, drag the handle position to 0 and change the color to grey or white. Then, drag the margins in to about a log2FoldChange of 2 and change their color. Change the arrows on the extremes to the same color.
+Now grab the columns (8-13) with the replicate data and transpose them (t). Note that we are using the same variable name. The transpose command turns it into a matrix but we need a data frame, so we'll wrap everything in the as.data.frame command to keep it as a data frame.
 
-You can save the session by clicking the icon at the top right of the app, which will allow you to return to the visualization and settings of the analysis in another session.
+```{R, eval=FALSE}
 
+df_camk2n1 = as.data.frame( t(df_camk2n1[,8:13]) )
+
+# Take a look at it
+df_camk2n1
+
+```
+
+
+```{R, eval=FALSE}
+                  30 
+SRR23869771 96840.79 
+SRR23869772 98702.66 
+SRR23869773 93495.25 
+SRR23869774 62737.18 
+SRR23869775 83620.25 
+SRR23869776 61241.84
+```
+
+Right now the column header is 30, referring to the original row number for Camk2n1, rather than the gene name. Let's fix that.
+
+```{R, eval=FALSE}
+
+colnames(df_camk2n1) = "Camk2n1"
+
+df_camk2n1
+```
+
+
+```{R, eval=FALSE}
+             Camk2n1 
+SRR23869771 96840.79 
+SRR23869772 98702.66 
+SRR23869773 93495.25 
+SRR23869774 62737.18 
+SRR23869775 83620.25 
+SRR23869776 61241.84
+```
+
+That's better. Now we need a new column with the treatment condition.
+
+```{R, eval=FALSE}
+
+df$Treatment=c("Control","Control","Control","Stress","Stress","Stress")
+
+df_camk2n1
+```
+
+
+```{R, eval=FALSE}
+             Camk2n1 Treatment
+SRR23869771 96840.79   Control
+SRR23869772 98702.66   Control
+SRR23869773 93495.25   Control
+SRR23869774 62737.18    Stress
+SRR23869775 83620.25    Stress
+SRR23869776 61241.84    Stress
+```
+
+Now for the boxplot.
+
+The first part, including the aesthetics, takes the same form we saw in the scatterplots. Instead of adding a geom_point() layer, we'll add a geom_boxplot() layer. We'll color by Treatment.
+
+
+```{R, eval=FALSE}
+pdf("boxplot.pdf")
+
+boxplot = ggplot(df_camk2n1, aes(x=Treatment, y=Camk2n1, fill=Treatment)) + geom_boxplot()
+
+boxplot
+
+dev.off()
+```
+
+![Boxplots](./Figures/boxplot-1.png){width=100%}
+
+Excercise: Try making boxplots with other genes.
+
+
+## Violin plots
+
+Violin Plots are similar to box plots but they show the distribution of the data a little bit better. They use rotated density plots to show the probability of each datapoint being a particular value. It is the same as a boxplot except using geom_violin instead of geom_boxplot.
+
+
+```{R, eval=FALSE}
+
+pdf("violinplot.pdf")
+
+violin = ggplot(df_camk2n1,
+	aes(x=Treatment, y=Camk2n1, fill=Treatment)) +
+	geom_violin()
+
+violin
+
+dev.off()
+
+```
+
+![Violin plot](./Figures/violinplot-1.png){width=100%}
+
+You can even use both a violin_plot layer and a box_plot layer. Note that the order matters as one writes on top of the other. Usually you put a skinny boxplot (using the “width” command) inside a violin plot. We'll make the boxplot somewhat skinny and use “alpha” to make it transparent so you can still see the violin plot through it.
+
+```{R, eval=FALSE}
+
+pdf("violinbox.pdf")
+
+violin = ggplot(df_camk2n1, aes(x=Treatment, y=Camk2n1, fill=Treatment)) + geom_violin() +	geom_boxplot(width=0.1,alpha=0.3)
+
+violin
+
+dev.off()
+
+```
+
+![ViolinBox plot](./Figures/violinbox-1.png){width=100%}
+
+## Interactive Plots
+
+The plotly library can make ggplot2 plots interactive. Since we have all of our ggplot2 plots in variables we can use those variables to make the plot interactive. We'll use the plotly library as well as the htmlwidgets library which allows us to avoid pandoc installation and setting of browsers. We'll use the scatterplot as an example. The scatterplot is in the variable “scatexpr2”.
+
+Load the libraries.
+
+```{R, eval=FALSE}
+
+
+library(plotly)
+library(htmlwidgets)
+
+```
+
+Apply ggplotly to the variable that contains the ggplot2 plot.
+
+```{R, eval=FALSE}
+
+scatint = ggplotly(scatexpr2)
+
+```
+
+Save it as an HTML file with an accompanying library folder ("lib")
+
+```{R, eval=FALSE}
+
+saveWidget(scatint, "scatterplot.html", selfcontained = F, libdir = "lib")
+
+```
+
+You need to copy both the html file and the “lib” directory to the same directory on your computer. Because “lib” is a directory, you need to use the recursive flag (-r) if you are using scp. You should be able to double-click on the html file to open it.
+
+![Interactive Scatterplot](./Figures/InteractiveScatter.png){width=100%}
+
+Try zooming in on the blue dots in the bottom left corner by selecting the magnifying glass and making a box around them.
+
+Exercise: Now make an interactive plot for the other ggplot plots. If more libraries are needed for the html, they will be added to the library folder, so I recommend that you copy the library folder over each time.
+
+1. Volcano plot (“volcano_viridis” variable)
+
+2. Box plot (“boxplot” variable)
+
+3. Violin plot (“violin” variable)
+
+We can also use plotly directly for interactive plots that are not from ggplot2. We'll start with a 3D scatterplot. We'll use the same expr data frame to look at all 3 reps for the Control.
+
+```{R, eval=FALSE}
+
+scatter3d=plot_ly(
+  x=expr$SRR23869773,
+	y=expr$SRR23869772,
+	z=expr$SRR23869771,
+	type="scatter3d", mode="markers", color=expr$padj)
+
+saveWidget(scatter3d, "scatter3d.html", selfcontained = F, libdir = "lib")
+
+```
+
+![Interactive 3D Scatterplot](./Figures/Scatter3d.png){width=100%}
+
+Interact with the plot and see what you can do with it.
+
+Exercise: Now make an interactive 3D scatterplot for the 3 replicates for the Treatment.
+
+We'll also make an interactive heatmap. We'll use Heatmaply for this. Heatmaply can be used for either static or interactive heatmaps.
+
+We'll need a matrix of genes x samples. First, we'll make the genes the rownames, rather than the default of row numbers. Note that the genes are in the Row.names column.
+
+```{R, eval=FALSE}
+# Make the genes the rownames
+rownames(expr) = expr$Row.names
+```
+
+We'll grab the significant genes (padj<=0.05) and just the rep data (columns 8-13). We'll do it all in one command but you can break it into two commands if that is easier.
+
+```{R, eval=FALSE}
+
+expr2 = subset(expr, padj<=0.05)[,8:13]
+
+```
+
+Check the data frame using the head command.
+
+```{R, eval=FALSE}
+
+head(expr2)
+
+```
+
+```{R, eval=FALSE}
+
+        SRR23869771 SRR23869772 SRR23869773 SRR23869774 SRR23869775 SRR23869776
+Gm5537    60.357391   57.400286    66.32549    5.891184    7.326479    6.761291
+Gm10154   32.825950   47.833571    42.63781  142.370279  123.503508   99.487567
+Ddc       83.653227  103.320514    95.69821  461.476078  142.343026  279.144727
+Gm10231  188.484485   76.533714    38.84779   20.619144   24.072718   24.147468
+Zfhx3    728.524303  495.555799   480.38605 1345.153674  723.228170 1165.839741
+Mab21l1    7.412311    7.653371    13.26510   81.494712   12.559679   88.862681
+
+```
+
+Change the data frame into a matrix.
+
+```{R, eval=FALSE}
+
+expr2matrix = as.matrix(expr2)
+
+```
+
+Now, let's make the heatmap.
+
+```{R, eval=FALSE}
+
+library(heatmaply)
+
+h=heatmaply(expr2matrix)
+
+saveWidget(h, "heatmap.html", selfcontained = F, libdir = "lib")
+
+```
+
+![Interactive Heatmap](./Figures/Heatmap3D.png){width=100%}
+
+## Homework (optional)
+
+Use ggplot2 to plot other types of graphs
+
+(http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)
+
+Try to make some of them into interactive graphs using plotly

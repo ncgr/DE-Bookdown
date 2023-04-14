@@ -1,4 +1,73 @@
-# DE Chapter 3
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Sequence metrics and quality Control
+
+## The Study Design
+
+3 replicates of control mice and 3 replicates of water avoidance stress induced mice. We will run our own analysis on these publically-available data and compare the DEG and pathway enrichment results to those published. 
+https://www.mdpi.com/2218-1989/13/3/453
+
+## Data Access
+
+Start a screen, make a new directory branch "DGE_workshop/reads", and enter it. Though there are only 6 samples, the sequencing depth is very high, making the download time ~ 1hr. If time does not allow for this (Option 1), cancel the command after checking it works, and softlink the data instead (Option 2).
+
+OPTION 1:
+```{bash, eval=FALSE}
+source activate fastqdump
+
+while read line; do fastq-dump --gzip --outdir ./ ${line}; done < /home/elavelle/SRRlist.txt
+
+```
+
+
+OPTION 2:
+```{bash, eval=FALSE}
+ln -s home/elavelle/DGE_workshop/reads* ./
+```
+
+## fastp QC
+Takes ~ 15 min. for all 6 samples on 10 threads.
+```{bash, eval=FALSE}
+conda deactivate
+
+source activate fastp
+
+for file in SRR*; do fastp -w 10 -i ${file} -o ${file}.fastp.gz; done
+```
+This sort of messes up the extensions. Rename the files
+
+```{bash, eval=FALSE}
+rename .gz.fastp.gz .fastp.gz *.gz
+```
+
+Download and view the .html report.
+
+## Checking Sequence Metrics
+
+
+awk "NR" variable: There are several built-in awk variables. One of them is "NR" (Number of Rows/
+Records). It contains line number and can be used to determine the total number of lines in a file. The
+following example illustrates one use of this built-in variable.
+
+Prints the line number of the first 10 lines
+```{bash, eval=FALSE}
+zcat SRR23869771.fastq.fastq.gz | awk '{print NR}' | head
+
+```
+awk modulo arithmatic: The modulo operator, "%", returns the remainder of division. The expression
+"5 % 2", for example, would evaluate to 1, while "9 % 3" would evaluate to 0 because the dividend (9) is
+a multiple of the divisor (3).
+```{bash, eval=FALSE}
+
+zcat SRR23869771.fastq.fastq.gz | awk '{ if ( NR % 4 == 2) print length ($1)}' | head
+
+zcat SRR23869771.fastq.fastp.gz | awk '{ if ( NR % 4 == 2) print $0}' | wc -l
+
+```
+
 
  
 

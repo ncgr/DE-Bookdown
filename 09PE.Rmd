@@ -1,2 +1,91 @@
-# DE Chapter 9
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Pathway Enrichment Analysis
+
+## Parsing
+
+Let's fix up the file headers
+
+```{bash, eval=FALSE}
+sed 's/\/home\/elavelle\/DGE_workshop\/alignments\///g' SfromC.tsv | sed 's/\.sorted\.bam//g' > SfromCsed.tsv
+```
+
+Use a couple options to enable better viewing.
+
+```{bash, eval=FALSE}
+sed 's/\/home\/elavelle\/DGE_workshop\/alignments\///g' SfromC.tsv | sed 's/\.sorted\.bam//g' > SfromCsed.tsv
+```
+
+Let's filter out genes we are missing data for.
+
+```{bash, eval=FALSE}
+awk '$6 != "NA" {print $0}' SfromCsed.tsv  > SfromCfiltered.tsv
+```
+
+We've made a good results table. But the researchers didn't report DEGs based on adjusted p-value. To compare our results, let's sort by regular p-value.
+
+Preserve the header, run a generalized sort from the second line on, then concatenate the two back together.
+
+```{bash, eval=FALSE}
+head -1 SfromCfiltered.tsv > header
+tail -n+2 SfromCfiltered.tsv | sort -g -k6 > SfromCsorted.tsv
+cat header SfromCsorted.tsv > SfromCcomplete.tsv
+```
+
+Download the file.
+
+## Cytoscape and ClueGO
+
+Open the app, and load the ClueGO plug-in: Apps --> App Manager
+Open the results table in a spreadsheet, copy the DEGs, an paste into clueGO.
+
+Selection in the "Visual Style" box sets the factors that will determine node properties. Keep the default selection, "Groups".
+
+Pick ontologies and set differing node shapes.
+
+Clicking on the "Evidence" button will display a decision tree clarifying evidence codes. Keep "All" checked for now.
+
+Check the "Show only Pathways with pV <=" box. If you want the details on how p-values are calculated for GO terms, click the “?” icon.
+
+Expand the "Statistical Options" menu. In the first box, change the selection from the default ("Enrichment/Depletion") to "Enrichment. A left side to the hypergeometric test will include significantly depleted pathways.
+
+Run the analysis! It will take several minutes. When it’s finished, look to the bottom right of the screen. Select the "ClueGO Results (Cluster #1)" tab, and click the indicated icon to save ClueGO results tables to your machine.
+
+Open the new directory. Among the several files, we can find a .png with GO terms represented with a horizontal bar graph as they are shown in the “Cluster #1” tab of in the software. Adjacent bars of the same color are terms that belong to the same group.
+
+The most generally useful file is “NodeAttributeTables.txt”. The fields here indicate annotation source, p-values, and gene composition and for each gene. Note the "GOLevels” column and the “Overview Term” column on the far right. Let’s return to Cytoscape to clarify what these mean.
+
+Each GO term has one or more associated levels. Only those with a level within the values in the “GO Tree Interval” have the potential to appear in the results. The boundaries of this window can be changed directly, or by dragging the “Network Specificity” bar.
+
+## Additional options
+
+Let's inspect some additional options.
+
+It’s typically a good idea to check the “Use GO Term Fusion” box. This will improve runtime and simplify the results by eliminating redundancy.
+
+Below the “GO Tree Interval” box, there are two others. The “GO Term/Pathway Selection” box will set the criterion for what is a qualifying GO term.
+
+The “GO Term/Pathway Network Connectivity” scroll tab will set the kappa score threshold for what the edges that appear between nodes. Kappa score is a measure of relation any and all GO terms based on the number of associated genes they have in common. For more details regarding this calculation, click on the “?” icon.
+
+Expand the “Grouping Options” box. Recall the variable (True/False) of the last column (Overview Term) in the node attribute table file we looked at. Those with a “True” value (as well as a check mark next to the GO id in the “Clue GO Results” tab in Cytoscape) are the leading term in the group, only meaning it is the group with the lowest p-value.
+
+The criterion to determine the leading term can be changed via the “Leading Group Term based on” selection. The threshold of commonality for what constitutes a group can also be adjusted, if so chosen.
+
+Let's run the analysis again, selecting the KEGG ontology instead of the GO ontologies.
+
+## CluePedia
+
+Select the "CluePedia" tab, and click the network icon. This will add miniature gene nodes within the edges between nodes. As of now, however, it is not apparent which of them are upregulated and which are downregulated.
+
+Navigate to File –> Import –> Table from File, and select the document from which the gene list was originally input. In the new window, chose “To selected networks only”. Under the “Key Column for Network” menu, pick “Input Gene ID”, then “OK”.
+
+In the control panel, on the left side of Cytoscape, select ”Style”. For column, choose “Log2Fold change” and for mapping type, select “Continuous Mapping” and click the spectrum map.
+
+In the window that appears, drag the handle position to 0 and change the color to grey or white. Then, drag the margins in to about a log2FoldChange of 2 and change their color. Change the arrows on the extremes to the same color.
+
+You can save the session by clicking the icon at the top right of the app, which will allow you to return to the visualization and settings of the analysis in another session.
+
 

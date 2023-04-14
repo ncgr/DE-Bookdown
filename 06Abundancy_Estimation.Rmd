@@ -1,4 +1,43 @@
-# DE Chapter 6
+---
+output:
+  html_document: default
+  pdf_document: default
+---
+# Abundance Estimation
+
+## Format check
+
+Look at the format for a .gff file: https://en.wikipedia.org/wiki/General_feature_format
+
+Exercise: Which genome/annotation pair in the folder /home/elavelle/DGE_Virtual/exercise_genomes/ has mismatched headers?
+
+## FeatureCounts
+
+Create a new directory under DGE_workshop
+```{bash, eval=FALSE}
+source activate featurecounts
+
+featureCounts -a /home/$USER/DGE_workshop/genome/GRCm39.index -o /home/$USER/DGE_workshop/count_matrix.tsv --largestOverlap -M --primary -T 10 -t gene -g gene_name *.bam
+```
+
+FeatureCounts put in an extra row and some columns we want to get rid of before doing differential expression analysis.
+
+```{bash, eval=FALSE}
+less count_matrix.tsv
+```
+
+Use tail to take every row starting with the second, then extract only the columns of interest.
+
+```{bash, eval=FALSE}
+tail -n +2 count_matrix.tsv | awk '{print $1 "\t" $7 "\t" $8 "\t" $9 "\t" $10 "\t" $11 "\t" $12 "\t" $13 "\t" $14 "\t" $15 "\t" $16 "\t" $17 "\t" $18}' > DESEQ2_matrix.tsv
+```
+
+```{bash, eval=FALSE}
+mkdir /home/$USER/DGE_Virtual/DESeq2
+mv DESEQ2_matrix.tsv /home/$USER/DGE_Virtual/DESEQ2/
+```
+
+
 
 
 
