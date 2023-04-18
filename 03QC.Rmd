@@ -14,6 +14,11 @@ https://www.mdpi.com/2218-1989/13/3/453
 
 Start a screen, make a new directory branch "DGE_workshop/reads", and enter it. Though there are only 6 samples, the sequencing depth is very high, making the download time ~ 1hr. If time does not allow for this (Option 1), cancel the command after checking it works, and softlink the data instead (Option 2).
 
+Make the needed directories
+```{bash, eval=FALSE}
+mkdir -p DGE_workshop/reads
+```
+
 OPTION 1:
 ```{bash, eval=FALSE}
 source activate fastqdump
@@ -25,7 +30,7 @@ while read line; do fastq-dump --gzip --outdir ./ ${line}; done < /home/elavelle
 
 OPTION 2:
 ```{bash, eval=FALSE}
-ln -s home/elavelle/DGE_workshop/reads* ./
+ln -s home/elavelle/DGE_workshop/reads/*.gz ./
 ```
 
 ## fastp QC

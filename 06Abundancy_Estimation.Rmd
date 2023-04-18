@@ -17,7 +17,7 @@ Create a new directory under DGE_workshop
 ```{bash, eval=FALSE}
 source activate featurecounts
 
-featureCounts -a /home/$USER/DGE_workshop/genome/GRCm39.index -o /home/$USER/DGE_workshop/count_matrix.tsv --largestOverlap -M --primary -T 10 -t gene -g gene_name *.bam
+featureCounts -a ~/DGE_workshop/genome/GCF_000001635.27_GRCm39_genomic.gtf -o /home/$USER/DGE_workshop/count_matrix.tsv --largestOverlap -M --primary -T 10 -t gene -g gene_name *.bam
 ```
 
 FeatureCounts put in an extra row and some columns we want to get rid of before doing differential expression analysis.

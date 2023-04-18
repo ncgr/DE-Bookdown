@@ -28,7 +28,7 @@ Activate environment, and use HISAT2 to create indices. If time prohibits, we wi
 ```{bash, eval=FALSE}
 source activate HISAT
 
-hisat2 -x /home/$USER/DGE_workshop/genome/GRCm39.index --threads 10 -U read -S ${line}.sam; done
+hisat2-build -p 10 GCF_000001635.27_GRCm39_genomic.fna GRCm39.index
 ```
 
 Run alignments
@@ -38,6 +38,13 @@ for file in *.fastp.gz; do hisat2 -x/home/$USER/DGE_workshop/genome/GRCm39.index
 ```
 
 What flags would you use for paired-end reads? 
+
+## .sam format
+
+![multipostnorm](./Figures/sam_format.png){width=100%}
+## Cigar string
+
+![multipostnorm](./Figures/cigar.png){width=100%}
 
 ## Alignment metrics
 
@@ -73,6 +80,8 @@ The " mapped" number from the flagstat output counts all alignments (not reads!)
 35942177 - 14794600
 
 As it happens, there is another convenient samtools function to extract the desired metrics from # a .sam file.
+
+![multipostnorm](./Figures/sam_bits.png){width=100%}
 
 ```{bash, eval=FALSE}
 samtools view -f 0x100 -c SRR23869771.fastq.fastp.gz.sam 
