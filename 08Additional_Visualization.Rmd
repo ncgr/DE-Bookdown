@@ -320,7 +320,7 @@ You need to copy both the html file and the “lib” directory to the same dire
 
 ![Interactive Scatterplot](./Figures/InteractiveScatter.png){width=100%}
 
-Try zooming in on the blue dots in the bottom left corner by selecting the magnifying glass and making a box around them.
+Try zooming in on the blue dots in the bottom left corner by selecting the magnifying glass and making a box around them. Note that if a dot's padj = NA (low mean normalized count), it colors them gray.
 
 Exercise: Now make an interactive plot for the other ggplot plots. If more libraries are needed for the html, they will be added to the library folder, so I recommend that you copy the library folder over each time.
 
@@ -334,19 +334,17 @@ We can also use plotly directly for interactive plots that are not from ggplot2.
 
 ```{R, eval=FALSE}
 
-scatter3d=plot_ly(
-  x=expr$SRR23869773,
-	y=expr$SRR23869772,
-	z=expr$SRR23869771,
-	type="scatter3d", mode="markers", color=expr$padj)
+scatter3d=plot_ly(expr, x = ~SRR23869773, y = ~SRR23869772, z = ~SRR23869771,
+  marker = list(color = ~padj, colorscale = 'Viridis', reversescale =T, showscale = TRUE, size=4)) %>% 
+  add_markers()
 
 saveWidget(scatter3d, "scatter3d.html", selfcontained = F, libdir = "lib")
-
 ```
 
-![Interactive 3D Scatterplot](./Figures/Scatter3d.png){width=100%}
+![Interactive 3D Scatterplot](./Figures/Scatter3d.png){width=60%}
 
-Interact with the plot and see what you can do with it.
+Interact with the plot and see what you can do with it. Note that dots with a padj of NA are colored black.
+
 
 Exercise: Now make an interactive 3D scatterplot for the 3 replicates for the Treatment.
 
@@ -395,19 +393,19 @@ expr2matrix = as.matrix(expr2)
 
 ```
 
-Now, let's make the heatmap.
+Now, let's make the heatmap. We'll use the log of the data to compress the scale to make the differences visible across more of the genes. Note, as is standard when taking the log of expression data, we will add one to the values before taking the log so that we don't try to take the log of zero, which is undefined. Adding one converts the 0 to a 1, then taking the log of 1 is back to 0.
 
 ```{R, eval=FALSE}
 
 library(heatmaply)
 
-h=heatmaply(expr2matrix)
+h=heatmaply(log(expr2matrix+1))
 
 saveWidget(h, "heatmap.html", selfcontained = F, libdir = "lib")
 
 ```
 
-![Interactive Heatmap](./Figures/Heatmap3D.png){width=100%}
+![Interactive Heatmap](./Figures/Heatmap3D.png){width=80%}
 
 ## Homework (optional)
 
