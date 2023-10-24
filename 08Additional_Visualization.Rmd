@@ -27,8 +27,6 @@ Reconnect to the DGE analysis screen.
 
 If you haven't already done so, activate the environment, open R, and load the ggplot2 library.
 ```{R, eval=FALSE}
-source activate visualization
-
 R
 library(ggplot2)
 ```
