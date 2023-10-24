@@ -7,10 +7,8 @@ output:
 
 ## R data import
 
-Load the proper conda environments, then launch R from the DESeq2 directory.
+Launch R from the DESeq2 directory.
 ```{bash, eval=FALSE}
-source activate deseq2-r
-source activate visualization
 R
 ```
 
@@ -30,7 +28,7 @@ getwd()
 and change it with:
 
 ```{R, eval=FALSE}
-setwd('/home/$USER/DGE_Virtual/DESEQ2/')
+setwd('/home/<username>/DGE_workshop/DESeq2/')
 ```
 
 Load the table we made with featureCounts into a variable, then check the dimensions.
@@ -46,7 +44,7 @@ dim(sampleCounts)
 Specify sample conditions. As the experimental design only incorporates two levels of a single factor, our table will be very simple. Nonetheless, it is important to create this accurately, as it is what the software will use to make comparisons.
 
 ```{bash, eval=FALSE}
-sampleCondition <- as.factor(c(rep("control",3),rep("stress")))
+sampleCondition <- as.factor(c(rep("control",3),rep("stress",3)))
 sampleTable <- data.frame(condition=sampleCondition)
 ``` 
 
@@ -122,7 +120,7 @@ dev.off()
 Designate reference level for each factor
 
 ```{R, eval=FALSE}
-colData(DESeqDataset)$condition <- relevel(DESeqDataset$condition, ref "control")
+colData(DESeqDataset)$condition <- relevel(DESeqDataset$condition, "control")
 ```
 Run DESeq2
 ```{R, eval=FALSE}
@@ -150,7 +148,7 @@ Sort our results table, and export a file with counts appended to it.
 ```{R, eval=FALSE}
 stress_from_control_sorted <- stress_from_control[order(stress_from_control$padj),]
 
-write.table(merge(as.data.frame(stress_from_control_sorted),as.data.frame(counts(dds,normalized=TRUE)), by="row.names"), row.names=TRUE, quote=FALSE, sep="\t", sort=FALSE, file="SfromC.tsv")
+write.table(merge(as.data.frame(stress_from_control_sorted),as.data.frame(counts(dds,normalized=TRUE)), by="row.names"), row.names=TRUE, quote=FALSE, sep="\t", file="SfromC.tsv")
 ```
 
 ## Heatmap
@@ -164,11 +162,12 @@ sigIndices <- which(stress_from_control$padj <= 0.05)
 sigIndices
 ```
 
-Create object to feed into the plot.
+Create object to feed into the plot, set colors.
 
 ```{R, eval=FALSE}
 plotCounts <- counts(dds[sigIndices,])
 colnames(plotCounts) <- c("C71","C72","C73","S74","S75","S76") 
+hmcol <- colorRampPalette(brewer.pal(9,"GnBu"))(100)
 ```
 
 Make it!

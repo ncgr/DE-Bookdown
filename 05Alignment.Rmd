@@ -26,15 +26,15 @@ wget https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_muscul
 Activate environment, and use HISAT2 to create indices. If time prohibits, we will likely need to terminate and softlink to output files.
 
 ```{bash, eval=FALSE}
-source activate HISAT
+source activate hisat2
 
 hisat2-build -p 10 GCF_000001635.27_GRCm39_genomic.fna GRCm39.index
 ```
 
-Run alignments
+From the reads directory, run alignments
 
 ```{bash, eval=FALSE}
-for file in *.fastp.gz; do hisat2 -x/home/$USER/DGE_workshop/genome/GRCm39.index --threads 10 -U ${file} -S /home/$USER/DGE_workshop/alignments/${file}.sam; done
+for file in *.fastp.gz; do hisat2 -x /home/$USER/DGE_workshop/genome/GRCm39.index --threads 10 -U ${file} -S /home/$USER/DGE_workshop/alignments/${file}.sam; done
 ```
 
 What flags would you use for paired-end reads? 
