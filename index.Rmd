@@ -167,7 +167,7 @@ _____
 2. Type the following on your command line, substituting in your username for <username>.
 
 ```
-ssh -p2310 <username>@inbre.ncgr.org
+ssh -p2311 <username>@inbre.ncgr.org
 ```
 
 3. Enter your password.
