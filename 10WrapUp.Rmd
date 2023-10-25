@@ -50,6 +50,6 @@ You can share these with other individuals in your lab or fellow students/collea
 
 ## Zoom recordings
 Please do not share the zoom recordings as we don't have permissions from everyone who participated. Feel free to use them for your own use.
-You can find links to the zoom recordings at: https://docs.google.com/document/d/1fk8VmOenYfLbe5BtzW_m43N5BLIjW-JkL49NpXfyvN0/edit?usp=sharing
+You can find links to the zoom recordings [here](https://docs.google.com/document/d/1fk8VmOenYfLbe5BtzW_m43N5BLIjW-JkL49NpXfyvN0/edit?usp=sharing).
 
 The bookdown and zoom recordings will be available for at least 3 months. Please plan to download what you need if you want access longer.

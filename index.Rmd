@@ -13,9 +13,6 @@ link-citations: yes
 github-repo: ncgr/DE-Bookdown
 ---
 
-
-This publication was supported by an Institutional Development Award (IDeA) from the National Institute of General Medical Sciences of the National Institutes of Health under grant number P20GM103451. 
-
 # Getting Started
 
 ## Installs
@@ -62,7 +59,6 @@ Everyone will need Cytoscape (a web-based pathway analysis tool).  Please perfor
 
 ## Agenda
 
-IN PROGRESS
 
 Zoom: https://www.google.com/url?q=https://us06web.zoom.us/j/82648563997?pwd%3DIKyrhYqkEBRwzGUAImt7DqP1XgLzld.1&sa=D&source=calendar&ust=1698686353551709&usg=AOvVaw0Vd9ByfGxQ5IYkNqqNiSa5
 
@@ -76,6 +72,8 @@ Zoom recordings:
 Please do not share these (see the Wrap Up chapter for more information).
 
 _____
+
+IN PROGRESS
 
 **Monday**
 
