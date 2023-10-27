@@ -60,7 +60,7 @@ Everyone will need Cytoscape (a web-based pathway analysis tool).  Please perfor
 ## Agenda
 
 
-Zoom: https://www.google.com/url?q=https://us06web.zoom.us/j/82648563997?pwd%3DIKyrhYqkEBRwzGUAImt7DqP1XgLzld.1&sa=D&source=calendar&ust=1698686353551709&usg=AOvVaw0Vd9ByfGxQ5IYkNqqNiSa5
+[Zoom](https://www.google.com/url?q=https://us06web.zoom.us/j/82648563997?pwd%3DIKyrhYqkEBRwzGUAImt7DqP1XgLzld.1&sa=D&source=calendar&ust=1698686353551709&usg=AOvVaw0Vd9ByfGxQ5IYkNqqNiSa5)
 
 ID: 82648563997
 
@@ -73,13 +73,12 @@ Please do not share these (see the Wrap Up chapter for more information).
 
 _____
 
+
 **Monday**
 
 <span style="color: lightgray;">MORNING</span>\
 
-NCGR Introduction (Callum)\
-
-Workshop, NMINBRE Introduction (Joann)\
+NCGR and NM-INBRE Introduction (Joann)\
 
 Student Introductions\
  
@@ -158,6 +157,7 @@ _____
 Feedback Survey\
 
 Logrus Access Request\
+
 _____
 
 <span style="color: forestgreen;">Green</span> text indicates hands-on sessions. Please note that the timing might shift slightly.
