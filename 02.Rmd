@@ -7,7 +7,7 @@
 2. Type the following on your command line, substituting in your username for <username>.
 
 ```
-ssh -p2310 <username>@inbre.ncgr.org
+ssh -p2311 <username>@inbre.ncgr.org
 ```
 
 3. Enter your password.
@@ -394,7 +394,7 @@ You should be returned to your prompt: username@de-2311:~/linuxc$
 #### Syntax: ln -s FileYouWantToLink/PointTo NameYouWantToGiveIt{-}
 
 ```
-ln -s /home/data/metagenomics-2310/covid.fasta covid.fasta
+ln -s /home/data/de-2311/covid.fasta covid.fasta
 
 ls -l
 ```
@@ -492,7 +492,7 @@ cat covid.fasta | tail
 Fastq files contain sequence reads and associated **meta data**.
 
 ```
-ln -s /home/data/metagenomics-2310/SP1.fq 
+ln -s /home/data/de-2311/SP1.fq 
 
 ls -ltr
 ```
@@ -694,7 +694,7 @@ Powerful Z commands (zcat)
 Let’s copy another file:
 
 ```
-cp /home/data/metagenomics-2310/table1.txt.gz .
+cp /home/data/de-2311/table1.txt.gz .
 zcat table1.txt.gz
 
 ```
@@ -986,7 +986,7 @@ There is also cheat sheet on the weebly site under Supplemental Documents.
 2) Enter the following command to log on to the NCGR Server: 
 
 ```
-ssh -p2310 <username>@inbre.ncgr.org
+ssh -p2311 <username>@inbre.ncgr.org
 ```
 
 + Don't forget to substitute **your** personal username in
