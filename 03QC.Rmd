@@ -17,13 +17,14 @@ Start a screen, make a new directory branch "DGE_workshop/reads", and enter it. 
 Make the needed directories
 ```{bash, eval=FALSE}
 mkdir -p DGE_workshop/reads
+cd DGE_workshop/reads
 ```
 
 OPTION 1:
 ```{bash, eval=FALSE}
-source activate fastqdump
+source activate sra-tools
 
-while read line; do fastq-dump --gzip --outdir ./ ${line}; done < /home/elavelle/SRRlist.txt
+while read line; do fasterq-dump --outdir ./ ${line}; done < /home/elavelle/SRRlist.txt
 
 ```
 
