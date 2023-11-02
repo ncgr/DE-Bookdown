@@ -26,14 +26,18 @@ wget https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_muscul
 Activate environment, and use HISAT2 to create indices. If time prohibits, we will likely need to terminate and softlink to output files.
 
 ```{bash, eval=FALSE}
+gunzip GCF_000001635.27_GRCm39_genomic.fna.gz
+
 source activate hisat2
 
 hisat2-build -p 10 GCF_000001635.27_GRCm39_genomic.fna GRCm39.index
 ```
 
-From the reads directory, run alignments
+Make the output directory, then, trom the reads directory, run alignments
 
 ```{bash, eval=FALSE}
+mkdir ~/DGE_workshop/alignments
+
 for file in *.fastp.gz; do hisat2 -x /home/$USER/DGE_workshop/genome/GRCm39.index --threads 10 -U ${file} -S /home/$USER/DGE_workshop/alignments/${file}.sam; done
 ```
 
@@ -53,6 +57,9 @@ Some alignment tools (HISAT2 for example) will print alignment metrics after gen
 Change environments and use this statistics summarization command. It takes about a minute per sample.
 
 ```{bash, eval=FALSE}
+conda deactivate
+source activate samtools
+
 samtools flagstat SRR23869771.fastq.fastp.gz.sam
 ```
 
@@ -96,6 +103,8 @@ Therefore, the number of primary alignments can also be found by:
 samtools view -F 0x904 -c SRR23869771.fastq.fastp.gz.sam 
 ```
 
+Note that this is less than the total number of reads in our file. This operates in an "or" fashion. If we run the above command with "-f", it yields 0, because the postive search runs in an "and" fashion.
+
 Exercise: Select another sample, and using any of the means above, determine 1) Total read count 2) Total mapped reads 3) Total primary alignments
 
 ## .sam/.bam conversion and alignment sorting
@@ -107,7 +116,11 @@ for file in *.sam; do samtools view -u ${file} | samtools sort -o ${file}.sorted
 Rename the output files
 
 ```{bash, eval=FALSE}
-rename .fastq.fastp.gz.sam.sorted .sorted.bam *.sorted
+rename .fastq.fastp.gz.sam.sorted .sorted.bam *.bam 
+
+or
+
+file-rename -- 's/\.fastq.fastp.gz.sam.sorted$/.sorted.bam/' *.sorted
 ```
 
 Exercise: What average genome coverage do our primary alignments give us?

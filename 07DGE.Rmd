@@ -148,7 +148,7 @@ Sort our results table, and export a file with counts appended to it.
 ```{R, eval=FALSE}
 stress_from_control_sorted <- stress_from_control[order(stress_from_control$padj),]
 
-write.table(merge(as.data.frame(stress_from_control_sorted),as.data.frame(counts(dds,normalized=TRUE)), by="row.names"), row.names=TRUE, quote=FALSE, sep="\t", file="SfromC.tsv")
+write.table(merge(as.data.frame(stress_from_control_sorted),as.data.frame(counts(dds,normalized=TRUE)), by="row.names"), row.names=FALSE, quote=FALSE, sep="\t", file="SfromC.tsv")
 ```
 
 ## Heatmap
@@ -185,11 +185,26 @@ dev.off()
 Camk2n1 is skewing the color palette. Let's make a version omitting it.
 ```{R, eval=FALSE}
 pdf ("heatmapSigsMost.pdf")
-heatmap.2(plotCounts[-7,],  col=hmcol, cexRow=0.8,
+heatmap.2(plotCounts[-5,],  col=hmcol, cexRow=0.8,
           key.title = NA, scale="none", dendrogram="col", 
           trace="none", density.info='none', cexCol=0.6, margin=c(6,10))
 dev.off()
 ```
+
+If we want the same decreasing order:
+```{R, eval=FALSE}
+# Sorts, removes Camk2n1
+sorted <- row.names(data.frame(sort(rowMeans(plotCounts), decreasing=TRUE)))[-1]
+# makes new dataframe with these indeces
+new_counts <- plotCounts[match(sorted, row.names(plotCounts)),]
+
+pdf ("heatmapSigsMost.pdf")
+heatmap.2(new_counts,  col=hmcol, cexRow=0.8,
+          key.title = NA, scale="none", dendrogram="col", 
+          trace="none", density.info='none', cexCol=0.6, margin=c(6,10), Rowv=FALSE) 
+dev.off()
+```
+
 
 ![workflow](./Figures/heatmapSigsMost-1.png){width=100%}
 
@@ -211,6 +226,8 @@ aesthetic layers
 x-axis labels and jittering
 
 ```{R, eval=FALSE}
+libary('ggplot2')
+
 for(k in 1:length(sigIndices)) {  
   gene <- rownames(stress_from_control_sorted)[k]
   pval <- format(stress_from_control_sorted$padj[k], digits=4)

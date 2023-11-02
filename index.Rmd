@@ -157,6 +157,7 @@ _____
 Feedback Survey\
 
 Logrus Access Request\
+
 _____
 
 <span style="color: forestgreen;">Green</span> text indicates hands-on sessions. Please note that the timing might shift slightly.

@@ -24,14 +24,14 @@ OPTION 1:
 ```{bash, eval=FALSE}
 source activate sra-tools
 
-while read line; do fasterq-dump --outdir ./ ${line}; done < /home/elavelle/SRRlist.txt
+while read line; do fasterq-dump --outdir ./ ${line}; done < /home/elavelle/DGE_workshop/SRRlist.txt
 
 ```
 
 
 OPTION 2:
 ```{bash, eval=FALSE}
-ln -s home/elavelle/DGE_workshop/reads/*.gz ./
+ln -s /home/elavelle/DGE_workshop/reads/*.gz ./
 ```
 
 ## fastp QC
@@ -41,12 +41,16 @@ conda deactivate
 
 source activate fastp
 
-for file in SRR*; do fastp -w 10 -i ${file} -o ${file}.fastp.gz; done
+for file in SRR*; do fastp -w 10 -h ${file}.html -i ${file} -o ${file}.fastp.gz; done
 ```
 This sort of messes up the extensions. Rename the files
 
 ```{bash, eval=FALSE}
 rename .gz.fastp.gz .fastp.gz *.gz
+
+OR
+
+while read line; do mv ${line}.fastq.gz.fastp.gz ${line}.fastq.fastp.gz; done < /home/elavelle/SRRlist.tx
 ```
 
 Download and view the .html report.
@@ -60,7 +64,7 @@ following example illustrates one use of this built-in variable.
 
 Prints the line number of the first 10 lines
 ```{bash, eval=FALSE}
-zcat SRR23869771.fastq.fastq.gz | awk '{print NR}' | head
+zcat SRR23869771.fastq.fastp.gz | awk '{print NR}' | head
 
 ```
 awk modulo arithmatic: The modulo operator, "%", returns the remainder of division. The expression

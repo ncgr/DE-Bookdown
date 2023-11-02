@@ -15,10 +15,13 @@ Exercise: Which genome/annotation pair in the folder /home/elavelle/DGE_Virtual/
 
 # Generate counts form the alignments directory.
 
+Make sure the annotation is unzipped first.
+
 ```{bash, eval=FALSE}
+
 source activate featurecounts
 
-featureCounts -a ~/DGE_workshop/genome/GCF_000001635.27_GRCm39_genomic.gtf -o /home/$USER/DGE_workshop/count_matrix.tsv --largestOverlap -M --primary -T 10 -g gene *.bam
+featureCounts -a ~/DGE_workshop/genome/GCF_000001635.27_GRCm39_genomic.gff -o /home/$USER/DGE_workshop/count_matrix.tsv --largestOverlap -M --primary -T 10 -g gene *.bam
 ```
 
 FeatureCounts put in an extra row and some columns we want to get rid of before doing differential expression analysis.
