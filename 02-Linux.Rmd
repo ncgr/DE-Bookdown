@@ -7,7 +7,7 @@
 2. Type the following on your command line, substituting in your username for <username>.
 
 ```
-ssh -p2311 <username>@inbre.ncgr.org
+ssh -p2403 <username>@inbre.ncgr.org
 ```
 
 3. Enter your password.
@@ -46,7 +46,7 @@ In a Finder window, you would see this:
 Click "Sessioins," then "SSH" button
     + Remote host: username@inbre.ncgr.org
     + Specify Username: username
-    + Port: 2311
+    + Port: 2403
     + click ok
 
 + For **Mac**:
@@ -56,12 +56,12 @@ Enter the following command in the linux terminal to log on to the NCGR Server:
 + substitute **your** personal username in for "username"
 
 ```
-ssh -p2311 <username>@inbre.ncgr.org
+ssh -p2403 <username>@inbre.ncgr.org
 ```
 
 Notes:
 
-+ Because we’re logging in remotely, the -p option is required to specify port 2311. 
++ Because we’re logging in remotely, the -p option is required to specify port 2403. 
 + If you’re prompted to confirm the connection, say "yes", then enter your password.
 
 ### Now that I logged on, where am I?
@@ -70,7 +70,7 @@ You’re at the command line interface of NCGR's analysis server!
 
 To the left of the command prompt, you should see something like this: 
 
-+ agomez@de-2311:~$
++ agomez@de-2403:~$
 
 Command **output** is shown after the "##" in this document.
 
@@ -290,7 +290,7 @@ ls
 ## newfile.txt
 ```
 
-### Files: securely copying files between your laptop and logrus 
+### Files: securely copying files between your laptop and NCGRs server 
 
 **s**ecure **c**o**p**y "scp" command
 
@@ -317,7 +317,7 @@ touch scp_test.txt
 + the last period means that the destination is your working directory
 
 ```
-scp -P 2311 <username>@inbre.ncgr.org:~/linuxc/scp_test.txt .
+scp -P 2403 <username>@inbre.ncgr.org:~/linuxc/scp_test.txt .
 ```
 
 Note: When you designate a port with secure copy (scp), you use a capital P.
@@ -330,7 +330,7 @@ You will be prompted for your NCGR Server password if not using MobaXterm.
 + Again, run the scp command from your **local** terminal window:
 
 ```
-scp -P 2311 scp_test.txt <username>@inbre.ncgr.org:~/linuxc
+scp -P 2403 scp_test.txt <username>@inbre.ncgr.org:~/linuxc
 ```
 
 6) Check to see if the file you copied from your computer is on **the NCGR Server**!
@@ -384,7 +384,7 @@ If you can't execute commands, then CTRL c
 ## ^C
 ```
 
-You should be returned to your prompt: username@de-2311:~/linuxc$
+You should be returned to your prompt: username@de-2403:~/linuxc$
 
 
 ## Linux basics: Part II
@@ -394,7 +394,7 @@ You should be returned to your prompt: username@de-2311:~/linuxc$
 #### Syntax: ln -s FileYouWantToLink/PointTo NameYouWantToGiveIt{-}
 
 ```
-ln -s /home/data/de-2311/covid.fasta covid.fasta
+ln -s /home/data/de-2403/covid.fasta covid.fasta
 
 ls -l
 ```
@@ -492,7 +492,7 @@ cat covid.fasta | tail
 Fastq files contain sequence reads and associated **meta data**.
 
 ```
-ln -s /home/data/de-2311/SP1.fq 
+ln -s /home/data/de-2403/SP1.fq 
 
 ls -ltr
 ```
@@ -694,7 +694,7 @@ Powerful Z commands (zcat)
 Let’s copy another file:
 
 ```
-cp /home/data/de-2311/table1.txt.gz .
+cp /home/data/de-2403/table1.txt.gz .
 zcat table1.txt.gz
 
 ```
@@ -977,7 +977,7 @@ There is also cheat sheet on the weebly site under Supplemental Documents.
 
 ### Using the Screen Command{-}
 
-![https://www.youtube.com/watch?v=_ZJiEX4rmN4](./Figures/Screen.png){width=60%}
+![https://www.youtube.com/watch?v=_ZJiEX4rmN4](){width=60%}
 
 ### Exercise{-}
 
@@ -986,7 +986,7 @@ There is also cheat sheet on the weebly site under Supplemental Documents.
 2) Enter the following command to log on to the NCGR Server: 
 
 ```
-ssh -p2311 <username>@inbre.ncgr.org
+ssh -p2403 <username>@inbre.ncgr.org
 ```
 
 + Don't forget to substitute **your** personal username in

@@ -13,7 +13,26 @@ link-citations: yes
 github-repo: ncgr/DE-Bookdown
 ---
 
-# Getting Started
+# License and Copyright{-}
+
+Creative Commons Attribution-NonCommercial-NoDerivatives 4.0
+https://creativecommons.org/licenses/by-nc-nd/4.0/
+
+© 2023 National Center for Genome Resources
+
+<br>
+
+![](./Figures/INBRE_Logo_Grad_transparent-2019.png){width=20%} 
+
+<br>
+
+![](./Figures/ncgr.png){width=30%} 
+
+## Getting Started{-}
+
+## Prerequisites
+
+Unix, sequencing basics and other study guides will be provided upon acceptance.
 
 ## Installs
 
@@ -84,13 +103,13 @@ Student Introductions\
  
 
 Linux\
-<span style="color: forestgreen;">Linux</span> (Adam)
+<span style="color: forestgreen;">Linux</span> (Ethan)
 
 
 <span style="color: lightgray;">AFTERNOON</span>\
 
 
-<span style="color: forestgreen;">Linux</span> (cont) (Adam)
+<span style="color: forestgreen;">Linux</span> (cont) (Ethan)
 
 
 _____
@@ -99,9 +118,9 @@ _____
 
 <span style="color: lightgray;">MORNING</span>\
 
-<span style="color: forestgreen;">Sequence Metrics and Quality Control</span> (Evan)\
+<span style="color: forestgreen;">Sequence Metrics and Quality Control</span> (Adam)\
 
-<span style="color: forestgreen;">Read Alignment</span> (indexing) (Evan)\
+<span style="color: forestgreen;">Read Alignment</span> (indexing) (Adam)\
 
 
 <span style="color: lightgray;">AFTERNOON</span>\
@@ -115,11 +134,11 @@ _____
 
 <span style="color: lightgray;">MORNING</span>\
 
-<span style="color: forestgreen;">Read Alignment</span> (Evan)\
+<span style="color: forestgreen;">Read Alignment</span> (Adam)\
 
 <span style="color: lightgray;">AFTERNOON</span>\
 
-<span style="color: forestgreen;">Abundance Estimation</span> (Evan)\ 
+<span style="color: forestgreen;">Abundance Estimation</span> (Joann)\ 
 
 
 _____
@@ -129,13 +148,13 @@ _____
 <span style="color: lightgray;">MORNING</span>\
 
 
-Differential Gene Expression Analysis (Evan)\
+Differential Gene Expression Analysis (Joann)\
 <span style="color: forestgreen;">DGE</span>
 
 
 <span style="color: lightgray;">AFTERNOON</span>\
 
-Differential Gene Expression Analysis (Evan) \
+Differential Gene Expression Analysis (Joann) \
 <span style="color: forestgreen;">DGE (cont)</span>
 
 
@@ -170,12 +189,12 @@ _____
 2. Type the following on your command line, substituting in your username for <username>.
 
 ```
-ssh -p2311 <username>@inbre.ncgr.org
+ssh -p2403 <username>@inbre.ncgr.org
 ```
 
 3. Enter your password.
 
-If you have trouble connecting, please contact Ethan Price at inbre\@ncgr.org.
+If you have trouble connecting, please contact Ethan Price at inbre@ncgr.org.
 
 
 
