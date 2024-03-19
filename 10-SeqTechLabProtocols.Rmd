@@ -1,0 +1,149 @@
+# Sequencing Technologies and Lab Protocols
+
+In order to understand any sequencing technology, you have to understand basic chemistry of nucleic acids:
+
+![Boris (PNG), SVG by Sjef, Public domain, via Wikimedia Commons](./Figures/DNAchem.png){width=100%}
+
+A DNA sequence is a string of As, Gs, Ts, and Cs. This string is synthesized by the formation of phosphodiester bonds between nucleotides (the sugar-phosphate backbone).
+
+Which of the following is DNA and which is RNA?
+
+![](./Figures/DNARNA.png){width=80%}
+
+Here we see thymidine triphosphate being integrated into a strand of DNA. What happens between the OH and the triphosphate?
+
+![](./Figures/DNARep.png){width=60%}
+
+
+NTP, dNTP, ddNTP
+
+![](./Figures/NTPs.png){width=60%}
+
+So what do you think happens if there isn't an oxygen available at the 3' location?
+
+![](./Figures/Halt.png){width=60%}
+
+
+## Sequencing technologies
+
+#### Short Reads{-}
+
+  + Sanger
+  + Illumina
+    
+#### Long Reads{-}
+
+  + PacBio
+  + Oxford Nanopore
+  
+### Sanger Sequencing
+
+Each reaction has very small amounts of ddNTPs.
+
+  + 1 type of ddNTP per reaction
+  + all reactions have the same DNA
+  
+![](./Figures/Sanger1.png){width=80%}
+
+Four Separate Reactions
+
+![](./Figures/Sanger2.png){width=80%}
+
+Run the reactions on a gel to get the different sizes (lengths) of DNA per nucleotide. 
+
+![](./Figures/Sanger3.png){width=80%}
+
+What is the sequence of the following gel?
+
+![](./Figures/Sanger4.png){width=80%}
+
+Fluorescent ddNTPs:
+
+![Fibonachi, CC BY-SA 1.0 <https://creativecommons.org/licenses/by-sa/1.0>, via Wikimedia Commons](./Figures/FloNTPs.png){width=60%}
+
+If colors are assigned to GATC from above:
+
+![](./Figures/Sanger5.png){width=60%}
+
+
+Fluorescent peaks of nucleotides:
+
+![Abizar at English Wikipedia, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-sa/3.0/>, via Wikimedia Commons](./Figures/GelSeq.png){width=30%}
+
+
+The order of sequences determined by the lengths at which they terminated at a specific ddNTP.
+
+![](./Figures/Sanger6.png){width=60%}
+
+In summary, the Sanger Sequencing process looks like this:
+
+![Estevezj, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons](./Figures/SangerSum.png){width=100%}
+
+## Illumina Sequencing
+
+![](./Figures/Illumina1.png){width=60%}
+
+![](./Figures/Illumina2.png){width=60%}
+
+![](./Figures/Illumina3.png){width=90%}
+
+![](./Figures/Illumina4.png){width=60%}
+
+https://www.youtube.com/watch?v=womKfikWlxM&t=80s
+
+![](./Figures/Illumina5.png){width=100%}
+
+![](./Figures/Illumina6.png){width=100%}
+
+![](./Figures/Illumina7.png){width=100%}
+
+https://www.youtube.com/watch?v=fCd6B5HRaZ8
+
+
+## PacBio Sequencing
+
+![](./Figures/Pac1.png){width=60%}
+
+https://www.youtube.com/watch?v=_lD8JyAbwEo
+
+
+![](./Figures/Pac2.png){width=60%}
+
+https://www.youtube.com/watch?v=NHCJ8PtYCFc
+
+![](./Figures/Pac3.png){width=60%}
+
+![](./Figures/Pac4.png){width=60%}
+
+![](./Figures/Pac5.png){width=60%}
+
+![](./Figures/Pac6.png){width=60%}
+
+![](./Figures/Pac7.png){width=60%}
+
+![](./Figures/Pac8.png){width=60%}
+
+![](./Figures/Pac9.png){width=60%}
+
+![](./Figures/Pac10.png){width=60%}
+
+https://www.youtube.com/watch?v=xbpYvki4U64
+
+
+## Oxford Nanopore Sequencing
+
+![](./Figures/ON1.png){width=80%}
+
+https://www.youtube.com/watch?v=CGWZvHIi3i0
+
+
+![](./Figures/ON2.png){width=60%}
+
+![](./Figures/ON3.png){width=60%}
+
+![](./Figures/ON4.png){width=80%}
+
+https://www.youtube.com/watch?v=GUb1TZvMWsw
+
+
+![](./Figures/ON5.png){width=100%}

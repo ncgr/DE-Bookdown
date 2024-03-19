@@ -22,16 +22,16 @@ cd DGE_workshop/reads
 
 OPTION 1:
 ```{bash, eval=FALSE}
-source activate sra-tools
+conda activate sra-tools
 
-while read line; do fasterq-dump --outdir ./ ${line}; done < /home/elavelle/DGE_workshop/SRRlist.txt
+while read line; do fasterq-dump --outdir ./ ${line}; done < /home/inbre/DGE_workshop/reads/SRRlist.txt
 
 ```
 
 
 OPTION 2:
 ```{bash, eval=FALSE}
-ln -s /home/elavelle/DGE_workshop/reads/*.gz ./
+ln -s /home/inbre/DGE_workshop/reads/*.gz ./
 ```
 
 ## fastp QC
@@ -39,7 +39,7 @@ Takes ~ 15 min. for all 6 samples on 10 threads.
 ```{bash, eval=FALSE}
 conda deactivate
 
-source activate fastp
+conda activate fastp
 
 for file in SRR*; do fastp -w 10 -h ${file}.html -i ${file} -o ${file}.fastp.gz; done
 ```
@@ -50,7 +50,7 @@ rename .gz.fastp.gz .fastp.gz *.gz
 
 OR
 
-while read line; do mv ${line}.fastq.gz.fastp.gz ${line}.fastq.fastp.gz; done < /home/elavelle/SRRlist.tx
+while read line; do mv ${line}.fastq.gz.fastp.gz ${line}.fastq.fastp.gz; done < /home/inbre/DGE_workshop/reads/SRRlist.txt
 ```
 
 Download and view the .html report.

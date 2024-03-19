@@ -28,7 +28,7 @@ Activate environment, and use HISAT2 to create indices. If time prohibits, we wi
 ```{bash, eval=FALSE}
 gunzip GCF_000001635.27_GRCm39_genomic.fna.gz
 
-source activate hisat2
+conda activate hisat2
 
 hisat2-build -p 10 GCF_000001635.27_GRCm39_genomic.fna GRCm39.index
 ```
@@ -58,7 +58,7 @@ Change environments and use this statistics summarization command. It takes abou
 
 ```{bash, eval=FALSE}
 conda deactivate
-source activate samtools
+conda activate samtools
 
 samtools flagstat SRR23869771.fastq.fastp.gz.sam
 ```
