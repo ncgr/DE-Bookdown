@@ -127,10 +127,8 @@ Exercise: What average genome coverage do our primary alignments give us?
 
 Download the 6 read pairs from this study: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SAMN00849440&o=acc_s%3Aa
 
+This is a yeast study comparing growth in two different conditions (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3488244/).
+
 Take them through the steps of the workflow up until now.
-
-
-
-
 
 
