@@ -13,7 +13,7 @@ Exercise: Which genome/annotation pair in the folder /home/elavelle/DGE_Virtual/
 
 ## FeatureCounts
 
-# Generate counts form the alignments directory.
+### Generate counts from the alignments directory. {-}
 
 Make sure the annotation is unzipped first.
 
