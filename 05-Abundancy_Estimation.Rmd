@@ -15,7 +15,7 @@ Exercise: Which genome/annotation pair in /home/data/de-2403/exercise_genomes/ h
 
 ## FeatureCounts
 
-### Generate counts from the alignments directory. {-}
+### Generate counts from the alignments directory {-}
 
 Make sure the annotation is unzipped first.
 
