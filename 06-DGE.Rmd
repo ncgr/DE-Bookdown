@@ -17,7 +17,7 @@ You are now in the R environment. Load the DESeq2 library.
 <!-- Note that we are using /usr/bin/R and don't need to activate an environment. There is also an R installed in the vis environment. -->
 
 ```{R, eval=FALSE}
-library('DESeq2')
+library(DESeq2)
 ```
 
 You shouldn't need to change the working directory, but you can check it with:
@@ -75,7 +75,7 @@ sizeFactors(DESeqSF)
 Load the library for plotting densities.
 
 ```{R, eval=FALSE}
-library("geneplotter")
+library(geneplotter)
 ``` 
 
 We "declare" the .pdf first, then run the plot command. 
@@ -157,8 +157,8 @@ write.table(merge(as.data.frame(stress_from_control_sorted),as.data.frame(counts
 Load libraries for heatmap and subset our results.
 
 ```{R, eval=FALSE}
-library("RColorBrewer")
-library("gplots")
+library(RColorBrewer)
+library(gplots)
 sigIndices <- which(stress_from_control$padj <= 0.05)
 sigIndices
 ```
