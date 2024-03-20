@@ -220,6 +220,8 @@ dev.off()
 ![Most Genes, ordered](./Figures/heatmapSigsMost-1.png){width=100%}
 
 
+\vspace{12pt}
+
 Principal Component Analysis now.
 ```{R, eval=FALSE}
 rld <- rlogTransformation(dds,blind=TRUE)
@@ -232,13 +234,14 @@ dev.off()
 
 ## Gene count plots
 
-This last command will put a lot together. Let's discuss:
-loop iterations
-aesthetic layers
-x-axis labels and jittering
+This last command will put a lot together. Let's discuss:  
+loop iterations  
+aesthetic layers  
+x-axis labels  
+jittering
 
 ```{R, eval=FALSE}
-libary('ggplot2')
+library('ggplot2')
 
 for(k in 1:length(sigIndices)) {  
   gene <- rownames(stress_from_control_sorted)[k]
@@ -261,4 +264,7 @@ for(k in 1:length(sigIndices)) {
 }
 dev.off()
 ```
-![workflow](./Figures/Egr1.png){width=100%}
+
+You should get 18 pdf files, one for each of the differentially expressed genes. One is shown below.
+
+![](./Figures/Egr1.png){width=100%}
