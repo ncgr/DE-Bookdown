@@ -12,8 +12,9 @@ Launch R from the DESeq2 directory.
 R
 ```
 
-You are now in the R environment. Load the DESeq2 library (accessible because we first activated the appropriate conda environment).
+You are now in the R environment. Load the DESeq2 library.
 
+<!-- Note that we are using /usr/bin/R and don't need to activate an environment. There is also an R installed in the vis environment. -->
 
 ```{R, eval=FALSE}
 library('DESeq2')
