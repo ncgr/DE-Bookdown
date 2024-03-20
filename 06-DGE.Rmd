@@ -200,6 +200,8 @@ dev.off()
 ![Most Genes](./Figures/heatmapSigsMost_take1.pdf){width=100%}
 
 
+<!-- Not sure why the figure above renders in a scrollable container. -->
+
 If we want the same decreasing order:
 ```{R, eval=FALSE}
 # Sorts, removes Camk2n1
