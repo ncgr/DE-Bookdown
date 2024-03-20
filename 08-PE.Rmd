@@ -40,7 +40,7 @@ Download the file.
 ## Cytoscape and ClueGO
 
 Open the app, and load the ClueGO plug-in: Apps --> App Manager
-Open the results table in a spreadsheet, copy the DEGs, an paste into clueGO.
+Open the results table in a spreadsheet, copy the DEGs, and paste into clueGO.
 
 Selection in the "Visual Style" box sets the factors that will determine node properties. Keep the default selection, "Groups".
 
