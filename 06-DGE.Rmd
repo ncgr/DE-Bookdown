@@ -91,6 +91,8 @@ dev.off()
 
 ![prenorm](./Figures/count_density_prenorm-1.png){width=100%}
 
+\vspace{12pt}
+
 Now we'll make a normalized one for comparison.
 
 ```{R, eval=FALSE}
@@ -131,7 +133,7 @@ dds <- DESeq(DESeqDataset)
 resultsNames(dds)
 ```
 
-The "results" function pulls the last comparison in the results list. Provide the an independent filtering variable equivalent to the study's false discovery rate.
+The "results" function pulls the last comparison in the results list. Provide an independent filtering variable equivalent to the study's false discovery rate.
 
 ```{R, eval=FALSE}
 stress_from_control <- results(dds, alpha=0.05)
