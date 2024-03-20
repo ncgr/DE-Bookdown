@@ -116,10 +116,6 @@ for file in *.sam; do samtools view -u ${file} | samtools sort -o ${file}.sorted
 Rename the output files
 
 ```{bash, eval=FALSE}
-rename .fastq.fastp.gz.sam.sorted .sorted.bam *.bam 
-
-or
-
 file-rename -- 's/\.fastq.fastp.gz.sam.sorted$/.sorted.bam/' *.sorted
 ```
 
