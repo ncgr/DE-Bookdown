@@ -81,6 +81,8 @@ library(geneplotter)
 We "declare" the .pdf first, then run the plot command.  
 dev.off() is necessary to close the .pdf
 
+Note that ECDF stands for "Estimator of the Cumulative Distribution Function".
+
 ```{R, eval=FALSE}
 pdf("count_density_prenorm.pdf")
 multiecdf(counts(DESeqSF, normalized=F)[idx.nz,],main="ECDF pre-normalized", xlab="count", ylab="portion of genes", xlim=c(0,1000))
