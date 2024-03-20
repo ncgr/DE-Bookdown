@@ -33,7 +33,7 @@ conda activate hisat2
 hisat2-build -p 10 GCF_000001635.27_GRCm39_genomic.fna GRCm39.index
 ```
 
-Make the output directory, then, trom the reads directory, run alignments
+Make the output directory, then, from the reads directory, run alignments
 
 ```{bash, eval=FALSE}
 mkdir ~/DGE_workshop/alignments
@@ -116,10 +116,6 @@ for file in *.sam; do samtools view -u ${file} | samtools sort -o ${file}.sorted
 Rename the output files
 
 ```{bash, eval=FALSE}
-rename .fastq.fastp.gz.sam.sorted .sorted.bam *.bam 
-
-or
-
 file-rename -- 's/\.fastq.fastp.gz.sam.sorted$/.sorted.bam/' *.sorted
 ```
 
@@ -127,10 +123,8 @@ Exercise: What average genome coverage do our primary alignments give us?
 
 Download the 6 read pairs from this study: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SAMN00849440&o=acc_s%3Aa
 
+This is a yeast study comparing growth in two different conditions (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3488244/).
+
 Take them through the steps of the workflow up until now.
-
-
-
-
 
 

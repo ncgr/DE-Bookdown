@@ -12,11 +12,12 @@ Launch R from the DESeq2 directory.
 R
 ```
 
-You are now in the R environment. Load the DESeq2 library (accessible because we first activated the appropriate conda environment).
+You are now in the R environment. Load the DESeq2 library.
 
+<!-- Note that we are using /usr/bin/R and don't need to activate an environment. There is also an R installed in the vis environment. -->
 
 ```{R, eval=FALSE}
-library('DESeq2')
+library(DESeq2)
 ```
 
 You shouldn't need to change the working directory, but you can check it with:
@@ -74,11 +75,15 @@ sizeFactors(DESeqSF)
 Load the library for plotting densities.
 
 ```{R, eval=FALSE}
-library("geneplotter")
+library(geneplotter)
 ``` 
 
-We "declare" the .pdf first, then run the plot command. 
-dev.off() is necessary to finish writing to the .pdf
+We "declare" the .pdf first, then run the plot command.  
+dev.off() is necessary to close the .pdf
+
+Note that ECDF stands for "Estimator of the Cumulative Distribution Function".
+
+<!--Note that the ECDF plots come out slightly different every time-->
 
 ```{R, eval=FALSE}
 pdf("count_density_prenorm.pdf")
@@ -87,6 +92,8 @@ dev.off()
 ```
 
 ![prenorm](./Figures/count_density_prenorm-1.png){width=100%}
+
+\vspace{12pt}
 
 Now we'll make a normalized one for comparison.
 
@@ -128,7 +135,7 @@ dds <- DESeq(DESeqDataset)
 resultsNames(dds)
 ```
 
-The "results" function pulls the last comparison in the results list. Provide the an independent filtering variable equivalent to the study's false discovery rate.
+The "results" function pulls the last comparison in the results list. Provide an independent filtering variable equivalent to the study's false discovery rate.
 
 ```{R, eval=FALSE}
 stress_from_control <- results(dds, alpha=0.05)
@@ -156,8 +163,8 @@ write.table(merge(as.data.frame(stress_from_control_sorted),as.data.frame(counts
 Load libraries for heatmap and subset our results.
 
 ```{R, eval=FALSE}
-library("RColorBrewer")
-library("gplots")
+library(RColorBrewer)
+library(gplots)
 sigIndices <- which(stress_from_control$padj <= 0.05)
 sigIndices
 ```
@@ -180,7 +187,7 @@ heatmap.2(plotCounts,  col=hmcol, cexRow=0.8,
 dev.off()
 ```
 
-![workflow](./Figures/heatmapSigs-1.png){width=100%}
+![All Genes](./Figures/heatmapSigs-1.png){width=100%}
 
 Camk2n1 is skewing the color palette. Let's make a version omitting it.
 ```{R, eval=FALSE}
@@ -190,6 +197,12 @@ heatmap.2(plotCounts[-5,],  col=hmcol, cexRow=0.8,
           trace="none", density.info='none', cexCol=0.6, margin=c(6,10))
 dev.off()
 ```
+
+
+![Most Genes](./Figures/heatmapSigsMost_take1.pdf){width=100%}
+
+
+<!-- Not sure why the figure above renders in a scrollable container. -->
 
 If we want the same decreasing order:
 ```{R, eval=FALSE}
@@ -206,7 +219,10 @@ dev.off()
 ```
 
 
-![workflow](./Figures/heatmapSigsMost-1.png){width=100%}
+![Most Genes, ordered](./Figures/heatmapSigsMost-1.png){width=100%}
+
+
+\vspace{12pt}
 
 Principal Component Analysis now.
 ```{R, eval=FALSE}
@@ -220,13 +236,14 @@ dev.off()
 
 ## Gene count plots
 
-This last command will put a lot together. Let's discuss:
-loop iterations
-aesthetic layers
-x-axis labels and jittering
+This last command will put a lot together. Let's discuss:  
+loop iterations  
+aesthetic layers  
+x-axis labels  
+jittering
 
 ```{R, eval=FALSE}
-libary('ggplot2')
+library('ggplot2')
 
 for(k in 1:length(sigIndices)) {  
   gene <- rownames(stress_from_control_sorted)[k]
@@ -249,4 +266,7 @@ for(k in 1:length(sigIndices)) {
 }
 dev.off()
 ```
-![workflow](./Figures/Egr1.png){width=100%}
+
+You should get 18 pdf files, one for each of the differentially expressed genes. One is shown below.
+
+![](./Figures/Egr1.png){width=100%}
