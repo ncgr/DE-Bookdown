@@ -197,7 +197,7 @@ dev.off()
 ```
 
 
-![Most Genes, ordered](./Figures/heatmapSigsMost_take1.pdf){width=100%}
+![Most Genes](./Figures/heatmapSigsMost_take1.pdf){width=100%}
 
 
 If we want the same decreasing order:
@@ -216,6 +216,7 @@ dev.off()
 
 
 ![Most Genes, ordered](./Figures/heatmapSigsMost-1.png){width=100%}
+
 
 Principal Component Analysis now.
 ```{R, eval=FALSE}
