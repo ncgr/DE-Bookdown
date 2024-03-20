@@ -33,7 +33,7 @@ source activate hisat2
 hisat2-build -p 10 GCF_000001635.27_GRCm39_genomic.fna GRCm39.index
 ```
 
-Make the output directory, then, trom the reads directory, run alignments
+Make the output directory, then, from the reads directory, run alignments
 
 ```{bash, eval=FALSE}
 mkdir ~/DGE_workshop/alignments
