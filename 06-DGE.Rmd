@@ -185,7 +185,7 @@ heatmap.2(plotCounts,  col=hmcol, cexRow=0.8,
 dev.off()
 ```
 
-![workflow](./Figures/heatmapSigs-1.png){width=100%}
+![All Genes](./Figures/heatmapSigs-1.png){width=100%}
 
 Camk2n1 is skewing the color palette. Let's make a version omitting it.
 ```{R, eval=FALSE}
@@ -195,6 +195,10 @@ heatmap.2(plotCounts[-5,],  col=hmcol, cexRow=0.8,
           trace="none", density.info='none', cexCol=0.6, margin=c(6,10))
 dev.off()
 ```
+
+
+![Most Genes, ordered](./Figures/heatmapSigsMost_take1.pdf){width=100%}
+
 
 If we want the same decreasing order:
 ```{R, eval=FALSE}
@@ -211,7 +215,7 @@ dev.off()
 ```
 
 
-![workflow](./Figures/heatmapSigsMost-1.png){width=100%}
+![Most Genes, ordered](./Figures/heatmapSigsMost-1.png){width=100%}
 
 Principal Component Analysis now.
 ```{R, eval=FALSE}
