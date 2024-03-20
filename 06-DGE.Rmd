@@ -78,8 +78,8 @@ Load the library for plotting densities.
 library(geneplotter)
 ``` 
 
-We "declare" the .pdf first, then run the plot command. 
-dev.off() is necessary to finish writing to the .pdf
+We "declare" the .pdf first, then run the plot command.  
+dev.off() is necessary to close the .pdf
 
 ```{R, eval=FALSE}
 pdf("count_density_prenorm.pdf")
