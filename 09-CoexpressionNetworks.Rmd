@@ -1,10 +1,18 @@
+<!-- Figure out what the module.trait.cor is for and write some downsteam biology; need to fix it so that the traits are numeric-->
+
+<!-- Maybe add the control in though you still need binary traits or time series; consider adding in t cells -->
+
+<!-- Add in gene plots such as those shown here: https://bioinformaticsworkbook.org/dataAnalysis/RNA-Seq/RNA-SeqIntro/wgcna.html#gsc.tab=0-->
+
+<!-- maybe add in a bioinformagician explatory video -->
+
 # Coexpression Networks
 
 Coexpression networking analysis looks at genes with similar expression patterns across treatments. These genes are likely all controlled together and comprise a gene expression "module".
 
 We can correlate these modules with phenotypic traits or treatments. We can then find out what processes and pathways interesting modules are enriched for. 
 
-We can also identify driver genes that are critical for interseting modules and for the trait of interest.
+We can also identify driver genes that are critical for interesting modules and for the trait of interest.
 
 We will use WGCNA (weighted gene co-expression network analysis) in R. This creates scale-free networks of gene expression patterns (networks with a lot of genes with low connectivity and a few genes ("hubs") with very high connectivity).
 
@@ -297,6 +305,8 @@ dev.off()
 
 ![](./Figures/dendrogram.pdf){width=100%}
 
+
+
 ## Compare modules to phenotypes
 
 Get sample and gene counts
@@ -387,6 +397,7 @@ table(heatmap.data$days_from_first_intubation)
 
 
 <!--I tried using binarizeCategoricalColumns but it didn't seem to keep things in order; maybe I was trying it on metafinal rather than heatmap.data -->
+
 
 
 ```
