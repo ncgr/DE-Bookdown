@@ -103,13 +103,13 @@ Student Introductions\
  
 
 Linux\
-<span style="color: forestgreen;">Linux</span> (Ethan)
+<span style="color: forestgreen;">Linux</span> (Adam)
 
 
 <span style="color: lightgray;">AFTERNOON</span>\
 
 
-<span style="color: forestgreen;">Linux</span> (cont) (Ethan)
+<span style="color: forestgreen;">Linux</span> (cont) (Adam)
 
 
 _____
@@ -164,7 +164,7 @@ _____
 
 <span style="color: lightgray;">MORNING</span>\
 
-<span style="color: forestgreen;">Pathway Enrichment Analysis</span> (Evan)\
+<span style="color: forestgreen;">Pathway Enrichment Analysis</span> (Joann)\
 
 <span style="color: forestgreen;">ggplot2</span> (Adam)\
 
