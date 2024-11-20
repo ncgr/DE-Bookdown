@@ -233,7 +233,7 @@ dev.off()
 ```
 
 ![PCA](./Figures/PCA.allsamples2-1.png){width=100%}
-
+<!--
 ## Gene count plots
 
 This last command will put a lot together. Let's discuss:  
@@ -270,3 +270,4 @@ dev.off()
 You should get 18 pdf files, one for each of the differentially expressed genes. One is shown below.
 
 ![](./Figures/Egr1.png){width=100%}
+-->
