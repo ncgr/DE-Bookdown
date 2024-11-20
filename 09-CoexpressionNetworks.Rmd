@@ -19,7 +19,7 @@ We will use WGCNA (weighted gene co-expression network analysis) in R. This crea
 When doing this type of analysis, there are a few things to keep in mind.
 
 + You should have at least 20 samples
-+ This is an unsupervied methods: you don't do differential expression first
++ This is an unsupervised methods: you don't do differential expression first
 + Remove genes with low counts
 + Start with normalized read counts
 
@@ -36,6 +36,11 @@ Activate the environment
 
 ```
 conda activate vis
+```
+
+Open up R
+```
+R
 ```
 
 Load libraries
