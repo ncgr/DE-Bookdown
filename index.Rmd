@@ -118,15 +118,17 @@ _____
 
 <span style="color: lightgray;">MORNING</span>\
 
+<span style="color: forestgreen;">Linux</span> (cont) (Adam)
+
 <span style="color: forestgreen;">Sequence Metrics and Quality Control</span> (Adam)\
 
-<span style="color: forestgreen;">Read Alignment</span> (indexing) (Adam)\
 
 
 <span style="color: lightgray;">AFTERNOON</span>\
 
 Sequencing Technologies and Lab Protocols (Adam)
 
+<span style="color: forestgreen;">Read Alignment</span> (indexing) (Adam)\
 
 _____
 
@@ -136,9 +138,13 @@ _____
 
 <span style="color: forestgreen;">Read Alignment</span> (Adam)\
 
+<span style="color: forestgreen;">Abundance Estimation</span> (Joann)\ 
+
+
 <span style="color: lightgray;">AFTERNOON</span>\
 
-<span style="color: forestgreen;">Abundance Estimation</span> (Joann)\ 
+Differential Gene Expression Analysis (Joann)\
+<span style="color: forestgreen;">DGE</span>
 
 
 _____
@@ -147,16 +153,17 @@ _____
 
 <span style="color: lightgray;">MORNING</span>\
 
+Differential Gene Expression Analysis (Joann) \
+<span style="color: forestgreen;">DGE (cont)</span>
 
-Differential Gene Expression Analysis (Joann)\
-<span style="color: forestgreen;">DGE</span>
+<span style="color: forestgreen;">ggplot2</span> (Adam)\
 
 
 <span style="color: lightgray;">AFTERNOON</span>\
 
-Differential Gene Expression Analysis (Joann) \
-<span style="color: forestgreen;">DGE (cont)</span>
+<span style="color: forestgreen;">ggplot2 (cont) </span> (Adam)\
 
+<span style="color: forestgreen;">Interactive Visualization</span> (Adam)\
 
 _____
 
@@ -166,12 +173,10 @@ _____
 
 <span style="color: forestgreen;">Pathway Enrichment Analysis</span> (Joann)\
 
-<span style="color: forestgreen;">ggplot2</span> (Adam)\
-
 
 <span style="color: lightgray;">AFTERNOON</span>\
 
-<span style="color: forestgreen;">Interactive Visualization</span> (Adam)\
+<span style="color: forestgreen;">Coexpression Networks</span> (Joann)\
 
 Feedback Survey\
 
