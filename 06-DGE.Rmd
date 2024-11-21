@@ -70,6 +70,8 @@ DESeqSF <- estimateSizeFactors(DESeqDataset)
 sizeFactors(DESeqSF)
 ``` 
 
+<!--Optional because DESeq2 will estimate these size factors if you don't-->
+
 ## Normalization
 
 Load the library for plotting densities.
