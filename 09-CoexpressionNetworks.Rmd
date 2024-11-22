@@ -1,6 +1,4 @@
-<!-- Figure out what the module.trait.cor is for and write some downsteam biology; need to fix it so that the traits are numeric-->
-
-<!-- Maybe add the control in though you still need binary traits or time series; consider adding in t cells -->
+<!-- Maybe add the control in though you still need binary (or numeric???) traits or time series; consider adding in t cells -->
 
 <!-- Add in gene plots such as those shown here: https://bioinformaticsworkbook.org/dataAnalysis/RNA-Seq/RNA-SeqIntro/wgcna.html#gsc.tab=0-->
 
