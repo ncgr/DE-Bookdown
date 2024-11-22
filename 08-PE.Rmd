@@ -40,17 +40,18 @@ Download the file.
 ## Cytoscape and ClueGO
 
 Open the app, and load the ClueGO plug-in: Apps --> App Manager
+
 Open the results table in a spreadsheet, copy the DEGs, and paste into clueGO.
 
-Selection in the "Visual Style" box sets the factors that will determine node properties. Keep the default selection, "Groups".
+Select in the "Visual Style" box sets the factors that will determine node properties. Keep the default selection, "Groups".
 
 Pick ontologies and set differing node shapes.
 
 Clicking on the "Evidence" button will display a decision tree clarifying evidence codes. Keep "All" checked for now.
 
-Check the "Show only Pathways with pV <=" box. If you want the details on how p-values are calculated for GO terms, click the “?” icon.
+Check the "Show only Pathways with pV <=" box and change it to 0.01. If you want the details on how p-values are calculated for GO terms, click the “?” icon.
 
-Expand the "Statistical Options" menu. In the first box, change the selection from the default ("Enrichment/Depletion") to "Enrichment. A left side to the hypergeometric test will include significantly depleted pathways.
+Expand the "Statistical Options" menu. In the first box, change the selection from the default ("Enrichment/Depletion") to "Enrichment.
 
 Run the analysis! It will take several minutes. When it’s finished, look to the bottom right of the screen. Select the "ClueGO Results (Cluster #1)" tab, and click the indicated icon to save ClueGO results tables to your machine.
 
