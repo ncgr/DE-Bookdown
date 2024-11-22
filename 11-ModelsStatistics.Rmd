@@ -1,0 +1,137 @@
+# DESeq2 Model Design
+
+DESeq2 can handle some complicated model designs.
+
+This is the code we ran in the differential expression chapter but you can slot in other designs. Below, only the designs are shown.
+
+```{R, eval=FALSE}
+DESeqDataset = DESeqDataSetFromMatrix(countData=sampleCounts, colData=sampleTable, design = ~ condition)
+```
+
+You can check the names of the comparisons created by DESeq2 like this.
+
+```{R, eval=FALSE}
+resultsNames(dds)
+```
+
+And then you can pull the results for a specific comparison like this (default = the last comparison).
+
+```{R, eval=FALSE}
+res = results(dds, name="condition_treatment_vs_control")
+```
+
+## One Factor
+
+This design matches what we did earlier. It works with 2 levels such as treatment/contol but it also works if you have more than 2 levels. With 3 levels for instance, it will compare two of the levels to the reference level. Make sure you set a reference level (see the Differential Expression chapter) or it will use the first one alphabetically.
+
+```{R, eval=FALSE}
+~ treatment
+```
+
+**Examples**
+
+*1 factor, 2 levels*  
+&nbsp;&nbsp;&nbsp;&nbsp; water stressed mice  
+&nbsp;&nbsp;&nbsp;&nbsp; control mice (reference level)
+
+
+*1 factor, 3 levels*  
+&nbsp;&nbsp;&nbsp;&nbsp; water stressed mice  
+&nbsp;&nbsp;&nbsp;&nbsp; social isolation stressed mice  
+&nbsp;&nbsp;&nbsp;&nbsp; control mice (reference level)
+
+
+## Two Factors
+
+You can model two factors such as genotype and treatment where you care about the main effects of both factors. The order matters. DESeq2 will adjust the model for the first one (in this case, "genotype") and then adjust for the second one (in this case, "treatement"). The last factor should be the one you are most interested in.
+
+Main effects only:
+
+```{R, eval=FALSE}
+~ genotype + treatment
+```
+
+
+Main effects + interaction:
+
+```{R, eval=FALSE}
+~ genotype + treatment + genotype:treatment
+```
+
+Controlling for one of the factors:
+
+```{R, eval=FALSE}
+~ batch + treatment
+```
+
+**Examples**
+
+In this example you would likely be interested in the effect of the genotype and of the treatment. You might also be interested in the effect of the genotype*treatment interaction.
+
+*2 factors, 2 levels each*  
+&nbsp;&nbsp;&nbsp;&nbsp; Treatment  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  water stressed mice   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  control mice (reference level)  
+&nbsp;&nbsp;&nbsp;&nbsp; Genotype  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Wildtype mouse  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Mutant mouse
+
+
+In this example you would probably only be interested in the effect of the treatment but would want to control for the batch effect.
+
+*2 factors, 2 levels each*  
+&nbsp;&nbsp;&nbsp;&nbsp; Treatment  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  water stressed mice   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  control mice (reference level)  
+&nbsp;&nbsp;&nbsp;&nbsp; Batch  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Lab technician 1  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Lab technician 2
+
+
+## A little bit on statistical tests
+
+The default statistical test is the WALD test. It checks to see whether a factor or set of factors significantly contribute to a model. If they aren't significantly contributing, they can be left out. This test is used by DESeq2 for pair-wise comparisons. It is an approximation of the likelihood ratio test (LRT), which can also be applied in DESeq2.
+
+You can use LRT to test whether factors are affecting your gene expression levels by comparing a full model with a reduced model that has one or more factors removed and calculating the likelihood ratio between the two models. If the likelihood of the full model is not much more than the likelihood of the reduced model, then the factors you are testing are not improving the model and can be left out.
+
+The Wald test is an approximation of LRT that requires one model estimation where the LRT requires two. As such, it is faster and simpler and usually yields a comparable result. But the LRT is more robust and can go beyond pairwise comparisons.
+
+
+## Time series
+
+While times series can be analyzed by a series of pairwise comparisons (ie. comparing each timepoint back to time 0), the LRT model allows us to perform time series and other non-pairwise comparisons using more than two levels of a factor. For example, we can look at gene expression patterns across multiple timepoints.
+
+The full model:
+
+```{R, eval=FALSE}
+~ treatment + time + treatment:time
+```
+
+The reduced model:
+
+```{R, eval=FALSE}
+~ treatment + time
+```
+
+The LRT could be run like this (after running the full model as usual):
+```{R, eval=FALSE}
+dds_lrt_time = DESeq(dds, test="LRT", reduced = ~ treatment + time)
+```
+
+
+The we can pull out genes that have similar patterns using something like this:
+
+```{R, eval=FALSE}
+geneclusters = degPatterns(log2normCounts, metadata = meta, time="time", col="treatment")
+```
+
+## More resources
+
+The [DESeq2 Vignette](https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html) has a lot of information.
+
+[This video](https://www.youtube.com/watch?v=OPt51qc5YJ8) has a good discussion of different models, including interaction terms.
+
+More information on the Wald Statistic is [here](https://medium.com/@analyttica/understanding-wald-test-2e3fa7723516).
+
+More information on analyzing time series expression data is [here](https://hbctraining.github.io/DGE_workshop_salmon_online/lessons/08b_time_course_analyses.html).
+
