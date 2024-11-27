@@ -3,9 +3,9 @@ output:
   pdf_document: default
   html_document: default
 ---
-# Sequence metrics and quality Control
+#Sequence metrics and quality Control
 
-## The Study Design
+##The Study Design
 
 **3 replicates** of control mice and **3 replicates** of water avoidance stress induced mice.  
 We will run our own analysis on these publically-available data and compare the Differential Gene Expression and Pathway Enrichment results to those published here:   
@@ -16,7 +16,7 @@ Why have a control?
 Why have replicates?
 
 
-## Data Access
+##Data Access
 
 Start a screen 
 ```{bash, eval=FALSE}
@@ -59,7 +59,7 @@ Softlink the data (after you cancel the command above):
 ln -s ~/DGE_workshop/reads/*.gz .
 ```
 
-## fastp Quality Control  
+##fastp Quality Control  
 
 
 It will take ~ 15 minutes to run **fastp** on the .fastq sequencing files for all 6 samples using 10 threads.  
@@ -72,7 +72,7 @@ conda activate fastp
 ```
 
 
-```{bash}
+```{bash, eval=FALSE}
 for file in SRR*; do
  bn=`basename ${file} .fastq.gz`
  echo $bn
@@ -90,9 +90,20 @@ done
 
 ```
 
+
 Download and view the .html report.
 
-## Checking Sequence Metrics
+It is essential that you know this basic command, and you should not need this prompt at this point:
+
+From <span style="color:red">**YOUR LOCAL TERMINAL**</span>
+```{bash, eval=FALSE}
+
+scp -P 2403 <username>@inbre.ncgr.org:~/DGE_workshop/reads/SRR23869771.fastq.html
+
+```
+
+
+##Checking Sequence Metrics
 
 awk "NR" variable:  
 There are several built-in awk variables. One of them is "NR" (Number of Rows/Records). It contains line number and can be used to determine the total number of lines in a file.  
@@ -103,9 +114,11 @@ Prints the line number of the first 10 lines
 zcat SRR23869771.fastp.fastq.gz | awk '{print NR}' | head
 
 ```
+
 awk modulo arithmatic:  
 The modulo operator, "%", returns the remainder of division.  
 The expression "5 % 2", for example, would evaluate to 1, while "9 % 3" would evaluate to 0 because the dividend (9) is a multiple of the divisor (3).
+
 ```{bash, eval=FALSE}
 
 zcat SRR23869771.fastp.fastq.gz | awk '{ if ( NR % 4 == 2) print length ($1)}' | head
@@ -115,9 +128,13 @@ zcat SRR23869771.fastp.fastq.gz | awk '{ if ( NR % 4 == 2) print $0}' | wc -l
 ```
 
 
- Option 2 - <span style="color:green">Advanced.</span>
+New Section with some advanced commands
+
 ```{bash, eval=FALSE}
 mkdir -p DGE_workshop/reads
 
 cd DGE_workshop/reads
+```
+
+
 
