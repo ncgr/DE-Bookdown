@@ -1,11 +1,7 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
-#Sequence metrics and quality Control
 
-##The Study Design
+# Sequence metrics and quality Control
+
+## The Study Design
 
 **3 replicates** of control mice and **3 replicates** of water avoidance stress induced mice.  
 We will run our own analysis on these publically-available data and compare the Differential Gene Expression and Pathway Enrichment results to those published here:   
@@ -16,9 +12,9 @@ Why have a control?
 Why have replicates?
 
 
-##Data Access
+## Data Access
 
-Start a screen 
+Start a new screen 
 ```{bash, eval=FALSE}
 screen -S DGE
 ```
@@ -28,7 +24,7 @@ Make a new directory branch (~/DGE_workshop/**reads**)
 Enter your new directory  
 
 
-Option 1 - From your home directory:
+From your home directory:
 ```{bash, eval=FALSE}
 cd DGE_workshop
 
@@ -38,7 +34,8 @@ cd reads
 ```
 
 
-We have a list of 6 Sequencing Run Result (**SRR**) unique identifiers for samples stored in the Sequence Read Archive (SRA) database managed by NCBI. We can use this simple list (in .txt format) to download the sequences that correspond to each of the 6 SRR identifiers in the list. 
+We have a list of 6 Sequencing Run Result (**SRR**) unique identifiers for sample sequences stored in the Sequence Read Archive (SRA) database managed by NCBI. We can use this simple list (in .txt format) to download the sequences that correspond to each of the 6 SRR identifiers in the list.  
+
 Though we only have 6 samples, the sequencing **depth** is very high, making the download time ~ 1hr. 
 
 <span style="color:red">Time will not allow for us to complete this command, so we will cancel the command after checking it works.</span>  
@@ -51,7 +48,6 @@ conda activate sra-tools
 for i in `cat SRRlist.txt`; do
   fasterq-dump --outdir . ${line}
 done < ~/DGE_workshop/reads/SRRlist.txt
-
 ```
 
 Softlink the data (after you cancel the command above):
@@ -59,7 +55,7 @@ Softlink the data (after you cancel the command above):
 ln -s ~/DGE_workshop/reads/*.gz .
 ```
 
-##fastp Quality Control  
+## fastp Quality Control  
 
 
 It will take ~ 15 minutes to run **fastp** on the .fastq sequencing files for all 6 samples using 10 threads.  
@@ -82,37 +78,36 @@ done
 
 Check the quality of our 6 sample sequences using **fastp**:
 ```{bash, eval=FALSE}
-
 for file in SRR*; do
  bn=`basename ${file} .fastq.gz`
  fastp -w 10 -h "${file}.html" -i "${file}" -o "${bn}.fastp.fastq.gz"
 done
-
 ```
 
 
-Download and view the .html report.
+Download the .html report to your computer and open it in an internet browser (right-click on the file and select browser)
 
-It is essential that you know this basic command, and you should not need this prompt at this point:
+It is essential that you know this basic command, and **you should not need this prompt at this point**:
 
 From <span style="color:red">**YOUR LOCAL TERMINAL**</span>
 ```{bash, eval=FALSE}
-
-scp -P 2403 <username>@inbre.ncgr.org:~/DGE_workshop/reads/SRR23869771.fastq.html
-
+scp -P 2403 agomez@inbre.ncgr.org:~/DGE_workshop/reads/SRR23869771.fastq.html
 ```
 
 
-##Checking Sequence Metrics
+## Checking Sequence Metrics
 
 awk "NR" variable:  
-There are several built-in awk variables. One of them is "NR" (Number of Rows/Records). It contains line number and can be used to determine the total number of lines in a file.  
+There are several built-in awk variables.  
+One of them is "NR" (Number of Rows/Records).  
+It contains line number and can be used to determine the total number of lines in a file.  
+
+
 The following example illustrates one use of this built-in variable.
 
 Prints the line number of the first 10 lines
 ```{bash, eval=FALSE}
 zcat SRR23869771.fastp.fastq.gz | awk '{print NR}' | head
-
 ```
 
 awk modulo arithmatic:  
@@ -120,11 +115,12 @@ The modulo operator, "%", returns the remainder of division.
 The expression "5 % 2", for example, would evaluate to 1, while "9 % 3" would evaluate to 0 because the dividend (9) is a multiple of the divisor (3).
 
 ```{bash, eval=FALSE}
-
 zcat SRR23869771.fastp.fastq.gz | awk '{ if ( NR % 4 == 2) print length ($1)}' | head
+```
 
+
+```{bash, eval=FALSE}
 zcat SRR23869771.fastp.fastq.gz | awk '{ if ( NR % 4 == 2) print $0}' | wc -l
-
 ```
 
 
