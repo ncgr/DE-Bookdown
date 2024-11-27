@@ -7,20 +7,38 @@ output:
 
 ## The Study Design
 
-3 replicates of control mice and 3 replicates of water avoidance stress induced mice. We will run our own analysis on these publically-available data and compare the DEG and pathway enrichment results to those published. 
+**3 replicates** of control mice and **3 replicates** of water avoidance stress induced mice.  
+We will run our own analysis on these publically-available data and compare the Differential Gene Expression and Pathway Enrichment results to those published here:   
 https://www.mdpi.com/2218-1989/13/3/453
+
+Why have a control?
+
+Why have replicates?
+
 
 ## Data Access
 
-Start a screen, make a new directory branch "DGE_workshop/reads", and enter it. Though there are only 6 samples, the sequencing depth is very high, making the download time ~ 1hr. If time does not allow for this (Option 1), cancel the command after checking it works, and softlink the data instead (Option 2).
+Start a screen  
 
-Make the needed directories
+Make a new directory branch (~/DGE_workshop/**reads**)  
+
+Enter your new directory  
+
+
+Create your new directory and move into your new directory:
 ```{bash, eval=FALSE}
 mkdir -p DGE_workshop/reads
 cd DGE_workshop/reads
 ```
 
-OPTION 1:
+
+We have a list of 6 Sequencing Run Result (**SRR**) unique identifiers for samples stored in the Sequence Read Archive (SRA) database managed by NCBI. We can use this simple list (in .txt format) to download the sequences that correspond to each of the 6 SRR identifiers in the list. 
+Though we only have 6 samples, the sequencing **depth** is very high, making the download time ~ 1hr. 
+
+<span style="color:red">Time will not allow for us to complete this command, so we will cancel the command after checking it works.</span>  
+
+
+Download fastq sequence files from NCBI's SRA:
 ```{bash, eval=FALSE}
 conda activate sra-tools
 
@@ -28,10 +46,10 @@ while read line; do fasterq-dump --outdir ./ ${line}; done < /home/inbre/DGE_wor
 
 ```
 
-
-OPTION 2:
+Softlink the data (after you cancel the command above):
 ```{bash, eval=FALSE}
 ln -s /home/inbre/DGE_workshop/reads/*.gz ./
+```
 ```
 
 ## fastp QC
@@ -43,6 +61,7 @@ conda activate fastp
 
 for file in SRR*; do fastp -w 10 -h ${file}.html -i ${file} -o ${file}.fastp.gz; done
 ```
+
 This sort of messes up the extensions. Rename the files
 
 ```{bash, eval=FALSE}
@@ -57,19 +76,18 @@ Download and view the .html report.
 
 ## Checking Sequence Metrics
 
-
-awk "NR" variable: There are several built-in awk variables. One of them is "NR" (Number of Rows/
-Records). It contains line number and can be used to determine the total number of lines in a file. The
-following example illustrates one use of this built-in variable.
+awk "NR" variable:  
+There are several built-in awk variables. One of them is "NR" (Number of Rows/Records). It contains line number and can be used to determine the total number of lines in a file.  
+The following example illustrates one use of this built-in variable.
 
 Prints the line number of the first 10 lines
 ```{bash, eval=FALSE}
 zcat SRR23869771.fastq.fastp.gz | awk '{print NR}' | head
 
 ```
-awk modulo arithmatic: The modulo operator, "%", returns the remainder of division. The expression
-"5 % 2", for example, would evaluate to 1, while "9 % 3" would evaluate to 0 because the dividend (9) is
-a multiple of the divisor (3).
+awk modulo arithmatic:  
+The modulo operator, "%", returns the remainder of division.  
+The expression "5 % 2", for example, would evaluate to 1, while "9 % 3" would evaluate to 0 because the dividend (9) is a multiple of the divisor (3).
 ```{bash, eval=FALSE}
 
 zcat SRR23869771.fastq.fastq.gz | awk '{ if ( NR % 4 == 2) print length ($1)}' | head
