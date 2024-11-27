@@ -152,13 +152,38 @@ control_from_stress <- results(dds, contrast=c("condition","control","stress"), 
 summary(control_from_stress)
 ```
 
-Sort our results table, and export a file with counts appended to it.
+Sort our results table by padj.
 
 ```{R, eval=FALSE}
 stress_from_control_sorted <- stress_from_control[order(stress_from_control$padj),]
-
-write.table(merge(as.data.frame(stress_from_control_sorted),as.data.frame(counts(dds,normalized=TRUE)), by="row.names"), row.names=FALSE, quote=FALSE, sep="\t", file="SfromC.tsv")
 ```
+
+Take a look at the column names.
+
+```{R, eval=FALSE}
+colnames(stress_from_control_sorted)
+```
+
+The sample columns end in .sorted.bam. Let's remove that suffix using the gsub (global substition) function.
+
+```{R, eval=FALSE}
+colnames(stress_from_control_sorted)=gsub(".sorted.bam","",colnames(test))
+```
+
+Recheck the column names.
+
+Now, let's grab the rows where padj <= 0.05. There are lots of ways to do this. Let's use the subset function.
+
+```{R, eval=FALSE}
+stress_from_control_sorted_sub = subset(stress_from_control_signif, padj <= 0.05)
+```
+
+Finally, let's export a file with counts appended to it.
+
+```{R, eval=FALSE}
+write.table(merge(as.data.frame(stress_from_control_sorted_signif),as.data.frame(counts(dds,normalized=TRUE)), by="row.names"), row.names=FALSE, quote=FALSE, sep="\t", file="SfromC.tsv")
+```
+
 
 ## Heatmap
 
