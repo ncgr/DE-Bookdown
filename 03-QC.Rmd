@@ -18,14 +18,29 @@ Why have replicates?
 
 ## Data Access
 
-Start a screen  
+Start a screen 
+```{bash, eval=FALSE}
+screen -S DGE
+```
 
 Make a new directory branch (~/DGE_workshop/**reads**)  
 
 Enter your new directory  
 
 
-Create your new directory and move into your new directory:
+Option 1 - From your home directory:
+```{bash, eval=FALSE}
+
+cd DGE_workshop
+
+mkdir reads
+
+cd reads
+
+```
+
+
+Option 2 - <span style="color:green">Advanced.</span>
 ```{bash, eval=FALSE}
 mkdir -p DGE_workshop/reads
 cd DGE_workshop/reads
