@@ -7,39 +7,103 @@ output:
 
 ## Reference acquisition
 
-Create a new directory under DGE_workshop
+Create a new directory named "genome" **within the DGE_workshop directory**
+
+<span style="color:red">**MAKE SURE YOUR ARE IN THE CORRECT DIRECTORY BEFORE YOU MAKE THIS DIRECTORY**</span>
+
 ```{bash, eval=FALSE}
 mkdir genome
 ```
 
-From this page: https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/latest_assembly_versions/GCF_000001635.27_GRCm39/
-Download the appropriate genome and annotation.
 
+Download the appropriate genome and annotation files to align our 6 sample sequence files to.  
+
+How do you know what genome and annotation file to get in this case?  
+
+What do we know about our sample sequences?  
+
+What organism did the samples come from?  
+
+
+Download the files from this page:  
+https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/latest_assembly_versions/GCF_000001635.27_GRCm39/
+
+What is Mus musculus?  
+
+Use wget command to dowload files using a link:
 ```{bash, eval=FALSE}
 wget https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/latest_assembly_versions/GCF_000001635.27_GRCm39/GCF_000001635.27_GRCm39_genomic.fna.gz
+```
 
+What type of file did you just download?  
+
+What do you know about this file format?  
+
+Use wget command to dowload files using a link:
+```{bash, eval=FALSE}
 wget https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/latest_assembly_versions/GCF_000001635.27_GRCm39/GCF_000001635.27_GRCm39_genomic.gff.gz
 ```
 
+Because we know that we downloaded a **genome file**  
+and an **annotation file**, what must the file we downloaded above be?
+
+What is the extension for an annotation file?
+
 ## HISAT2
 
-Activate environment, and use HISAT2 to create indices. If time prohibits, we will likely need to terminate and softlink to output files.
-
+Unzip your genome.gz file:  
 ```{bash, eval=FALSE}
 gunzip GCF_000001635.27_GRCm39_genomic.fna.gz
+```
 
+
+Activate the hisat2 environment:  
+```{bash, eval=FALSE}
 conda activate hisat2
+```
 
+
+Use the program HISAT2 to create indices:  
+
+<span style="color:red">Time will not allow for us to complete this command, so we will cancel the command after checking it works.</span>
+```{bash, eval=FALSE}
 hisat2-build -p 10 GCF_000001635.27_GRCm39_genomic.fna GRCm39.index
 ```
 
-Make the output directory, then, from the reads directory, run alignments
+Make the output directory that your newly-created alignment files will be saved to.  
 
+This directory will be called "alignments" and <span style="color:red">**MUST BE IN YOUR DGE_workshop DIRECTORY**</span>
+
+Again, if your directories and paths are incorrect, the following commands will not work.
+
+Why won't they work?
+
+From the correct directory, make a directory called alignments:
 ```{bash, eval=FALSE}
-mkdir ~/DGE_workshop/alignments
-
-for file in *.fastp.gz; do hisat2 -x /home/$USER/DGE_workshop/genome/GRCm39.index --threads 10 -U ${file} -S /home/$USER/DGE_workshop/alignments/${file}.sam; done
+mkdir alignments
 ```
+
+From the **reads directory** run the hisat command to generate alignments.  
+
+What file is your index file?  
+How do you know?  
+
+What files are the sample sequence files?  
+How many sample sequence files are we aligning to the index?  
+
+<span style="color:red">What directory are you in?</span>  
+
+If you're not in the reads directory, will this command work?  
+Why not?   
+
+Run hisat to align fastq files to the genome index:
+```{bash, eval=FALSE}
+for file in *.fastq.gz; do
+  hisat2 -x ~/DGE_workshop/genome/GRCm39.index --threads 10 -U "${file}" -S ~/DGE_workshop/alignments/"${file}.sam"
+done
+```
+
+
 
 What flags would you use for paired-end reads? 
 
