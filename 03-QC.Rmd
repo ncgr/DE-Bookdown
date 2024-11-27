@@ -30,20 +30,11 @@ Enter your new directory
 
 Option 1 - From your home directory:
 ```{bash, eval=FALSE}
-
 cd DGE_workshop
 
 mkdir reads
 
 cd reads
-
-```
-
-
-Option 2 - <span style="color:green">Advanced.</span>
-```{bash, eval=FALSE}
-mkdir -p DGE_workshop/reads
-cd DGE_workshop/reads
 ```
 
 
@@ -57,34 +48,46 @@ Download fastq sequence files from NCBI's SRA:
 ```{bash, eval=FALSE}
 conda activate sra-tools
 
-while read line; do fasterq-dump --outdir ./ ${line}; done < /home/inbre/DGE_workshop/reads/SRRlist.txt
+for i in `cat SRRlist.txt`; do
+  fasterq-dump --outdir . ${line}
+done < ~/DGE_workshop/reads/SRRlist.txt
 
 ```
 
 Softlink the data (after you cancel the command above):
 ```{bash, eval=FALSE}
-ln -s /home/inbre/DGE_workshop/reads/*.gz ./
-```
+ln -s ~/DGE_workshop/reads/*.gz .
 ```
 
-## fastp QC
-Takes ~ 15 min. for all 6 samples on 10 threads.
+## fastp Quality Control  
+
+
+It will take ~ 15 minutes to run **fastp** on the .fastq sequencing files for all 6 samples using 10 threads.  
+
+Activate the fastp environment:
 ```{bash, eval=FALSE}
 conda deactivate
 
 conda activate fastp
-
-for file in SRR*; do fastp -w 10 -h ${file}.html -i ${file} -o ${file}.fastp.gz; done
 ```
 
-This sort of messes up the extensions. Rename the files
 
+```{bash}
+for file in SRR*; do
+ bn=`basename ${file} .fastq.gz`
+ echo $bn
+done
+```
+
+
+Check the quality of our 6 sample sequences using **fastp**:
 ```{bash, eval=FALSE}
-rename .gz.fastp.gz .fastp.gz *.gz
 
-OR
+for file in SRR*; do
+ bn=`basename ${file} .fastq.gz`
+ fastp -w 10 -h "${file}.html" -i "${file}" -o "${bn}.fastp.fastq.gz"
+done
 
-while read line; do mv ${line}.fastq.gz.fastp.gz ${line}.fastq.fastp.gz; done < /home/inbre/DGE_workshop/reads/SRRlist.txt
 ```
 
 Download and view the .html report.
@@ -97,7 +100,7 @@ The following example illustrates one use of this built-in variable.
 
 Prints the line number of the first 10 lines
 ```{bash, eval=FALSE}
-zcat SRR23869771.fastq.fastp.gz | awk '{print NR}' | head
+zcat SRR23869771.fastp.fastq.gz | awk '{print NR}' | head
 
 ```
 awk modulo arithmatic:  
@@ -105,12 +108,16 @@ The modulo operator, "%", returns the remainder of division.
 The expression "5 % 2", for example, would evaluate to 1, while "9 % 3" would evaluate to 0 because the dividend (9) is a multiple of the divisor (3).
 ```{bash, eval=FALSE}
 
-zcat SRR23869771.fastq.fastq.gz | awk '{ if ( NR % 4 == 2) print length ($1)}' | head
+zcat SRR23869771.fastp.fastq.gz | awk '{ if ( NR % 4 == 2) print length ($1)}' | head
 
-zcat SRR23869771.fastq.fastp.gz | awk '{ if ( NR % 4 == 2) print $0}' | wc -l
+zcat SRR23869771.fastp.fastq.gz | awk '{ if ( NR % 4 == 2) print $0}' | wc -l
 
 ```
 
 
- 
+ Option 2 - <span style="color:green">Advanced.</span>
+```{bash, eval=FALSE}
+mkdir -p DGE_workshop/reads
+
+cd DGE_workshop/reads
 
