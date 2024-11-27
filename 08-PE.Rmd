@@ -5,38 +5,6 @@ output:
 ---
 # Pathway Enrichment Analysis
 
-## Parsing
-
-Let's fix up the file headers
-
-```{bash, eval=FALSE}
-sed 's/\/home\/elavelle\/DGE_workshop\/alignments\///g' SfromC.tsv | sed 's/\.sorted\.bam//g' > SfromCsed.tsv
-```
-
-Use a couple options to enable better viewing.
-
-```{bash, eval=FALSE}
-sed 's/\/home\/elavelle\/DGE_workshop\/alignments\///g' SfromC.tsv | sed 's/\.sorted\.bam//g' > SfromCsed.tsv
-```
-
-Let's filter out genes we are missing data for.
-
-```{bash, eval=FALSE}
-awk '$6 != "NA" {print $0}' SfromCsed.tsv  > SfromCfiltered.tsv
-```
-
-We've made a good results table. But the researchers didn't report DEGs based on adjusted p-value. To compare our results, let's sort by regular p-value.
-
-Preserve the header, run a generalized sort from the second line on, then concatenate the two back together.
-
-```{bash, eval=FALSE}
-head -1 SfromCfiltered.tsv > header
-tail -n+2 SfromCfiltered.tsv | sort -g -k6 > SfromCsorted.tsv
-cat header SfromCsorted.tsv > SfromCcomplete.tsv
-```
-
-Download the file.
-
 ## Cytoscape and ClueGO
 
 Open the app, and load the ClueGO plug-in: Apps --> App Manager
