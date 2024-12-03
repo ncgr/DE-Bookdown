@@ -38,7 +38,7 @@ We have a list of 6 Sequencing Run Result (**SRR**) unique identifiers for sampl
 
 Though we only have 6 samples, the sequencing **depth** is very high, making the download time ~ 1hr. 
 
-<span style="color:red">Time will not allow for us to complete this command, so we will cancel the command after checking it works.</span>  
+<span style="color:red">Time will not allow for us to complete this command, so we will cancel the command after checking it works.</span>. 
 
 
 Download fastq sequence files from NCBI's SRA:
