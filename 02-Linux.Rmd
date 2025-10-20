@@ -6,7 +6,7 @@
 
 2. Type the following on your command line, substituting in your username for <username>.
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ssh -p2403 <username>@inbre.ncgr.org
 ```
 
@@ -55,7 +55,7 @@ Enter the following command in the linux terminal to log on to the NCGR Server:
 
 + substitute **your** personal username in for "username"
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ssh -p2403 <username>@inbre.ncgr.org
 ```
 
@@ -80,11 +80,11 @@ Command **output** is shown after the "##" in this document.
 
 print working directory (pwd), mkdir (make directory), and list contents (ls)
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 pwd
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## /home/agomez
 ```
 
@@ -92,13 +92,13 @@ pwd
 
 Now, create a dir under your home directory for this linux class:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 mkdir linuxc
 
 ls
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## linuxc
 ```
 
@@ -108,22 +108,22 @@ using the ls command
 
 + **l**ong list:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ls -l
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## total 4
 ## drwx 2 agomez agomez 10 Aug 17 22:50 linuxc
 ```
 
 + **l**ong list, by **t**ime, **r**everse order -old to new:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ls -ltr
 ```
     
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## total 4
 ## drwx 2 agomez agomez 10 Aug 17 22:50 linuxc
 ```
@@ -133,13 +133,13 @@ ls -ltr
 1) "**c**hange **d**irectory" to the directory you made
 + where ~ is shorthand for your home directory
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 cd ~/linuxc
 
 pwd
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## /home/agomez/linuxc
 ```
 
@@ -147,26 +147,26 @@ pwd
 
 1) Create a file
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 touch newfile.txt
 
 ls -l
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## total 0
 ## -rw-rw-r-- 1 eprice eprice 0 Aug 17 22:50 newfile.txt
 ```
 
 2) Change to your home dir
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 cd ~ 
 
 pwd
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## /home/agomez
 ```
 
@@ -174,11 +174,11 @@ pwd
 
 lists the commands you have entered
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 history
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## 17 ls -ltr
 ## 18 cd ../linuxc
 ## 19 ls -ltr
@@ -189,13 +189,13 @@ Scroll through recent commands with the up and down arrows.
 
 To perform a command from the list by number:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 !17
 ```
 
 To perform the last command you made:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 !!
 ```
 
@@ -208,23 +208,23 @@ To send output to a file instead of standard out:
 + standard out is just the terminal
    
     
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 history > history.txt
 
 ls -l
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## total 4
 ## -rw-rw-r-- 1 eprice eprice 0    Aug 17 22:50 history.txt
 ## drwxrwxr-x 2 eprice eprice 4096 Aug 17 22:50 linuxc
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 cat history.txt
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## 17 ls -ltr
 ## 18 cd ../linuxc
 ## 19 ls -ltr
@@ -249,13 +249,13 @@ To autocomplete remainder of file name instead of typing it all in:
 
 #### Syntax: mv sourcefilename destinationfilename{-}
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 mv history.txt history_file.txt
 
 ls -l
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## total 4
 ## -rw-rw-r-- 1 eprice eprice 0    Aug 17 22:50 history_file.txt 
 ## drwxrwxr-x 2 eprice eprice 4096 Aug 17 22:50 linuxc
@@ -269,23 +269,23 @@ ls -l
 
 1) Change back to the linuxc directory:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 cd ~/linuxc
 ```
 
 2) Make a "back up" copy of a file in your working directory:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 cp ~/linuxc/newfile.txt newfile_bu.txt
 ```
 
 3) Check if the newly copied file is there:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ls
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## newfile_bu.txt
 ## newfile.txt
 ```
@@ -301,7 +301,7 @@ ls
 
 1) Create a file to copy
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 touch scp_test.txt
 ```
 
@@ -316,7 +316,7 @@ touch scp_test.txt
 + to **download** the file **to your computer** from the NCGR Server
 + the last period means that the destination is your working directory
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 scp -P 2403 <username>@inbre.ncgr.org:~/linuxc/scp_test.txt .
 ```
 
@@ -329,7 +329,7 @@ You will be prompted for your NCGR Server password if not using MobaXterm.
 5) Now **upload** a file **to logrus** from your computer
 + Again, run the scp command from your **local** terminal window:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 scp -P 2403 scp_test.txt <username>@inbre.ncgr.org:~/linuxc
 ```
 
@@ -341,23 +341,23 @@ scp -P 2403 scp_test.txt <username>@inbre.ncgr.org:~/linuxc
 
 #### Syntax: rm [options] filename{-}
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 rm -i newfile_bu.txt
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## rm: remove regular empty file newfile_bu.txt?
 ```
 
 Enter "yes" or "y" in response to the question:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 yes
 
 ls -l
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## total 0
 ## -rw-rw-r-- 1 eprice eprice 0 Aug 17 22:50 newfile.txt
 ```
@@ -374,13 +374,13 @@ Let’s say you type a command and nothing happens; it hangs.
 This can happen when the syntax doesn’t make sense. 
 Good time for CTRL c
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 cat
 ```
 
 If you can't execute commands, then CTRL c
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## ^C
 ```
 
@@ -393,13 +393,13 @@ You should be returned to your prompt: username@de-2403:~/linuxc$
 
 #### Syntax: ln -s FileYouWantToLink/PointTo NameYouWantToGiveIt{-}
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ln -s /home/data/de-2403/covid.fasta covid.fasta
 
 ls -l
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## total 0
 ## lrwxrwxrwx 1 eprice eprice 26 Aug 17 22:50 covid.fasta -> /home/agomez/covid.fasta 
 ## -rw-rw-r-- 1 eprice Aug 17 22:50 newfile.txt
@@ -411,11 +411,11 @@ Fasta files (.fasta or .fa) contain one or more sequences, each preceded by a **
 
 Show only the **first 10 lines** of a file with "head" command:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 head covid.fasta
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## >NC_045512.2 |Severe acute respiratory syndrome coronavirus 2 isolate Wuhan-Hu-1, co
 ## ATTAAAGGTTTATACCTTCCCAGGTAACAAACCAACCAACTTTCGATCTCTTGTAGATCT
 ## GTTCTCTAAACGAACTTTAAAATCTGTGTGGCTGTCACTCGGCTGCATGCTTAGTGCACT
@@ -430,11 +430,11 @@ head covid.fasta
 
 Now show only the **last 10 lines** of a file using the "tail" command:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 tail covid.fasta
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## TATTGACGCATACAAAACATTCCCACCAACAGAGCCTAAAAAGGACAAAAAGAAGAAGGC
 ## TGATGAAACTCAAGCCTTACCGCAGAGACAGAAGAAACAGCAAACTGTGACTCTTCTTCC
 ## TGCTGCAGATTTGGATGATTTCTCCAAACAATTGCAACAATCCATGAGCAGTGCTGACTC
@@ -453,11 +453,11 @@ Use the pipe operator to redirect "cat" output to "head":
 
 + The symbol "|" denotes a pipe
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 cat covid.fasta | head
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## >NC_045512.2 |Severe acute respiratory syndrome coronavirus 2 isolate Wuhan-Hu-1, co
 ## ATTAAAGGTTTATACCTTCCCAGGTAACAAACCAACCAACTTTCGATCTCTTGTAGATCT
 ## GTTCTCTAAACGAACTTTAAAATCTGTGTGGCTGTCACTCGGCTGCATGCTTAGTGCACT
@@ -470,11 +470,11 @@ cat covid.fasta | head
 ## ACGTTCGGATGCTCGAACTGCACCTCATGGTCATGTTATGGTTGAGCTGGTAGCAGAACT
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 cat covid.fasta | tail
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## TATTGACGCATACAAAACATTCCCACCAACAGAGCCTAAAAAGGACAAAAAGAAGAAGGC
 ## TGATGAAACTCAAGCCTTACCGCAGAGACAGAAGAAACAGCAAACTGTGACTCTTCTTCC
 ## TGCTGCAGATTTGGATGATTTCTCCAAACAATTGCAACAATCCATGAGCAGTGCTGACTC
@@ -491,13 +491,13 @@ cat covid.fasta | tail
 
 Fastq files contain sequence reads and associated **meta data**.
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ln -s /home/data/de-2403/SP1.fq 
 
 ls -ltr
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## total 0
 ## -rw-rw-r-- 1 eprice eprice 0 Aug 17 22:50 newfile.txt
 ## lrwxrwxrwx 1 eprice eprice 26 Aug 17 22:50 covid.fasta -> /home/eprice/covid.fasta 
@@ -506,11 +506,11 @@ ls -ltr
 
 Tail the last 4 lines:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 tail -n 4 SP1.fq
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## @cluster_834:UMI_TTAAGG
 ## AGGGTGGGGGATCACATTTATTGTATTGAGG 
 ## +
@@ -532,11 +532,11 @@ Grep will output the lines containing a provided expression.
 
 #### Syntax: grep [options] "expression" filename{-}
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 grep ">" covid.fasta
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## >NC_045512.2 |Severe acute respiratory syndrome coronavirus 2 isolate Wuhan-Hu-1, co
 ## >MT627325.1 |Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/huma
 ## >MT622319.1 |Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/huma
@@ -645,17 +645,17 @@ Adding the "-c" option counts the number of lines containing a match
 
 + **not** the number of matches!
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 grep -c ">" covid.fasta
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## 102
 ```
 
 The "-v" option reverses the grep search, which is the first step towards finding the total length of sequences
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 grep -v ">" covid.fasta
 ```
 
@@ -665,23 +665,23 @@ We can add in the pipe operator to redirect our output to the "wc" command.
 
 The output shows the number of newline characters, followed by line count and total character count.
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 grep -v ">" covid.fasta | wc
 ```
 
 wc: prints newline, word, and byte counts for each file:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## 50812 50812 3096018
 ```
 
 Let’s trim out the newline characters with "tr -d" before doing the word count:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 grep -v ">" covid.fasta | tr -d '\n' | wc
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ##       0       1 3045206
 ```
 
@@ -693,13 +693,13 @@ Powerful Z commands (zcat)
 
 Let’s copy another file:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 cp /home/data/de-2403/table1.txt.gz .
 zcat table1.txt.gz
 
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## 1, Justin Timberlake, Title 545, Price $7.30
 ## 2, Taylor Swift, Title 723, Price $7.90
 ## 3, Mick Jagger, Title 610, Price $7.90
@@ -710,11 +710,11 @@ zcat table1.txt.gz
 ## 8, Michael Jackson, Title 373, Price $5.50
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 zgrep "Jagger" table1.txt.gz
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## 3, Mick Jagger, Title 610, Price $7.90
 ```
 
@@ -722,11 +722,11 @@ zgrep "Jagger" table1.txt.gz
 
 :s = substitute /word1/with word2
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 !!:s/Jagger/John
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## 5, Johnny Cash, Title 482, Price $6.50
 ## 7, John Lennon, Title 271, Price $7.90
 ```
@@ -739,21 +739,21 @@ Powerful Z commands (zgrep)
 
 Display all the lines that start with 8:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 zgrep "^8" table1.txt.gz
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## 8, Michael Jackson, Title 373, Price $5.50
 ```
 
 Display all the lines that end with 50:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 zgrep "50$" table1.txt.gz
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## 5, Johnny Cash, Title 482, Price $6.50
 ## 8, Michael Jackson, Title 373, Price $5.50
 ```
@@ -791,13 +791,13 @@ How many fields does it have?
 
 p. 2 of 5
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 gunzip table1.txt.gz
 
 cat table1.txt
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## 1, Justin Timberlake, Title 545, Price $7.30
 ## 2, Taylor Swift, Title 723, Price $7.90
 ## 3, Mick Jagger, Title 610, Price $7.90
@@ -808,11 +808,11 @@ cat table1.txt
 ## 8, Michael Jackson, Title 373, Price $5.50
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 awk '{print $1 $3 $5}' table1.txt
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## 1,Timberlake,545,
 ## 2,Swift,723,
 ## 3,Jagger,610,
@@ -829,11 +829,11 @@ p. 3 of 5
 
 Using field separator command -F
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 cat table1.txt
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## 1, Justin Timberlake, Title 545, Price $7.30
 ## 2, Taylor Swift, Title 723, Price $7.90
 ## 3, Mick Jagger, Title 610, Price $7.90
@@ -844,11 +844,11 @@ cat table1.txt
 ## 8, Michael Jackson, Title 373, Price $5.50
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 awk -F, '{print $3}' table1.txt
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ##  Title 545
 ##  Title 723
 ##  Title 610
@@ -880,11 +880,11 @@ Time to really watch for syntax errors!
 
 p. 5 of 5
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 awk '$7=="$7.30" {print $3}' table1.txt
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## Timberlake,
 ## Gaga,
 ## Presley,
@@ -900,11 +900,11 @@ text substitution
 
 Examples:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 echo "it’s a trap" | sed s/ra/ar/
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## it’s a tarp
 ```
 
@@ -912,17 +912,17 @@ Say you want to change all price occurrences of $7.90 to $8.90 from table1.txt, 
 
 You can do this with sed.
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 sed 's/7.90/8.90/' table1.txt > table2.txt
 ```
 
 Use cat to display the contens of the new file:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 cat table2.txt
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## 1, Justin Timberlake, Title 545, Price $7.30
 ## 2, Taylor Swift, Title 723, Price $8.90
 ## 3, Mick Jagger, Title 610, Price $8.90
@@ -939,11 +939,11 @@ Suppose we want to run a command for a **group of files** in a directory. We can
 
 #### Syntax: for variablename in filenameexpression; do command ${variablename}; done {-}
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 for file in *; do echo ${file}; done
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## covid.fasta
 ## newfile.txt
 ## SP1.fq
@@ -985,7 +985,7 @@ There is also cheat sheet on the weebly site under Supplemental Documents.
 
 2) Enter the following command to log on to the NCGR Server: 
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ssh -p2403 <username>@inbre.ncgr.org
 ```
 
@@ -993,46 +993,46 @@ ssh -p2403 <username>@inbre.ncgr.org
 
 3) Make a new directory under **your home directory**:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 mkdir fastq_files
 ```
 
 4) Enter into the new directory:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 cd fastq_files
 ```
 
 5) Move the fastq file from yesterday to the present working directory:
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 mv ~/linuxc/SP1.fq .
 
 ls -ltr
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## total 0
 ## lrwxrwxrwx 1 elavelle elavelle 28 Aug 17 22:50 SP1.fq -> /home/data/metagenomics-2310/SP1.fq
 ```
 
 6) How can we count the number of records in a fastq file?
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 grep -c "@cluster" SP1.fq
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## 250
 ```
 
 7) If you want to determine the number of lines in a file, you can use the "wc" command.
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 cat SP1.fq | wc -l
 ```
 
-```{R, eval=FALSE}
+```{bash, eval=FALSE}
 ## 1000
 ```
 
