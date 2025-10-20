@@ -7,6 +7,29 @@ output:
 
 ## Cytoscape and ClueGO
 
+The ClueGO plugin of Cytoscape can run both **pathway enrichment** and **ontology enrichment** analysis. In other words, we can check which pathways and ontologies are overrepresented by our set of interesting genes (for example, differentially expressed genes or genes from interesting expression modules). And we can see if any of those pathways and ontologies contain more genes of interest than we would expect if we had instead grabbed the same number of random genes to feed into the enrichment analysis.
+
+Here we will use the KEGG (Kyoto Encyclopedia of Genes and Genomes) PATHWAY database (https://www.genome.jp/kegg/pathway.html) to look for enriched pathways. And we will use GO (gene ontology) ontologies (https://geneontology.org/) to look for enriched ontologies. Feel free to try other pathway and ontology options.
+
+**KEGG PATHWAY**
+
+Pathways for:  
++ Metabolism
++ Genetic Information Processing
++ Cellular Processes
++ Organismal Systems
++ Human Diseases
++ Drug Development
+
+
+**Gene Ontology**
+
+Gene ontologies describe the function of genes in biological systems using a structured vocabulary that crosses species boundaries and that is both human-readable and machine-readable. Common gene ontology sets include:  
++ Biological Process  
++ Molecular Function  
++ Cellular Component
+
+
 Open the app, and load the ClueGO plug-in: Apps --> App Manager
 
 Open the results table in a spreadsheet, copy the DEGs, and paste into clueGO.
