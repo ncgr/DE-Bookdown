@@ -30,7 +30,7 @@ https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/la
 
 What is Mus musculus?  
 
-Use wget command to dowload files using a link:
+Use wget command to download files using a link:
 ```{bash, eval=FALSE}
 wget https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/latest_assembly_versions/GCF_000001635.27_GRCm39/GCF_000001635.27_GRCm39_genomic.fna.gz
 ```
