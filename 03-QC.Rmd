@@ -26,11 +26,9 @@ Enter your new directory
 
 From your home directory:
 ```{bash, eval=FALSE}
-cd DGE_workshop
+mkdir -p DGE_workshop/reads
 
-mkdir reads
-
-cd reads
+cd DGE_workshop/reads
 ```
 
 
@@ -47,12 +45,12 @@ conda activate sra-tools
 
 for i in `cat SRRlist.txt`; do
   fasterq-dump --outdir . ${line}
-done < ~/DGE_workshop/reads/SRRlist.txt
+done < ~/home/data/de-2403/SRRlist.txt
 ```
 
 Softlink the data (after you cancel the command above):
 ```{bash, eval=FALSE}
-ln -s ~/DGE_workshop/reads/*.gz .
+ln -s /home/data/de-2403/reads/*.gz .
 ```
 
 ## fastp Quality Control  
@@ -68,19 +66,11 @@ conda activate fastp
 ```
 
 
-```{bash, eval=FALSE}
-for file in SRR*; do
- bn=`basename ${file} .fastq.gz`
- echo $bn
-done
-```
-
-
 Check the quality of our 6 sample sequences using **fastp**:
 ```{bash, eval=FALSE}
 for file in SRR*; do
- bn=`basename ${file} .fastq.gz`
- fastp -w 10 -h "${file}.html" -i "${file}" -o "${bn}.fastp.fastq.gz"
+  bn=`basename ${file} .fastq.gz`
+  fastp -w 10 -h "${bn}.html" -i "${file}" -o "${bn}.fastp.fastq.gz"
 done
 ```
 
@@ -91,7 +81,7 @@ It is essential that you know this basic command, and **you should not need this
 
 From <span style="color:red">**YOUR LOCAL TERMINAL**</span>
 ```{bash, eval=FALSE}
-scp -P 2403 agomez@inbre.ncgr.org:~/DGE_workshop/reads/SRR23869771.fastq.html
+scp -P 2403 agomez@inbre.ncgr.org:~/DGE_workshop/reads/SRR23869771.html
 ```
 
 
@@ -124,13 +114,8 @@ zcat SRR23869771.fastp.fastq.gz | awk '{ if ( NR % 4 == 2) print $0}' | wc -l
 ```
 
 
-New Section with some advanced commands
 
-```{bash, eval=FALSE}
-mkdir -p DGE_workshop/reads
 
-cd DGE_workshop/reads
-```
 
 
 

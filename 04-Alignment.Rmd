@@ -134,19 +134,19 @@ Change environments and use this statistics summarization command. It takes abou
 conda deactivate
 conda activate samtools
 
-samtools flagstat SRR23869771.fastq.fastp.gz.sam
+samtools flagstat SRR23869771.fastp.fastq.gz.sam
 ```
 
 The number in the first row is the count of records in the .sam file. Confirm this by counting the rows not including the header lines.
 
 ```{bash, eval=FALSE}
-grep -v "^@" SRR23869771.fastq.fastp.gz.sam
+grep -v "^@" SRR23869771.fastp.fastq.gz.sam
 ```
 
 Secondary alignments counts the alignments of reads that mapped to additional locations on the genome. To omit these, Count the number of unique read IDs in the file.
 
 ```{bash, eval=FALSE}
-grep -v "^@" SRR23869771.fastq.fastp.gz.sam | awk '{print $1}' | uniq | wc -l
+grep -v "^@" SRR23869771.fastp.fastq.gz.sam | awk '{print $1}' | uniq | wc -l
 ```
 
 Check this with arithmatic from the flagstat output: 38991995 - 14794600
@@ -154,7 +154,7 @@ Check this with arithmatic from the flagstat output: 38991995 - 14794600
 However, this count also includes reads which didn't map at all. Filter those out ("*" in column 3) to find the number of reads that mapped once or more. 
 
 ```{bash, eval=FALSE}
-cat SRR23869771.fastq.fastp.gz.sam | grep -v '^@' | awk '{ if ($3 != "*") print $0}' | awk '{print $1}' | uniq | wc -l
+cat SRR23869771.fastp.fastq.gz.sam | grep -v '^@' | awk '{ if ($3 != "*") print $0}' | awk '{print $1}' | uniq | wc -l
 ```
 
 The " mapped" number from the flagstat output counts all alignments (not reads!) Subtract the secondary alignments from that value to check our result:
@@ -165,7 +165,7 @@ As it happens, there is another convenient samtools function to extract the desi
 ![multipostnorm](./Figures/sam_bits.png){width=100%}
 
 ```{bash, eval=FALSE}
-samtools view -f 0x100 -c SRR23869771.fastq.fastp.gz.sam 
+samtools view -f 0x100 -c SRR23869771.fastp.fastq.gz.sam 
 ```
 
 Including the "-f" option in the samtools "view" command will print to stdout the records matching the corresponding bit flag shown in the table below. This command, for example, counts (due to the inclusion of the "-c" option) all secondary reads. Notice it matches the number found with the other methods.
@@ -174,7 +174,7 @@ The "-F" option is similar to grep's "-v" option; it pulls the OPPOSITE records 
 Therefore, the number of primary alignments can also be found by:
 
 ```{bash, eval=FALSE}
-samtools view -F 0x904 -c SRR23869771.fastq.fastp.gz.sam 
+samtools view -F 0x904 -c SRR23869771.fastp.fastq.gz.sam 
 ```
 
 Note that this is less than the total number of reads in our file. This operates in an "or" fashion. If we run the above command with "-f", it yields 0, because the postive search runs in an "and" fashion.
@@ -190,7 +190,7 @@ for file in *.sam; do samtools view -u ${file} | samtools sort -o ${file}.sorted
 Rename the output files
 
 ```{bash, eval=FALSE}
-file-rename -- 's/\.fastq.fastp.gz.sam.sorted$/.sorted.bam/' *.sorted
+file-rename -- 's/\.fastp.fastq.gz.sam.sorted$/.sorted.bam/' *.sorted
 ```
 
 Exercise: What average genome coverage do our primary alignments give us?
