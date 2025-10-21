@@ -103,14 +103,24 @@ for file in *.fastq.gz; do
 done
 ```
 
+What option in the command above indicates that we want to use a setting for single-end reads?  
 
 
-What flags would you use for paired-end reads? 
+What option would you use for paired-end reads?  
 
-## .sam format
+
+What are single-end vs. paired-end reads?  
+
+
+## .sam format  
+ 
+What kind of information does the first 11 columns of a .sam file contain?
 
 ![multipostnorm](./Figures/sam_format.png){width=100%}
-## Cigar string
+
+## Cigar string  
+
+What is a Cigar string?
 
 ![multipostnorm](./Figures/cigar.png){width=100%}
 
