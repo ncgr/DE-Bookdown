@@ -21,7 +21,7 @@ Make sure the annotation is unzipped first.
 
 ```{bash, eval=FALSE}
 
-source activate featurecounts
+conda activate featurecounts
 
 featureCounts -a ~/DGE_workshop/genome/GCF_000001635.27_GRCm39_genomic.gff -o /home/$USER/DGE_workshop/count_matrix.tsv --largestOverlap -M --primary -T 10 -g gene *.bam
 ```
