@@ -91,16 +91,15 @@ How do you know?
 What files are the sample sequence files?  
 How many sample sequence files are we aligning to the index?  
 
-<span style="color:red">What directory are you in?</span>  
-
 If you're not in the reads directory, will this command work?  
 Why not?   
 
-Run hisat to align fastq files to the genome index:
+Run hisat2 to align fastq files to the genome index. We'll use the fastq files that fastp filtered to remove low quality reads.
+
 ```{bash, eval=FALSE}
-for file in *.fastq.gz; do
-  base="${file%.fastq.gz}"
-  hisat2 -x /home/data/de-2403/genome/GRCm39.index --threads 10 -U "$file" -S ~/DGE_workshop/alignments/"${base}.sam"
+for file in *.fastp.fastq.gz; do
+  base=`basename $file .fastp.fastq.gz`
+  hisat2 -x ~/DGE_workshop/genome/GRCm39.index --threads 10 -U "$file" -S ~/DGE_workshop/alignments/"${base}.sam"
 done
 ```
 
