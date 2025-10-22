@@ -93,7 +93,7 @@ multiecdf(counts(DESeqSF, normalized=F)[idx.nz,],main="ECDF pre-normalized", xla
 dev.off()
 ```
 
-![prenorm](./Figures/count_density_prenorm-1.png){width=100%}
+![](./Figures/count_density_prenorm-1.png){width=100%}
 
 \vspace{12pt}
 
@@ -105,7 +105,7 @@ multiecdf(counts(DESeqSF, normalized=T)[idx.nz,],main="ECDF post-normalized", xl
 dev.off()
 ```
 
-![postnorm](./Figures/count_density_postnorm-1.png){width=100%}
+![](./Figures/count_density_postnorm-1.png){width=100%}
 
 Let's generate similar multidensity plots.
 
@@ -115,7 +115,7 @@ multidensity(counts(DESeqDataset, normalized=F)[idx.nz,],xlab="mean counts", xli
 dev.off()
 ``` 
 
-![multiprenorm](./Figures/multidensity_prenorm-1.png){width=100%}
+![](./Figures/multidensity_prenorm-1.png){width=100%}
 
 ```{R, eval=FALSE}
 pdf("multidensity_postnorm.pdf")
@@ -123,7 +123,7 @@ multidensity(counts(DESeqSF, normalized=T)[idx.nz,],xlab="mean counts", xlim=c(0
 dev.off()
 ``` 
 
-![multipostnorm](./Figures/multidensity_postnorm-1.png){width=100%}
+![](./Figures/multidensity_postnorm-1.png){width=100%}
 ## DESeq2
 
 Designate reference level for each factor
@@ -207,7 +207,7 @@ heatmap.2(plotCounts,  col=hmcol, cexRow=0.8,
 dev.off()
 ```
 
-![All Genes](./Figures/heatmapSigs-1.png){width=100%}
+![](./Figures/heatmapSigs-1.png){width=100%}
 
 Camk2n1 is skewing the color palette. Let's make a version omitting it.
 ```{R, eval=FALSE}
@@ -219,7 +219,7 @@ dev.off()
 ```
 
 
-![Most Genes](./Figures/heatmapSigsMost_take1.pdf){width=100%}
+![](./Figures/heatmapSigsMost_take1.pdf){width=100%}
 
 
 <!-- Not sure why the figure above renders in a scrollable container. -->
@@ -239,10 +239,10 @@ dev.off()
 ```
 
 
-![Most Genes, ordered](./Figures/heatmapSigsMost-1.png){width=100%}
+![](./Figures/heatmapSigsMost-1.png){width=100%}
 
 
-\vspace{12pt}
+## Principal Component Analysis (PCA)
 
 Principal Component Analysis now.
 ```{R, eval=FALSE}
@@ -252,7 +252,7 @@ plotPCA(rld,intgroup=c("condition"))
 dev.off()
 ```
 
-![PCA](./Figures/PCA.allsamples2-1.png){width=100%}
+![](./Figures/PCA.allsamples2-1.png){width=100%}
 <!--
 ## Gene count plots
 
