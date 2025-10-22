@@ -133,5 +133,6 @@ The [DESeq2 Vignette](https://bioconductor.org/packages/devel/bioc/vignettes/DES
 
 More information on the Wald Statistic is [here](https://medium.com/@analyttica/understanding-wald-test-2e3fa7723516).
 
-More information on analyzing time series expression data is [here](https://hbctraining.github.io/DGE_workshop_salmon_online/lessons/08b_time_course_analyses.html).
+<!-- Link broken
+More information on analyzing time series expression data is [here](https://hbctraining.github.io/DGE_workshop_salmon_online/lessons/08b_time_course_analyses.html). -->
 
