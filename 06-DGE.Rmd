@@ -5,6 +5,8 @@ output:
 ---
 # Differential Gene Expression Analysis
 
+Make sure you are in a screen.
+
 ## R data import
 
 Launch R from the DESeq2 directory.

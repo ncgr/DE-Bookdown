@@ -5,6 +5,8 @@ output:
 ---
 # Abundance Estimation
 
+Make sure you are in a screen.
+
 ## GFF format
 
 Look at the format for a .gff file: https://en.wikipedia.org/wiki/General_feature_format
@@ -33,7 +35,9 @@ pwd
 ```{bash, eval=FALSE}
 conda activate featurecounts
 
-featureCounts -a ~/DGE_workshop/genome/GCF_000001635.27_GRCm39_genomic.gff.gz -o ~/DGE_workshop/count_matrix.tsv --largestOverlap -M --primary -T 10 -g gene *.sorted.bam
+featureCounts -a ~/DGE_workshop/genome/GCF_000001635.27_GRCm39_genomic.gff.gz \
+-o ~/DGE_workshop/counts/count_matrix.tsv --largestOverlap -M --primary \
+-T 10 -g gene *.sorted.bam
 ```
 
 What do each of the parameters mean?
