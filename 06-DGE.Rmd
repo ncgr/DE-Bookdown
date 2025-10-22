@@ -164,13 +164,6 @@ Take a look at the column names.
 colnames(stress_from_control_sorted)
 ```
 
-The sample columns end in .sorted.bam. Let's remove that suffix using the gsub (global substition) function.
-
-```{R, eval=FALSE}
-colnames(stress_from_control_sorted)=gsub(".sorted.bam","",colnames(test))
-```
-
-Recheck the column names.
 
 Now, let's grab the rows where padj <= 0.05. There are lots of ways to do this. Let's use the subset function.
 
