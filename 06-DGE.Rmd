@@ -168,13 +168,13 @@ colnames(stress_from_control_sorted)
 Now, let's grab the rows where padj <= 0.05. There are lots of ways to do this. Let's use the subset function.
 
 ```{R, eval=FALSE}
-stress_from_control_sorted_sub = subset(stress_from_control_signif, padj <= 0.05)
+stress_from_control_sorted_sub = subset(stress_from_control_sorted, padj <= 0.05)
 ```
 
 Finally, let's export a file with counts appended to it.
 
 ```{R, eval=FALSE}
-write.table(merge(as.data.frame(stress_from_control_sorted_signif),as.data.frame(counts(dds,normalized=TRUE)), by="row.names"), row.names=FALSE, quote=FALSE, sep="\t", file="SfromC.tsv")
+write.table(merge(as.data.frame(stress_from_control_sorted_sub),as.data.frame(counts(dds,normalized=TRUE)), by="row.names"), row.names=FALSE, quote=FALSE, sep="\t", file="SfromC.tsv")
 ```
 
 
