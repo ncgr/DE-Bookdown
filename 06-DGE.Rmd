@@ -29,7 +29,7 @@ getwd()
 and change it with:
 
 ```{R, eval=FALSE}
-setwd('/home/<username>/DGE_workshop/DESeq2/')
+setwd('~/DGE_workshop/DESeq2/')
 ```
 
 Load the table we made with featureCounts into a variable, then check the dimensions.
