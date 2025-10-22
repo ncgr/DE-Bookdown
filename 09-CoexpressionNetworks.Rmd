@@ -1,3 +1,5 @@
+# Coexpression Networks
+
 <!-- Maybe add the control in though you still need binary (or numeric???) traits or time series; consider adding in t cells -->
 
 <!-- Something on time series-->
@@ -6,7 +8,7 @@
 
 <!-- maybe add in a bioinformagician explatory video -->
 
-# Coexpression Networks
+
 
 Coexpression networking analysis looks at genes with similar expression patterns across treatments. These genes are likely all controlled together and comprise a gene expression "module".
 
