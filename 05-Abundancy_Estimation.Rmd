@@ -33,7 +33,7 @@ pwd
 ```{bash, eval=FALSE}
 conda activate featurecounts
 
-featureCounts -a ~/DGE_workshop/genome/GCF_000001635.27_GRCm39_genomic.gff.gz -o ~/DGE_workshop/count_matrix.tsv --largestOverlap -M --primary -T 10 -g gene *.bam
+featureCounts -a ~/DGE_workshop/genome/GCF_000001635.27_GRCm39_genomic.gff.gz -o ~/DGE_workshop/count_matrix.tsv --largestOverlap -M --primary -T 10 -g gene *.sorted.bam
 ```
 
 What do each of the parameters mean?
