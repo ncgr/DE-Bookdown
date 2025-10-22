@@ -69,7 +69,7 @@ Run fastp.
 ```{bash, eval=FALSE}
 for file in SRR*.fastq.gz; do
   bn=`basename ${file} .fastq.gz`
-  fastp -w 10 -h "${bn}.html" -i "${file}" -o "${bn}.fastp.fastq.gz"
+  fastp -w 10 -h ${bn}.html -j ${bn}.json -i ${file} -o ${bn}.fastp.fastq.gz
 done
 ```
 
