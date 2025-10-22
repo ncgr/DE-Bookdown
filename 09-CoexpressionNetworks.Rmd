@@ -479,8 +479,8 @@ metafinal$diagnosis = gsub('Other Pneumonia', '0', metafinal$diagnosis)
 metafinal$diagnosis = gsub('COVID-19', '1', metafinal$diagnosis)
 metafinal$diagnosis = as.numeric(metafinal$diagnosis)
 
-gene.signf <- cor(ncnt, metafinal$diagnosis, use = 'p')
-gene.signf.pvals <- as.data.frame(corPvalueStudent(gene.signf, nSamples))
+gene.signf = cor(ncnt, metafinal$diagnosis, use = 'p')
+gene.signf.pvals = as.data.frame(corPvalueStudent(gene.signf, nSamples))
 ```
 
 Take a look at the genes sorted starting with the most significant. These genes have a high impact on differentiating between COVID-19 and other pneumonias (diagnosis trait).
