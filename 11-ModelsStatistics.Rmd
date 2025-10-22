@@ -43,7 +43,7 @@ This design matches what we did earlier. It works with 2 levels such as treatmen
 
 ## Two Factors
 
-You can model two factors such as genotype and treatment where you care about the main effects of both factors. The order matters. DESeq2 will adjust the model for the first one (in this case, "genotype") and then adjust for the second one (in this case, "treatement"). The last factor should be the one you are most interested in.
+You can model two factors such as genotype and treatment where you care about the main effects of both factors. The order matters. DESeq2 will adjust the model for the first one (in this case, "genotype") and then adjust for the second one (in this case, "treatment"). The last factor should be the one you are most interested in.
 
 Main effects only:
 
