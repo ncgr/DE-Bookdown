@@ -9,6 +9,12 @@ Make sure you are in a screen.
 
 ## R data import
 
+Move into the DESeq2 directory.
+
+```{bash, eval=FALSE}
+~/DGE_workshop/DESeq2/
+```
+
 Launch R from the DESeq2 directory.
 ```{bash, eval=FALSE}
 R
