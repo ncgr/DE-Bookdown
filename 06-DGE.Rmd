@@ -35,7 +35,7 @@ setwd('~/DGE_workshop/DESeq2/')
 Load the table we made with featureCounts into a variable, then check the dimensions.
 
 ```{R, eval=FALSE}
-sampleCounts <- read.table("DESEQ2_matrix.tsv", header = TRUE, row.names = 1, check.names=FALSE)
+sampleCounts = read.table("DESEQ2_matrix.tsv", header = TRUE, row.names = 1, check.names=FALSE)
 
 dim(sampleCounts)
 ```
@@ -45,28 +45,28 @@ dim(sampleCounts)
 Specify sample conditions. As the experimental design only incorporates two levels of a single factor, our table will be very simple. Nonetheless, it is important to create this accurately, as it is what the software will use to make comparisons.
 
 ```{bash, eval=FALSE}
-sampleCondition <- as.factor(c(rep("control",3),rep("stress",3)))
-sampleTable <- data.frame(condition=sampleCondition)
+sampleCondition = as.factor(c(rep("control",3),rep("stress",3)))
+sampleTable = data.frame(condition=sampleCondition)
 ``` 
 
 Prepare the DESeq2-specific object.
 
 ```{R, eval=FALSE}
-DESeqDataset <- DESeqDataSetFromMatrix(countData=sampleCounts, colData=sampleTable, design=~condition)
+DESeqDataset = DESeqDataSetFromMatrix(countData=sampleCounts, colData=sampleTable, design=~condition)
 ``` 
 
 Optional step 1: Count genes with totals > 0 across all samples.
 
 ```{R, eval=FALSE}
-GeneCounts <- counts(DESeqDataset)
-idx.nz <- apply(GeneCounts,1,function(x){all(x>0)})
+GeneCounts = counts(DESeqDataset)
+idx.nz = apply(GeneCounts,1,function(x){all(x>0)})
 sum(idx.nz)
 ``` 
 
 Optional step 2: Generate library size normalization factors.
 
 ```{R, eval=FALSE}
-DESeqSF <- estimateSizeFactors(DESeqDataset)
+DESeqSF = estimateSizeFactors(DESeqDataset)
 sizeFactors(DESeqSF)
 ``` 
 
@@ -129,18 +129,18 @@ dev.off()
 Designate reference level for each factor
 
 ```{R, eval=FALSE}
-colData(DESeqDataset)$condition <- relevel(DESeqDataset$condition, "control")
+colData(DESeqDataset)$condition = relevel(DESeqDataset$condition, "control")
 ```
 Run DESeq2
 ```{R, eval=FALSE}
-dds <- DESeq(DESeqDataset)
+dds = DESeq(DESeqDataset)
 resultsNames(dds)
 ```
 
 The "results" function pulls the last comparison in the results list. Provide an independent filtering variable equivalent to the study's false discovery rate.
 
 ```{R, eval=FALSE}
-stress_from_control <- results(dds, alpha=0.05)
+stress_from_control = results(dds, alpha=0.05)
 summary(stress_from_control)
 ```
 
@@ -148,14 +148,14 @@ There are a few ways to extract comparisons from the results object.
 What is different about this method?
 
 ```{R, eval=FALSE}
-control_from_stress <- results(dds, contrast=c("condition","control","stress"), alpha=0.05)
+control_from_stress = results(dds, contrast=c("condition","control","stress"), alpha=0.05)
 summary(control_from_stress)
 ```
 
 Sort our results table by padj.
 
 ```{R, eval=FALSE}
-stress_from_control_sorted <- stress_from_control[order(stress_from_control$padj),]
+stress_from_control_sorted = stress_from_control[order(stress_from_control$padj),]
 ```
 
 Take a look at the column names.
@@ -185,16 +185,16 @@ Load libraries for heatmap and subset our results.
 ```{R, eval=FALSE}
 library(RColorBrewer)
 library(gplots)
-sigIndices <- which(stress_from_control$padj <= 0.05)
+sigIndices = which(stress_from_control$padj <= 0.05)
 sigIndices
 ```
 
 Create object to feed into the plot, set colors.
 
 ```{R, eval=FALSE}
-plotCounts <- counts(dds[sigIndices,])
-colnames(plotCounts) <- c("C71","C72","C73","S74","S75","S76") 
-hmcol <- colorRampPalette(brewer.pal(9,"GnBu"))(100)
+plotCounts = counts(dds[sigIndices,])
+colnames(plotCounts) = c("C71","C72","C73","S74","S75","S76") 
+hmcol = colorRampPalette(brewer.pal(9,"GnBu"))(100)
 ```
 
 Make it!
@@ -227,9 +227,9 @@ dev.off()
 If we want the same decreasing order:
 ```{R, eval=FALSE}
 # Sorts, removes Camk2n1
-sorted <- row.names(data.frame(sort(rowMeans(plotCounts), decreasing=TRUE)))[-1]
+sorted = row.names(data.frame(sort(rowMeans(plotCounts), decreasing=TRUE)))[-1]
 # makes new dataframe with these indeces
-new_counts <- plotCounts[match(sorted, row.names(plotCounts)),]
+new_counts = plotCounts[match(sorted, row.names(plotCounts)),]
 
 pdf ("heatmapSigsMost.pdf")
 heatmap.2(new_counts,  col=hmcol, cexRow=0.8,
@@ -246,7 +246,7 @@ dev.off()
 
 Principal Component Analysis now.
 ```{R, eval=FALSE}
-rld <- rlogTransformation(dds,blind=TRUE)
+rld = rlogTransformation(dds,blind=TRUE)
 pdf("PCA.allsamples2.pdf")
 plotPCA(rld,intgroup=c("condition"))
 dev.off()
@@ -266,13 +266,13 @@ jittering
 library('ggplot2')
 
 for(k in 1:length(sigIndices)) {  
-  gene <- rownames(stress_from_control_sorted)[k]
-  pval <- format(stress_from_control_sorted$padj[k], digits=4)
+  gene = rownames(stress_from_control_sorted)[k]
+  pval = format(stress_from_control_sorted$padj[k], digits=4)
   
-  d <- plotCounts(dds, gene=gene, # replaced = TRUE, 
+  d = plotCounts(dds, gene=gene, # replaced = TRUE, 
                   intgroup = c("condition"), 
                   returnData = TRUE)
-  p <- ggplot(d, aes(x=condition, y=count,
+  p = ggplot(d, aes(x=condition, y=count,
                      color=condition)) +
     geom_point(position=position_jitter(w=0.2, h=0), 
                alpha=100/100, size=3, stroke=1.25) + 
