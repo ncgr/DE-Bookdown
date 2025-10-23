@@ -101,7 +101,7 @@ multiecdf(counts(DESeqSF, normalized=F)[idx.nz,],main="ECDF pre-normalized", xla
 dev.off()
 ```
 
-![](./Figures/count_density_prenorm-1.png){width=100%}
+![](./Figures/count_density_prenorm.png){width=100%}
 
 \vspace{12pt}
 
@@ -113,25 +113,25 @@ multiecdf(counts(DESeqSF, normalized=T)[idx.nz,],main="ECDF post-normalized", xl
 dev.off()
 ```
 
-![](./Figures/count_density_postnorm-1.png){width=100%}
+![](./Figures/count_density_postnorm.png){width=100%}
 
 Let's generate similar multidensity plots.
 
 ```{R, eval=FALSE}
 pdf("multidensity_prenorm.pdf")
-multidensity(counts(DESeqDataset, normalized=F)[idx.nz,],xlab="mean counts", xlim=c(0,1000))
+multidensity(counts(DESeqDataset, normalized=F)[idx.nz,],main="Density pre-normalized",xlab="mean counts", xlim=c(0,1000))
 dev.off()
 ``` 
 
-![](./Figures/multidensity_prenorm-1.png){width=100%}
+![](./Figures/multidensity_prenorm.png){width=100%}
 
 ```{R, eval=FALSE}
 pdf("multidensity_postnorm.pdf")
-multidensity(counts(DESeqSF, normalized=T)[idx.nz,],xlab="mean counts", xlim=c(0,1000))
+multidensity(counts(DESeqSF, normalized=T)[idx.nz,],main="Density post-normalized",xlab="mean counts", xlim=c(0,1000))
 dev.off()
 ``` 
 
-![](./Figures/multidensity_postnorm-1.png){width=100%}
+![](./Figures/multidensity_postnorm.png){width=100%}
 ## DESeq2
 
 Designate reference level for each factor
