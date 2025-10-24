@@ -32,7 +32,9 @@ Gene ontologies describe the function of genes in biological systems using a str
 
 Open the Cytoscape app, and load the ClueGO plug-in: Apps --> App Manager
 
-Open the results table in a spreadsheet, copy the DEGs, and paste into clueGO.
+Change the species to mouse.
+
+Open the results table, copy the DEGs, and paste into clueGO.
 
 Select in the "Visual Style" box sets the factors that will determine node properties. Keep the default selection, "Groups".
 
