@@ -10,7 +10,7 @@ I have pulled the read counts from the Gene Expression Omnibus (GEO) (https://ww
 
 Factors (Levels):  
 + Water (Drought / Well-watered)  
-+ Temperature (30 = normal / 40 for 30 min = heat shock)  
++ Temperature (30° = normal / 40° for 30 min = heat shock)  
 + Segment (2 / 3 / 4 / 5 / 6)  
 Leaves were cut into 7 equal segments from base to tip and the middle 5 segments were sequenced.
 
