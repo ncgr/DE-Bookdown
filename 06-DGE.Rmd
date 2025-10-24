@@ -12,11 +12,11 @@ Make sure you are in a screen.
 Move into the DESeq2 directory.
 
 ```{bash, eval=FALSE}
-~/DGE_workshop/DESeq2/
+cd ~/DGE_workshop/DESeq2/
 ```
 
 Launch R from the DESeq2 directory.
-```{bash, eval=FALSE}
+```{R, eval=FALSE}
 R
 ```
 
