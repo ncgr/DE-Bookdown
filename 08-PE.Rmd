@@ -54,6 +54,10 @@ The most generally useful file is “NodeAttributeTables.txt”. The fields here
 
 Each GO term has one or more associated levels. Only those with a level within the values in the “GO Tree Interval” have the potential to appear in the results. The boundaries of this window can be changed directly, or by dragging the “Network Specificity” bar.
 
+Go to https://www.genome.jp/kegg/ and take a look at one of the pathways.
+
+<!--Sometimes the genes we found are listed as an alias on the KEGG pathway map. Sometimes they aren't found--maybe the pathway visuals haven't been updated?-->
+
 ## Additional options
 
 Let's inspect some additional options.
