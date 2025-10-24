@@ -4,7 +4,8 @@
 ## The Study Design
 
 **3 replicates** of control mice and **3 replicates** of water avoidance stress induced mice.  
-We will run our own analysis on these publically-available data and compare the Differential Gene Expression and Pathway Enrichment results to those published here:   
+
+We will run our own analysis on these publically-available data. The original study was published here:   
 https://www.mdpi.com/2218-1989/13/3/453
 
 Why have a control?
@@ -19,20 +20,16 @@ Start a new screen
 screen -S DGE
 ```
 
-Make a new directory branch (~/DGE_workshop/**reads**)  
+Make a new directory called reads and move into it.
 
-Enter your new directory  
-
-
-From your home directory:
 ```{bash, eval=FALSE}
-mkdir -p DGE_workshop/reads
+mkdir -p ~/DGE_workshop/reads
 
-cd DGE_workshop/reads
+cd ~/DGE_workshop/reads
 ```
 
 
-We have a list of 6 Sequencing Run Result (**SRR**) unique identifiers for sample sequences stored in the Sequence Read Archive (SRA) database managed by NCBI. We can use this simple list (in .txt format) to download the sequences that correspond to each of the 6 SRR identifiers in the list.  
+We have a list of unique identifiers from 6 Sequencing Runs for sample sequences stored in the Sequence Read Archive (SRA) database managed by NCBI. We can use this simple list (in .txt format) to download the sequences that correspond to each of the 6 SRR identifiers in the list.  
 
 Though we only have 6 samples, the sequencing **depth** is very high, making the download time ~ 1hr. 
 
@@ -48,13 +45,14 @@ for i in `cat SRRlist.txt`; do
 done < ~/home/data/de-2403/SRRlist.txt
 ```
 
-Softlink the data (after you cancel the command above):
+Softlink the pre-downloaded data (after you cancel the command above):
 ```{bash, eval=FALSE}
 ln -s /home/data/de-2403/reads/*.gz .
 ```
 
 ## fastp Quality Control  
 
+fastp (https://github.com/OpenGene/fastp) does both quality assessment and preprocessing. It will identify and trim adapters and remove low quality reads.
 
 It will take ~ 15 minutes to run **fastp** on the .fastq sequencing files for all 6 samples using 10 threads.  
 
@@ -66,20 +64,22 @@ conda activate fastp
 ```
 
 
-Check the quality of our 6 sample sequences using **fastp**:
+Run fastp.
+
 ```{bash, eval=FALSE}
-for file in SRR*; do
+for file in SRR*.fastq.gz; do
   bn=`basename ${file} .fastq.gz`
-  fastp -w 10 -h "${bn}.html" -i "${file}" -o "${bn}.fastp.fastq.gz"
+  fastp -w 10 -h ${bn}.html -j ${bn}.json -i ${file} -o ${bn}.fastp.fastq.gz
 done
 ```
 
 
 Download the .html report to your computer and open it in an internet browser (right-click on the file and select browser)
 
-It is essential that you know this basic command, and **you should not need this prompt at this point**:
 
-From <span style="color:red">**YOUR LOCAL TERMINAL**</span>
+You should be able to do this on your own but here is a hint for mac users (windows users should be able to download from the MobaXTerm GUI).
+
+Mac users: From **your local terminal**:
 ```{bash, eval=FALSE}
 scp -P 2403 agomez@inbre.ncgr.org:~/DGE_workshop/reads/SRR23869771.html
 ```

@@ -14,11 +14,11 @@ Here we will use the KEGG (Kyoto Encyclopedia of Genes and Genomes) PATHWAY data
 **KEGG PATHWAY**
 
 Pathways for:  
-+ Metabolism
-+ Genetic Information Processing
-+ Cellular Processes
-+ Organismal Systems
-+ Human Diseases
++ Metabolism  
++ Genetic Information Processing  
++ Cellular Processes  
++ Organismal Systems  
++ Human Diseases  
 + Drug Development
 
 
@@ -30,7 +30,7 @@ Gene ontologies describe the function of genes in biological systems using a str
 + Cellular Component
 
 
-Open the app, and load the ClueGO plug-in: Apps --> App Manager
+Open the Cytoscape app, and load the ClueGO plug-in: Apps --> App Manager
 
 Open the results table in a spreadsheet, copy the DEGs, and paste into clueGO.
 

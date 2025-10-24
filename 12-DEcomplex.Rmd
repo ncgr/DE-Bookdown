@@ -1,0 +1,36 @@
+# More Complex Datasets
+
+## Data
+
+We'll use a rice dataset. The publication can be found here: https://pmc.ncbi.nlm.nih.gov/articles/PMC12304625/#tpj70349-fig-0003
+
+All samples are from the Nipponbare accession and are leaf tissue.
+
+I have pulled the read counts from the Gene Expression Omnibus (GEO) (https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE295637). We are using the batch corrected, FPKM read counts. More information on FPKM is here: https://www.rna-seqblog.com/rpkm-fpkm-and-tpm-clearly-explained/
+
+<!--I didn't see any batch info so we can't correct for it ourselves-->
+
+Factors (Levels):  
++ Water (Drought / Well-watered)  
++ Temperature (30 = normal / 40 for 30 min = heat shock)  
++ Segment (2 / 3 / 4 / 5 / 6)  
+Leaves were cut into 7 equal segments from base to tip and the middle 5 segments were sequenced.
+
+<!-- The segments are similar to a time series and were analysed with LRT. The others used the Wald test and were done pairwise but the model was not given. We could also use coexpression analysis, including using different phenotypes to enable analysis of the segment series as a whole or in pieces. -->
+
+<!-- Heat explains a larger portion of the variance than drought (see Supplemental Fig. S3, which also shows PC3 that tracks segment.) -->
+
+4 biological replicates (80 samples total)
+
+The read counts are here:  
+/home/data/de-2403/rice/GSE295637_2025.Robertson_Wilkins.BatchCorrectedFPKM.csv
+
+These steps were already performed:  
++ Perform read QC  
++ Align reads to the genome  
++ Get read counts  
++ Normalize read counts  
+
+What strategies would you use to analyze the data?
+
+Try to carry out one of these strategies.

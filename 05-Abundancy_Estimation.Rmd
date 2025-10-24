@@ -5,28 +5,51 @@ output:
 ---
 # Abundance Estimation
 
-## Format check
+Make sure you are in a screen.
+
+## GFF format
 
 Look at the format for a .gff file: https://en.wikipedia.org/wiki/General_feature_format
 
-Exercise: Which genome/annotation pair in /home/data/de-2403/exercise_genomes/ has mismatched headers?
+<!-- Exercise: Which genome/annotation pair in /home/data/de-2403/exercise_genomes/ has mismatched sequence headers? -->
 
 <!-- ASM674v1 has .1 in the fasta but not in the gff -->
 
 ## FeatureCounts
 
-### Generate counts from the alignments directory {-}
-
-Make sure the annotation is unzipped first.
+### Make a subdirectory for the counts {-}
 
 ```{bash, eval=FALSE}
-
-conda activate featurecounts
-
-featureCounts -a ~/DGE_workshop/genome/GCF_000001635.27_GRCm39_genomic.gff -o /home/$USER/DGE_workshop/count_matrix.tsv --largestOverlap -M --primary -T 10 -g gene *.bam
+mkdir ~/DGE_workshop/counts
 ```
 
-FeatureCounts put in an extra row and some columns we want to get rid of before doing differential expression analysis.
+But you should still be in the alignments directory. Doublecheck.
+
+```{bash, eval=FALSE}
+pwd
+```
+
+
+### Generate counts from the alignments directory {-}
+
+```{bash, eval=FALSE}
+conda activate featurecounts
+
+featureCounts -a ~/DGE_workshop/genome/GCF_000001635.27_GRCm39_genomic.gff.gz \
+-o ~/DGE_workshop/counts/count_matrix.tsv --largestOverlap -M --primary \
+-T 10 -g gene *.sorted.bam
+```
+
+What do each of the parameters mean?
+
+Now move into the counts directory.
+
+```{bash, eval=FALSE}
+cd ~/DGE_workshop/counts
+```
+
+
+FeatureCounts puts in an extra row and some columns we want to get rid of before doing differential expression analysis.
 
 ```{bash, eval=FALSE}
 less count_matrix.tsv
@@ -38,9 +61,25 @@ Use tail to take every row starting with the second, then extract only the colum
 tail -n +2 count_matrix.tsv | cut -f 1,7-12 > DESEQ2_matrix.tsv
 ```
 
+Let's clean up the sample names. First, look at the sample names.
+
 ```{bash, eval=FALSE}
-mkdir /home/$USER/DGE_workshop/DESeq2
-mv DESEQ2_matrix.tsv /home/$USER/DGE_workshop/DESeq2/
+head -n1 DESEQ2_matrix.tsv
+```
+
+We'll use sed to remove ".sam.sorted.bam". The -i parameter tells sed to make the substitution "in place".
+
+```{bash, eval=FALSE}
+sed -i 's/.sam.sorted.bam//g' DESEQ2_matrix.tsv
+```
+
+Now check the names again using the head command from above.
+
+Let's create a working subdirectory for DESeq2 and move the file we just made into it, to be ready for the next chapter.
+
+```{bash, eval=FALSE}
+mkdir ~/DGE_workshop/DESeq2
+mv DESEQ2_matrix.tsv ~/DGE_workshop/DESeq2/
 ```
 
 

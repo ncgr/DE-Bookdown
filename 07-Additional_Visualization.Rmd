@@ -83,8 +83,8 @@ Let's compare the averages of the treatment to the averages of the controls. We 
 
 ```{R, eval=FALSE}
 
-expr$ControlAverage <- rowMeans(expr[ , c(8:10)])
-expr$TreatmentAverage <- rowMeans(expr[ , c(11:13)])
+expr$ControlAverage = rowMeans(expr[ , c(8:10)])
+expr$TreatmentAverage = rowMeans(expr[ , c(11:13)])
 
 ```
 
