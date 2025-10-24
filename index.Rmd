@@ -51,15 +51,22 @@ Install the correct version for your OS. Don't plan to use the web version, as t
 
 2. [Integrated Genomics Viewer (IGV)](https://software.broadinstitute.org/software/igv/download)
 
-3. [MobaXterm](https://mobaxterm.mobatek.net/download.html) (Windows Users Only. Mac or Linux users will use their native terminal)
+3. [Tabby Terminal](https://tabby.sh) (Windows Users Only. Mac or Linux users will use their native terminal)  
 
-* Download the "Home" "Installer" edition.  Be careful not to install the portable or professional editions.  
+Find your system type:  
+  - Right-click the Start button → choose System.  
+  - Under Device specifications, look for System type.  
+  - It will say either 64-bit operating system, x64-based processor or ARM-based processor.  
+  
+Download the matching file from the Tabby GitHub page:  
+  - If it says x64-based → click tabby-<version>-setup-x64.exe  
+  - If it says ARM-based → click tabby-<version>-setup-arm64.exe  
+  
+Once downloaded, double-click the file to install Tabby.  
 
-* Before installing, extract the installer zip folder to any location on your computer.  
+Follow installer prompts.
 
-* Now run the installer and follow the prompts.
-
-4. [Filezilla](https://filezilla-project.org/)
+4. [Filezilla](https://filezilla-project.org/download.php?show_all=1)
 
 5. [Cytoscape](https://cytoscape.org/)
 
