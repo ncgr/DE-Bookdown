@@ -259,10 +259,10 @@ https://peterlangfelder.com/2018/11/25/blockwise-network-analysis-of-large-data/
 We'll try to run it in a single block.
 
 blockwiseModules runs several steps, including:  
-Creates an adjancency matrix
-Converts the matrix into a topological overlap matrix (TOM)
-Creates a dendogram
-Identifies modules
+Creates an adjancency matrix  
+Converts the matrix into a topological overlap matrix (TOM)  
+Creates a dendogram  
+Identifies modules  
 Merges modules
 
 
