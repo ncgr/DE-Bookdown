@@ -587,7 +587,7 @@ head(gene.signf.pvals[order(gene.signf.pvals$V1),,drop = FALSE])
 
 Again, let's look at the first 2 genes.
 
-ENSG00000165949 is IFI27 (interferon alpha inducible protein 27). It is induced by interferon and regulates transcription. It is known to be involved in defense respons and apoptosis pathways.
+ENSG00000165949 is IFI27 (interferon alpha inducible protein 27). It is induced by interferon and regulates transcription. It is known to be involved in defense response and apoptosis pathways.
 
 ENSG00000132938 is MTUS2 (microtubule associated scaffold protein 2). This gene triggers microtuble binding and protein homodimerization. Located with the centrosomes and cytoplasmic microtubules.
 
