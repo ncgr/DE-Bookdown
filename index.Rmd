@@ -67,14 +67,6 @@ Everyone will need Cytoscape (a web-based pathway analysis tool).  Please perfor
 
 * Download Cytoscape: instructions at https://cytoscape.org/ >Download. 
 
-* Request a ClueGo license key (this takes a couple days) at http://www.ici.upmc.fr/cluego/cluegoLicense.shtml
-
-* Open Cytoscape 
-
-* Install the ClueGo App. Click on Apps > App Manager > Find ClueGo in the App Manager list and click install 
-
-* Open ClueGo in Cytoscape by clicking on Apps>ClueGo. Input your license key.
-
 
 ## Agenda
 
