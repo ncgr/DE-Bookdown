@@ -1,9 +1,5 @@
 # Coexpression Networks
 
-<!-- Maybe add the control in though you still need binary (or numeric???) traits or time series; consider adding in t cells -->
-
-<!-- Something on time series-->
-
 <!-- Add in gene plots such as those shown here: https://bioinformaticsworkbook.org/dataAnalysis/RNA-Seq/RNA-SeqIntro/wgcna.html#gsc.tab=0-->
 
 <!-- maybe add in a bioinformagician explatory video -->
@@ -40,23 +36,32 @@ Activate the environment
 conda activate vis
 ```
 
-Open up R
+We will be working in R but will export some files into the linux file system. Let's make a directory to house those files and change into it before we go into R. Because we will open R from that directory that will be the working directory that R uses unless we change it.
+
+```{R, eval=FALSE}
+mkdir ~/DGE_workshop/coexpr
+
+cd ~/DGE_workshop/coexpr
 ```
+
+Open up R
+```{R, eval=FALSE}
 R
 ```
 
 Load libraries
 
-```
+```{R, eval=FALSE}
 library(DESeq2)
 library(WGCNA)
 library(CorLevelPlot)
 library(RColorBrewer)
+library(ggplot2)
 ```
 
 Allow parallel processing
 
-```
+```{R, eval=FALSE}
 allowWGCNAThreads(nThreads=8)
 ```
 
@@ -66,15 +71,15 @@ The data includes raw gene counts from https://www.nature.com/articles/s41586-02
 
 It has been transposed so that the genes are the column and the rows are the samples.
 
-```
-expr = read.table("/home/data/de-2403/wgcna/covidxpneumonia.csv")
+```{R, eval=FALSE}
+expr = read.table("/home/data/diffexpr/wgcna/covidxpneumonia.csv")
 ```
 
 ## Check Samples and Genes
 
 The goodSamplesGenes function from WGCNA finds samples and genes with a high number of missing entries and genes with zero variance. It will iterate if necessary.
 
-```
+```{R, eval=FALSE}
 gsg = goodSamplesGenes(expr)
 summary(gsg)
 gsg$allOK
@@ -88,7 +93,7 @@ All the samples are good. 40,374 genes are good.
 
 Let's get the good genes.
 
-```
+```{R, eval=FALSE}
 exprgood = expr[,gsg$goodGenes == TRUE]
 ```
 
@@ -98,7 +103,7 @@ exprgood = expr[,gsg$goodGenes == TRUE]
 
 We'll look for outliers in a PCA and a hierarchal tree.
 
-```
+```{R, eval=FALSE}
 pdf("outliers.pdf", width=10, height=10)
 
 #pca
@@ -127,7 +132,7 @@ dev.off()
 
 Let's exclude 304011161 and 304020336. Both are "Other Pneumonia" bringing our count of patients in that category down to 100.
 
-```
+```{R, eval=FALSE}
 remove = c('304011161', '304020336')
 exprfinal = exprgood[!(rownames(exprgood) %in% remove),]
 ```
@@ -136,20 +141,20 @@ exprfinal = exprgood[!(rownames(exprgood) %in% remove),]
 
 Read in the metadata table.
 
-```
-meta = read.table("/home/data/de-2403/wgcna/metadata_covidxpneumonia.csv",sep=",", header=TRUE, row.names=1)
+```{R, eval=FALSE}
+meta = read.table("/home/data/diffexpr/wgcna/metadata_covidxpneumonia.csv",sep=",", header=TRUE, row.names=1)
 
 ```
 
 Remove the two problematic samples.
 
-```
+```{R, eval=FALSE}
 metafinal = meta[!(rownames(meta) %in% remove),]
 ```
 
 Double-check that the samples are in the same order in the expression and the metadata.
 
-```
+```{R, eval=FALSE}
 all(rownames(metafinal) == rownames(exprfinal))
 ```
 
@@ -157,7 +162,7 @@ all(rownames(metafinal) == rownames(exprfinal))
 
 We will create a DESeq2 dataset so that we can use some of the DESeq2 functions. Since we are not doing differential expression, we will not specify a model. We have to transpose the expression data for DESeq2 to have samples as columns and genes as rows.
 
-```
+```{R, eval=FALSE}
 dds = DESeqDataSetFromMatrix(countData = t(exprfinal),
                               colData = metafinal,
                               design = ~ 1)
@@ -166,7 +171,7 @@ dds = DESeqDataSetFromMatrix(countData = t(exprfinal),
 
 We will futher filter the genes to keep only genes that have at least 10 reads in 40% of the samples (70 samples). This allows us to look at genes that are not expressed or have really low expression in one condition but not in the other.
 
-```
+```{R, eval=FALSE}
 ddsFilt = dds[rowSums(counts(dds) >= 10) >= 70,]
 
 nrow(ddsFilt)
@@ -174,13 +179,13 @@ nrow(ddsFilt)
 
 We will do VST (Variance Stabilizing Transformation)  normalization using a DESeq2 function.
 
-```
+```{R, eval=FALSE}
 ddsFiltNorm = vst(ddsFilt)
 ```
 
 Get the normalized counts and transform them back into the WGCNA format of samples as rows and genes as columns.
 
-```
+```{R, eval=FALSE}
 ncnt = t(assay(ddsFiltNorm))
 ```
 
@@ -190,7 +195,7 @@ ncnt = t(assay(ddsFiltNorm))
 
 Choose some powers to test. We'll use a soft threshold, which emphasizes (weights) the strong correlations.
 
-```
+```{R, eval=FALSE}
 power = c(c(1:10), seq(from = 12, to = 30, by = 2))
 ```
 
@@ -198,7 +203,7 @@ Run them to see which power best models a scale-free network. We'll be using "si
 
 <!-- Negatively correlated genes could be split into a different module and if you want to pull them back together you might consider also doing an unsigned network. -->
 
-```
+```{R, eval=FALSE}
 sft = pickSoftThreshold(ncnt,
                         powerVector = power,
                         networkType = "signed",
@@ -207,7 +212,7 @@ sft = pickSoftThreshold(ncnt,
 
 Plot them.
 
-```
+```{R, eval=FALSE}
 pdf("softThreshold.pdf")
 
 ggplot(sft$fitIndices, aes(x=Power, y=SFT.R.sq, label = Power)) +
@@ -231,7 +236,7 @@ dev.off()
 
 Manually choose a threshold. You want to have a high R2 for fitting the scale-free model while not letting the connectivity drop too low.
 
-```
+```{R, eval=FALSE}
 soft = 10
 ```
 
@@ -241,7 +246,7 @@ soft = 10
 
 We need to do a correlation. There are 2 different "cor" functions, one in base R and one in WGCNA. We want to make sure it is using the latter so we'll stash the base R function in the temp_cor variable and make sure that "cor" points to the WGCNA version.
 
-```
+```{R, eval=FALSE}
 temp_cor = cor
 cor = WGCNA::cor
 ```
@@ -262,7 +267,7 @@ Identifies modules
 Merges modules
 
 
-```
+```{R, eval=FALSE}
 bwnet = blockwiseModules(ncnt,
   maxBlockSize = 12000,
   TOMType = "signed",
@@ -275,7 +280,7 @@ bwnet = blockwiseModules(ncnt,
 
 Replace the base R cor back to its original name.
 
-```
+```{R, eval=FALSE}
 cor = temp_cor
 ```
 
@@ -285,17 +290,19 @@ Module eigengenes are essentially a hypothetical central, representative express
 
 <!-- they are actually defined as the first principal component of the expression matrix of each module -->
 
+```{R, eval=FALSE}
 module_eigengenes = bwnet$MEs
+```
 
 We can get number of genes for each module. Note that the grey module has all the genes that aren't connected to a module.
 
-```
+```{R, eval=FALSE}
 table(bwnet$colors)
 ```
 
 Plot the dendogram and the modules, both before and after merging.
 
-```
+```{R, eval=FALSE}
 pdf("dendrogram.pdf")
 
 plotDendroAndColors(bwnet$dendrograms[[1]],
@@ -318,7 +325,7 @@ dev.off()
 
 Get sample and gene counts
 
-```
+```{R, eval=FALSE}
 nSamples = nrow(ncnt)
 nGenes = ncol(ncnt)
 ```
@@ -327,7 +334,7 @@ Perform a correlation
 
 <!-- is the p for pearson? or pairwise complete obs?) -->
 
-```
+```{R, eval=FALSE}
 module.trait.corr = cor(module_eigengenes, metafinal, use = 'p')
 module.trait.corr.pvals = corPvalueStudent(module.trait.corr, nSamples)
 ```
@@ -335,7 +342,7 @@ module.trait.corr.pvals = corPvalueStudent(module.trait.corr, nSamples)
 
 First, merge the eigengenes with the metadata. We'll need to create row names from column 1 then delete column 1. We'll also delete columns 8 (grey module), 9 (patient id), and 14 (another id that is mostly missing).
 
-```
+```{R, eval=FALSE}
 heatmap.data = merge(module_eigengenes, metafinal, by = 'row.names')
 
 rownames(heatmap.data) = heatmap.data$Row.names 
@@ -352,9 +359,9 @@ Diagnosis
 Days from first intubation  
 Superinfection
 
-We'll need to convert the phenotypes to numeric, binary data. Age and days from first intubation are already numeric. The remaining variables are all binary and we can see their categories with the table function. Note that superinfection has a lot of missing data since it is only filled in for COVID-19 cases.
+We'll need to convert the phenotypes to numeric data. Age and days from first intubation are already numeric. The remaining variables are all binary and we can see their categories with the table function. Note that superinfection has a lot of missing data since it is only filled in for COVID-19 cases.
 
-```
+```{R, eval=FALSE}
 table(heatmap.data$sex)
 table(heatmap.data$diagnosis)
 table(heatmap.data$superinfection)
@@ -362,7 +369,7 @@ table(heatmap.data$superinfection)
 
 Let's change the binary categories to numbers.
 
-```
+```{R, eval=FALSE}
 heatmap.data$sex = gsub('Male', '0', heatmap.data$sex)
 heatmap.data$sex = gsub('Female', '1', heatmap.data$sex)
 heatmap.data$sex = as.numeric(heatmap.data$sex)
@@ -378,27 +385,27 @@ heatmap.data$superinfection = as.numeric(heatmap.data$superinfection)
 
 Age is a little trickier. We'll break that into people ages 65+ and under 65 given that people over 65 and older have an increased risk of severe COVID-19 disease. The age range is from 25.79535 to 120.10335 (!). I guess that age 120 is not impossible so we'll go with it. The next oldest is 87.18891 (which seems more reasonable).
 
-```
+```{R, eval=FALSE}
 heatmap.data$age[heatmap.data$age<65]=0
 heatmap.data$age[heatmap.data$age>=65]=1
 ```
 
 Check how many are 65+ (1) and how many are <65 (0).
 
-```
+```{R, eval=FALSE}
 table(heatmap.data$age)
 ```
 
 days_from_first_intubation ranges from 0 to Inf (the next highest is 90). Let's make this a binary <=10 and >10.
 
-```
+```{R, eval=FALSE}
 heatmap.data$days_from_first_intubation[heatmap.data$days_from_first_intubatio<=10]=0
 heatmap.data$days_from_first_intubation[heatmap.data$days_from_first_intubatio>10]=1
 ```
 
 Check the numbers.
 
-```
+```{R, eval=FALSE}
 table(heatmap.data$days_from_first_intubation)
 ```
 
@@ -407,7 +414,7 @@ table(heatmap.data$days_from_first_intubation)
 
 
 
-```
+```{R, eval=FALSE}
 pdf("heatmap.pdf")
 
 CorLevelPlot(heatmap.data,
@@ -423,7 +430,7 @@ dev.off()
 
 Let's focus on the green module, which is significantly increased in COVID-19 compared to other pneumonias and the turquoise module which is significantly decreased in COVID-19 compared to other pneumonias.
 
-```
+```{R, eval=FALSE}
 green = row.names(as.data.frame(bwnet$color[bwnet$color=="green"]))
 write.table(green, file="green.txt", sep="\n", row.names=FALSE, col.names=FALSE, quote=FALSE)
 
@@ -431,29 +438,119 @@ turquoise = row.names(as.data.frame(bwnet$color[bwnet$color=="turquoise"]))
 write.table(turquoise, file="turquoise.txt", sep="\n", row.names=FALSE, col.names=FALSE, quote=FALSE)
 ```
 
-Download the files and put the gene lists into cytoscape and look at the KEGG and GO pathways.
+Download the files to your local computer and put the gene lists into cytoscape and look at the KEGG and GO pathways.
 <!-- KEGG is viral recognition for green-->
-<!-- lots of immune associate genes -->
+<!-- lots of immune associated genes -->
 
+<!--In progress
+
+### Plot expression patterns {-}
+
+Let's plot the green and turquoise modules.
+
+First we need to get the normalized expression counts for each module.
+
+```{R, eval=FALSE}
+green.expr = as.data.frame(ncnt[,colnames(ncnt) %in% green])
+
+turquoise.expr = as.data.frame(ncnt[,colnames(ncnt) %in% turquoise])
+```
+
+Take a look at them.
+
+```{R, eval=FALSE}
+head(green.expr)
+
+head(turquoise.expr)
+```
+
+We need to change the format. First, load the tidyverse library.
+
+```{R, eval=FALSE}
+library(tidyverse)
+```
+
+Then we can fix the format.
+
+```{R, eval=FALSE}
+g.mutate = green.expr %>% mutate (sample_id = row.names(.)) %>% pivot_longer(-sample_id)
+
+t.mutate = turquoise.expr %>% mutate (sample_id = row.names(.)) %>% pivot_longer(-sample_id)
+```
+
+Take a look at the new format. It is now in a tibble which is an improved version of a data frame.
+
+```{R, eval=FALSE}
+head(g.mutate)
+dim(g.mutate)
+
+head(t.mutate)
+dim(t.mutate)
+```
+
+Let's set the order on the x axis. First we'll grab the samples diagnosed as COVID-19 pneumonia. Then we'll grab the samples diagnosed as other pneumonias.
+
+```{R, eval=FALSE}
+csamples = row.names(metafinal[metafinal$diagnosis == 1,])
+osamples = row.names(metafinal[metafinal$diagnosis == 0,])
+```
+
+Now, we'll turn sample_id into a factor with levels that include the COVID-19 samples first and then the other pneumonia samples. That way, the COVID-19 samples will all be grouped together and the other pneumonia samples will be grouped together.
+
+```{R, eval=FALSE}
+g.mutate$sample_id <- factor(g.mutate$sample_id, levels = c(csamples,osamples))
+
+t.mutate$sample_id <- factor(t.mutate$sample_id, levels = c(csamples,osamples))
+```
+
+Now let's plot them.
+
+```{R, eval=FALSE}
+pdf("patterns.pdf", width=20)
+
+ggplot(g.mutate, aes(x=sample_id, y=value, group=name)) +
+  geom_line(alpha=0.2) +
+  theme(
+    axis.text.x = element_text(angle = 90)
+  ) +
+  labs(x = "Treatment",
+       y = "Normalized expression") + 
+  ggtitle("Green Module")
+
+ggplot(t.mutate, aes(x=sample_id, y=value, group=name)) +
+  geom_line(alpha=0.2) +
+  theme(
+    axis.text.x = element_text(angle = 90)
+  ) +
+  labs(x = "Treatment",
+       y = "Normalized expression") +
+  ggtitle("Turquoise Module")
+
+dev.off()
+```
+
+XXX Order them by age as well? Color code by diagnosis or add bars and labels. Or add trend line. It's the peaks that matter.
+
+-->
 
 ## Driver genes
 
 <!-- all the datasets we are comparing have samples as rows and they are in the same order -->
 
-#Module Membership#
+### Module Membership {-}
 
 This will find genes that are highly connected to interesting modules. These hub genes are likely driving the trait response.
 
 We will calculate the module memership or intramodular connectivity by finding the correlation (and p-values) of the eigengene of each module to each gene's expression profile.
 
-```
+```{R, eval=FALSE}
 membership = cor(module_eigengenes, ncnt, use = 'p')
 membership.pvals = corPvalueStudent(membership, nSamples)
 ```
 
-Let's find some of the drivers for the green module. We'll pull out the row for the green module, change the column name to "pvalue", the sort it by the most significant to least significant and grab the top six genes.
+Let's find some of the drivers for the green module. We'll pull out the row for the green module, change the column name to "pvalue", then sort it by the most significant to least significant and grab the top six genes.
 
-```
+```{R, eval=FALSE}
 green.mod = as.data.frame(membership.pvals[rownames(membership.pvals) %in% "MEgreen",])
 
 colnames(green.mod)="pvalue"
@@ -468,13 +565,13 @@ ENSG00000157601 is MX1 (MX dynamin like GTPase 1). It is part of the antiviral r
 ENSG00000111335 is OAS2 (2'-5'-oligoadenylate synthetase 2). It is involved in the innate immune response to viruses. It is induced by interferons and activates latent RNAase L to degrade virus and prevent replication.
 
 
-#Gene Significance#
+### Gene Significance {-}
 
 This will identify genes that are significantly associated with the trait of interest.
 
 Calculate the gene significance for the diagnosis trait and their associated p-values. We'll use the diagnosis column from metafinal rather than heatmap.data because the sample (row) order in metafinal is the same as that in ncnts, which we'll be comparing it to. We'll need to make it numeric.
 
-```
+```{R, eval=FALSE}
 metafinal$diagnosis = gsub('Other Pneumonia', '0', metafinal$diagnosis)
 metafinal$diagnosis = gsub('COVID-19', '1', metafinal$diagnosis)
 metafinal$diagnosis = as.numeric(metafinal$diagnosis)
@@ -485,7 +582,7 @@ gene.signf.pvals = as.data.frame(corPvalueStudent(gene.signf, nSamples))
 
 Take a look at the genes sorted starting with the most significant. These genes have a high impact on differentiating between COVID-19 and other pneumonias (diagnosis trait).
 
-```
+```{R, eval=FALSE}
 head(gene.signf.pvals[order(gene.signf.pvals$V1),,drop = FALSE])
 ```
 
@@ -496,7 +593,7 @@ ENSG00000165949 is IFI27 (interferon alpha inducible protein 27). It is induced 
 ENSG00000132938 is MTUS2 (microtubule associated scaffold protein 2). This gene triggers microtuble binding and protein homodimerization. Located with the centrosomes and cytoplasmic microtubules.
 
 
-Bonus exercises:
+### Bonus exercises {-}
 
 1) Look at modules important to some of the other phenotypes.
 2) Do differential expression on the COVID-19 dataset.
