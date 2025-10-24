@@ -191,7 +191,9 @@ for file in *.sam; do samtools view -u ${file} | samtools sort -o ${file}.sorted
 Rename the output files
 
 ```{bash, eval=FALSE}
-file-rename -- 's/\.fastp.fastq.gz.sam.sorted$/.sorted.bam/' *.sorted
+for f in *.fastp.sam.sorted; do
+    mv "$f" "${f/.fastp.sam.sorted/.sorted.bam}"
+done
 ```
 
 Exercise: What average genome coverage do our primary alignments give us?
