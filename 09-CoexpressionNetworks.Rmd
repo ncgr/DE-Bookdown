@@ -26,13 +26,13 @@ When doing this type of analysis, there are a few things to keep in mind.
 
 Work in a screen
 
-```
+```{bash, eval=FALSE}
 screen -S coexpr
 ```
 
 Activate the environment
 
-```
+```{bash, eval=FALSE}
 conda activate vis
 ```
 
