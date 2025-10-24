@@ -1,7 +1,5 @@
 # More Complex Datasets
 
-## Data
-
 We'll use a rice dataset. The publication can be found here: https://pmc.ncbi.nlm.nih.gov/articles/PMC12304625/#tpj70349-fig-0003
 
 All samples are from the Nipponbare accession and are leaf tissue.
