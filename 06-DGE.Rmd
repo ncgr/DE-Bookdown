@@ -261,6 +261,11 @@ dev.off()
 ```
 
 ![](./Figures/PCA.allsamples2-1.png){width=100%}
+
+
+<!-- With only 18 genes, ClueGO can't find anything even if you relax the p value. You get 50 genes if you call differential genes at p<=0.1 but that only gives one GO term even if you double the p value for the 2 sided test.-->
+
+
 <!--
 ## Gene count plots
 
