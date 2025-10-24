@@ -11,7 +11,7 @@ Make sure you are in a screen.
 
 Look at the format for a .gff file: https://en.wikipedia.org/wiki/General_feature_format
 
-<!-- Exercise: Which genome/annotation pair in /home/data/de-2403/exercise_genomes/ has mismatched sequence headers? -->
+<!-- Exercise: Which genome/annotation pair in /home/data/diffexpr/exercise_genomes/ has mismatched sequence headers? -->
 
 <!-- ASM674v1 has .1 in the fasta but not in the gff -->
 

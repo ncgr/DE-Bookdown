@@ -42,12 +42,12 @@ conda activate sra-tools
 
 for i in `cat SRRlist.txt`; do
   fasterq-dump --outdir . ${line}
-done < ~/home/data/de-2403/SRRlist.txt
+done < ~/home/data/diffexpr/SRRlist.txt
 ```
 
 Softlink the pre-downloaded data (after you cancel the command above):
 ```{bash, eval=FALSE}
-ln -s /home/data/de-2403/reads/*.gz .
+ln -s /home/data/diffexpr/reads/*.gz .
 ```
 
 ## fastp Quality Control  

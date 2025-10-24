@@ -67,7 +67,7 @@ The data includes raw gene counts from https://www.nature.com/articles/s41586-02
 It has been transposed so that the genes are the column and the rows are the samples.
 
 ```
-expr = read.table("/home/data/de-2403/wgcna/covidxpneumonia.csv")
+expr = read.table("/home/data/diffexpr/wgcna/covidxpneumonia.csv")
 ```
 
 ## Check Samples and Genes
@@ -137,7 +137,7 @@ exprfinal = exprgood[!(rownames(exprgood) %in% remove),]
 Read in the metadata table.
 
 ```
-meta = read.table("/home/data/de-2403/wgcna/metadata_covidxpneumonia.csv",sep=",", header=TRUE, row.names=1)
+meta = read.table("/home/data/diffexpr/wgcna/metadata_covidxpneumonia.csv",sep=",", header=TRUE, row.names=1)
 
 ```
 
