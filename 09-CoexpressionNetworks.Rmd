@@ -4,7 +4,7 @@
 
 <!-- maybe add in a bioinformagician explatory video -->
 
-
+<!-- Make sure people save their R workspace if this splits over multiple sessions; or I can copy my R history files-->
 
 Coexpression networking analysis looks at genes with similar expression patterns across treatments. These genes are likely all controlled together and comprise a gene expression "module".
 
