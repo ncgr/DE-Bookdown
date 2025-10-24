@@ -143,7 +143,6 @@ Read in the metadata table.
 
 ```{R, eval=FALSE}
 meta = read.table("/home/data/diffexpr/wgcna/metadata_covidxpneumonia.csv",sep=",", header=TRUE, row.names=1)
-
 ```
 
 Remove the two problematic samples.
