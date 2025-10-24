@@ -3,7 +3,7 @@ output:
   pdf_document: default
   html_document: default
 ---
-# Pathway Enrichment Analysis
+# Pathway and Gene Ontology Enrichment
 
 ## Cytoscape and ClueGO
 
@@ -82,4 +82,16 @@ In the window that appears, drag the handle position to 0 and change the color t
 
 You can save the session by clicking the icon at the top right of the app, which will allow you to return to the visualization and settings of the analysis in another session.
 
+## Revigo
 
+Revigo (reduce & visualize gene ontology) is a tool that will collapse related GO terms and create some interactive visualizations.
+
+Copy your enriched GO terms ("ID" column) and the "Term PValue Corrected with Bonferroni step down" column (note: it is ok to include the KEGG pathways that are in the "ID" column, Revigo will just warn you that it can't find any matches for them and will ignore them).
+
+Go to http://revigo.irb.hr/ and paste them in the box.
+
+Change the species to "Homo sapiens".
+
+Click on "Start Revigo".
+
+After we explore the results, try rerunning it, changing "How large would you like the resulting list to be" to different values.
