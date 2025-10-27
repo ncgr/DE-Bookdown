@@ -382,6 +382,13 @@ heatmap.data$superinfection = gsub('Superinfection', '1', heatmap.data$superinfe
 heatmap.data$superinfection = as.numeric(heatmap.data$superinfection)
 ```
 
+age and days_from_first_intubation are already numeric so we can leave them as is. But days_from_first_intubation has one entry that is Inf (infinity), presumably meaning that the person was never intubated. This messes up downstream analyses because some of them don't consider Inf as a numeric value. Plus the one patient that wasn't intubated is in a category all their own. Let's replace that Inf value with NA.
+
+```{R, eval=FALSE}
+heatmap.data$days_from_first_intubation[heatmap.data$days_from_first_intubation>=Inf]=N
+```
+
+<!--
 Age is a little trickier. We'll break that into people ages 65+ and under 65 given that people over 65 and older have an increased risk of severe COVID-19 disease. The age range is from 25.79535 to 120.10335 (!). I guess that age 120 is not impossible so we'll go with it. The next oldest is 87.18891 (which seems more reasonable).
 
 ```{R, eval=FALSE}
@@ -397,9 +404,10 @@ table(heatmap.data$age)
 
 days_from_first_intubation ranges from 0 to Inf (the next highest is 90). Let's make this a binary <=10 and >10.
 
+
 ```{R, eval=FALSE}
-heatmap.data$days_from_first_intubation[heatmap.data$days_from_first_intubatio<=10]=0
-heatmap.data$days_from_first_intubation[heatmap.data$days_from_first_intubatio>10]=1
+heatmap.data$days_from_first_intubation[heatmap.data$days_from_first_intubation<=10]=0
+heatmap.data$days_from_first_intubation[heatmap.data$days_from_first_intubation>10]=1
 ```
 
 Check the numbers.
@@ -407,6 +415,8 @@ Check the numbers.
 ```{R, eval=FALSE}
 table(heatmap.data$days_from_first_intubation)
 ```
+
+-->
 
 
 <!--I tried using binarizeCategoricalColumns but it didn't seem to keep things in order; maybe I was trying it on metafinal rather than heatmap.data -->
