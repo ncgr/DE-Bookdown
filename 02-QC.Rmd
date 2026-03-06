@@ -33,7 +33,7 @@ We have a list of unique identifiers from 6 Sequencing Runs for sample sequences
 
 Though we only have 6 samples, the sequencing **depth** is very high, making the download time ~ 1hr. 
 
-<span style="color:red">Time will not allow for us to complete this command, so we will cancel the command after checking it works.</span>. 
+**<span>Time will not allow for us to complete this command, so we will cancel the command after checking it works</span>.** 
 
 
 Download fastq sequence files from NCBI's SRA:
