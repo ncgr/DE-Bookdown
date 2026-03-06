@@ -72,7 +72,8 @@ Follow installer prompts.
 
 Everyone will need Cytoscape (a web-based pathway analysis tool).  Please perform the following:
 
-* Download Cytoscape: instructions at https://cytoscape.org/ >Download. 
+* Download Cytoscape: instructions at https://cytoscape.org/
+  * Then click "Download".
 
 
 ## Agenda
