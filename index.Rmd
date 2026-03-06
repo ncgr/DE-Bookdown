@@ -118,14 +118,12 @@ _____
 
 <span style="color: forestgreen;">Sequence Metrics and Quality Control</span> (Adam)\
 
-Sequencing Technologies and Lab Protocols (Adam)
+<span style="color: forestgreen;">Read Alignment</span> (indexing) (Adam)\
 
 
 <span style="color: lightgray;">AFTERNOON</span>\
 
-Sequencing Technologies and Lab Protocols (cont) (Adam)
-
-<span style="color: forestgreen;">Read Alignment</span> (indexing) (Adam)\
+<span style="color: forestgreen;">Abundance Estimation</span> (Joann)\ 
 
 _____
 
@@ -133,32 +131,37 @@ _____
 
 <span style="color: lightgray;">MORNING</span>\
 
-<span style="color: forestgreen;">Abundance Estimation</span> (Joann)\ 
-
-<span style="color: forestgreen;">Differential Gene Expression Analysis</span> (Joann)
-
-
-<span style="color: lightgray;">AFTERNOON</span>\
-
-<span style="color: forestgreen;">Differential Gene Expression Analysis (cont) </span> (Joann)
-
-<span style="color: forestgreen;">Model Design</span> (Joann)
-
-
-_____
-
-**Thursday**
-
-<span style="color: lightgray;">MORNING</span>\
+Sequencing Technologies and Lab Protocols (Adam)
 
 <span style="color: forestgreen;">Visualization</span> (Adam)\
 
 
 <span style="color: lightgray;">AFTERNOON</span>\
 
+<span style="color: forestgreen;">Visualization</span> (cont) (Adam)\
+
 <span style="color: forestgreen;">Interactive Visualization</span> (Adam)\
 
-<span style="color: forestgreen;">Coexpression Networks</span> (Joann)\
+
+_____
+
+**Thursday**
+
+
+<span style="color: lightgray;">MORNING</span>\
+
+<span style="color: forestgreen;">Differential Gene Expression Analysis</span> (Joann)
+
+
+
+<span style="color: lightgray;">AFTERNOON</span>\
+
+<span style="color: forestgreen;">Differential Gene Expression Analysis (cont)</span> (Joann)
+
+<span style="color: forestgreen;">Power Analysis</span> (Joann)
+
+<span style="color: forestgreen;">Model Design</span> (Joann)
+
 
 _____
 
@@ -166,12 +169,12 @@ _____
 
 <span style="color: lightgray;">MORNING</span>\
 
-<span style="color: forestgreen;">Coexpression Networks (cont)</span> (Joann)\
-
-<span style="color: forestgreen;">Enrichment Analysis</span> (Joann)\
+<span style="color: forestgreen;">Coexpression Networks</span> (Joann)\
 
 
 <span style="color: lightgray;">AFTERNOON</span>\
+
+<span style="color: forestgreen;">Enrichment Analysis</span> (Joann)\
 
 <span style="color: forestgreen;">Rice Dataset</span> (Joann)\
 
