@@ -713,3 +713,73 @@ screen -rd singlecell
 More information for screen and keyboard shortcuts are here: https://www.geeksforgeeks.org/linux-unix/screen-command-in-linux-with-examples/
 
 
+## Exercises
+
+### Setup
+
+1. If you are in a screen, exit it.
+
+2. Create a new screen called "exercises".
+
+3. Create a directory in your home directory called "linux_exercises".
+
+4. Navigate into that directory.
+
+5. Check what directory you are in.
+
+6. Copy "pandemics.txt", "sarscov2_variants.txt", and "virus_info.txt" from "/home/data/linux" into your current directory.
+
+7. Make sure that the files are there and that their file sizes are not zero (hint: list the files using the "-l" option).
+
+### File manipulation
+
+**Using file "virus_info.txt":**
+
+1. How many genomes have a genome size less than 29,800 nucleotides?
+
+**Using file "pandemics.txt":**
+
+2. Look at the file in a way that makes the columns lined up and easy to read (hint: the file is tab delimited but there are also spaces).
+
+<!-- column -t -s $'\t' pandemics.csv -->
+
+3. Using awk, print to standard output (stdout) the number of pandemics in the file that have occured since 2000.
+
+**Using file "sarscov2_variants.txt":**
+
+4. Look at the file to figure out what is in it. If you don't understand the terms in the column names, look them up or ask another student before proceeding. The data here is from https://libguides.mskcc.org/SARS2/EvolutionsStages.
+
+5. Use awk to answer the following questions:
+
+* Which SARS-CoV-2 variants have more than 500 Confirmed cases per 100,000?
+* Which SARS-CoV-2 variants have fewer than 2 Confirmed deaths per 100,000?
+* Which SARS-CoV-2 variants have a Case Fatality Rate (CFR) greater than or equal to 0.02?
+* What interesting observations did you find as you answered these questions?
+
+6. Spaces can be a pain in tab-delimited files. Use sed to replace all the spaces with underscores and then look at the file to make sure that it worked.
+
+7. Create a new file called "2column_sarscov2_variants.txt" that has only the Variant and Confirmed deaths per 100,000 columns.
+
+### History
+
+1. Save your history to a file called "history.txt".
+
+2. Use the history and tail commands (hint: you will need to use a pipe) to save the most recent 25 commands to a file called "recent_history.txt"
+
+3. Use the history and grep commands to print the "column" commans you used to the screen.
+
+### File transfer
+
+1. Transfer your two history files to your local machine. Make sure they are there and that you can open them up.
+
+2. Transfer them back to logrus.
+
+### Working with multiple files
+
+1. Count the number of lines in your history files (hint: you can do it in one line using *history.txt)
+
+2. Count the number of lines in all files in your directory that have the word "Wuhan" (Wuhan is original SARS-CoV-2 isolate named after the city it was found in).
+
+3. Use a for loop to loop through all files and print the filename (hint: "echo $i") and then search for lines with "Wuhan".
+
+<!-- for i in *; do echo $i; grep Wuhan $i; done -->
