@@ -450,9 +450,9 @@ You can limit the search to the beginning or end of the line using "^" or "$", r
 grep "^>" covid.fasta
 ```
 
-### awk
+### Subsetting columns
 
-'awk' is a scripting tool that is very powerful. Here, we will use it to subset (and rearrange) columns.
+'awk' is a scripting tool that is very powerful. Here, we will use it to subset (and rearrange) columns but you will cover additional things that you can do with awk later in this workshop.
 
 + **A**ho, **W**einberger and **K**ernighan 
     + the authors of the language
@@ -482,6 +482,13 @@ You can also rearrange columns.
 awk -F "\t" '{print $6 "\t" $1 "\t" $5}' 30_virus_info.txt
 ```
 
+In addition, you can use 'cut' to subset columns. By default, 'cut' uses tab as a delimiter (but you can change it with the "-d" option). However, you can't rearrange the columns.
+
+* Grab the accession, length, and year (columns 1, 5, and 6).
+
+```{bash, eval=FALSE}
+cut -f 1,5-6 30_virus_info.txt
+```
 
 ## The pipe operator
 
@@ -668,4 +675,8 @@ screen -rd singlecell
 ```
 
 More information for screen and keyboard shortcuts are here: https://www.geeksforgeeks.org/linux-unix/screen-command-in-linux-with-examples/
+
+
+## Exercises
+
 
