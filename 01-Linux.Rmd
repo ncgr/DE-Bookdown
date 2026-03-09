@@ -357,6 +357,7 @@ Grab the end of the file.
 tail covid.fasta
 ```
 
+
 ### Column
 
 With all the methods for looking at a file that we have discussed so far, tab-delimited files can end up spaced in a way that is really hard to read.
@@ -367,19 +368,30 @@ Let's look at the information about the SARS-Cov-2 viral isolates. You should al
 ln -s /home/data/linux/virus_info.txt .
 ```
 
+Let's use head to get the first 30 lines and put it in a file called "30_virus_info.txt". The "-n" parameter will allow us to change the number of lines from the default of 10.
+
+<!-- Doing this so the column header doesn't scroll off (and we can't pipe it into more or head because we haven't taught the students about pipes yet); also good practice for head -->
+
+```{bash, eval=FALSE}
+head -30 virus_info.txt > 30_virus_info.txt
+```
+
+
 Use 'more' to look at the file to see how the columns get shifted.
 
 ```{bash, eval=FALSE}
-more virus_info.txt
+more 30_virus_info.txt
 ```
 
-To make tab-delimited files easier to read, use the '**column**' command with the "-t" (table) parameter, which will make it look like a table. We'll pipe it into 'more' so the headers don't scroll off the screen.
+To make tab-delimited files easier to read, use the '**column**' command with the "-t" (table) parameter, which will make it look like a table. Let's start with a basic command.
 
 ```{bash, eval=FALSE}
-column -t covid.fasta
+column -t 30_virus_info.txt
 ```
 
 By default it will create the table by splitting at all white space, which is a little more splitting that we need. But we can explicitly tell it to use a tab to split.
+
+<!-- the "$" is an escape key, otherwise it will split at every t-->
 
 ```{bash, eval=FALSE}
 column -t -s $'\t' virus_info.txt
@@ -438,6 +450,8 @@ General syntax:
     + output goes to standard out=terminal
 + awk 'pattern {action}' input-file > output-file
     + or send to an output file
+
+We'll practice 
 
 XXX Add in example from the virus_info.txt file
 
