@@ -282,7 +282,7 @@ Change the connection from ftp (file transfer protocol) to sftp (ssh file transf
 
 + Under host, type "inbre.ncgr.org".
 
-+ Under host, type "2309".
++ Under host, type "2403".
 
 + Put in your username.
 
