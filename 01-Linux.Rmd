@@ -490,6 +490,29 @@ In addition, you can use 'cut' to subset columns. By default, 'cut' uses tab as 
 cut -f 1,5-6 30_virus_info.txt
 ```
 
+## Substitutions
+
+We can use 'sed' (**s**tream **e**ditor) to do substitutions in files. The format is: 
+
+sed 's/thing_to_be_replaced/thing_to_replace_it_with/g' <filename>
+
+The "g" (**g**lobal) option at the end tells sed to replace every instance, not just the first instance on a line.
+
+For practice, we'll replace the year "2020" with "1920" in the "30_virus_info.txt" file. 
+
+```{bash, eval=FALSE}
+sed 's/2020/1920/g' 30_virus_info.txt
+```
+
+The code above prints the output to the screen but you could also redirect (">") it into another file. In addition, you can use the "-i" option to edit the file "in place".
+
+```{bash, eval=FALSE}
+sed -i 's/2020/1920/g' 30_virus_info.txt
+
+cat 30_virus_info.txt
+```
+
+
 ## The pipe operator
 
 The pipe operator ("|") takes the output of one command and passes it as input into a second command.
