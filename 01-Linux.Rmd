@@ -1,5 +1,7 @@
 # Linux Basics
 
+<!-- Might want to add in 'sort' at some point-->
+
 ## Server Info
 
 ### What are the NCGR Server, Linux, and bash?
@@ -377,12 +379,15 @@ ln -s /home/data/linux/virus_info.txt .
 
 Let's use head to get the first 30 lines and put it in a file called "30_virus_info.txt". The "-n" option will allow us to change the number of lines from the default of 10.
 
+
+
 <!-- Doing this so the column header doesn't scroll off (and we can't pipe it into more or head because we haven't taught the students about pipes yet); also good practice for head -->
 
 ```{bash, eval=FALSE}
-head -30 virus_info.txt > 30_virus_info.txt
+head -n 30 virus_info.txt > 30_virus_info.txt
 ```
 
+> **_NOTE:_** The "-n" option works similarly in 'tail'.
 
 Use 'more' to look at the file to see how the columns get shifted.
 
@@ -450,9 +455,9 @@ You can limit the search to the beginning or end of the line using "^" or "$", r
 grep "^>" covid.fasta
 ```
 
-### Subsetting columns
+### Subsetting
 
-'awk' is a scripting tool that is very powerful. Here, we will use it to subset (and rearrange) columns but you will cover additional things that you can do with awk later in this workshop.
+'awk' is a scripting tool that is very powerful. Here, we will use it to subset (and rearrange) columns as well as subsetting rows based on their values, but you will cover additional things that you can do with awk later in this workshop.
 
 + **A**ho, **W**einberger and **K**ernighan 
     + the authors of the language
@@ -488,6 +493,14 @@ In addition, you can use 'cut' to subset columns. By default, 'cut' uses tab as 
 
 ```{bash, eval=FALSE}
 cut -f 1,5-6 30_virus_info.txt
+```
+
+'awk' can also be used to grab rows based on their values in a certain column by putting in a conditional statement before the curly brackets.
+
+Grab the lines in "30_virus_info.txt" that have a genome length (column 5) >= 29900. Here we will just print to the screen but you could redirect (">") it into a file if desired.
+
+```{bash, eval=FALSE}
+awk -F "\t" '$5>=29900{print}' 30_virus_info.txt
 ```
 
 ## Substitutions
@@ -698,8 +711,5 @@ screen -rd singlecell
 ```
 
 More information for screen and keyboard shortcuts are here: https://www.geeksforgeeks.org/linux-unix/screen-command-in-linux-with-examples/
-
-
-## Exercises
 
 
