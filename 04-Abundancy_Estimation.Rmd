@@ -24,7 +24,7 @@ zcat ~/DGE_workshop/genome/GCF_000001635.27_GRCm39_genomic.gff.gz | more
 
 ## Counts
 
-### Make a subdirectory for the counts {-}
+Make a subdirectory for the counts
 
 ```{bash, eval=FALSE}
 mkdir ~/DGE_workshop/counts
@@ -37,7 +37,7 @@ pwd
 ```
 
 
-### Generate counts from the alignments directory {-}
+Generate counts from the alignments directory
 
 ```{bash, eval=FALSE}
 conda activate featurecounts
