@@ -9,7 +9,7 @@ output:
 
 Create a new directory named "genome" **within the DGE_workshop directory**
 
-<span style="color:red">**MAKE SURE YOUR ARE IN THE CORRECT DIRECTORY BEFORE YOU MAKE THIS DIRECTORY**</span>
+**MAKE SURE YOUR ARE IN THE CORRECT DIRECTORY BEFORE YOU MAKE THIS DIRECTORY**</span>
 
 ```{bash, eval=FALSE}
 mkdir genome
@@ -32,7 +32,7 @@ What is Mus musculus?
 
 Use wget command to download files using a link:
 ```{bash, eval=FALSE}
-wget https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/latest_assembly_versions/GCF_000001635.27_GRCm39/GCF_000001635.27_GRCm39_genomic.fna.gz
+wget -4 https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/latest_assembly_versions/GCF_000001635.27_GRCm39/GCF_000001635.27_GRCm39_genomic.fna.gz
 ```
 
 What type of file did you just download?  
@@ -41,7 +41,7 @@ What do you know about this file format?
 
 Use wget command to dowload files using a link:
 ```{bash, eval=FALSE}
-wget https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/latest_assembly_versions/GCF_000001635.27_GRCm39/GCF_000001635.27_GRCm39_genomic.gff.gz
+wget -4 https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/latest_assembly_versions/GCF_000001635.27_GRCm39/GCF_000001635.27_GRCm39_genomic.gff.gz
 ```
 
 Because we know that we downloaded a **genome file**  
