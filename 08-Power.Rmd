@@ -1,0 +1,43 @@
+# Power Analysis
+
+An RNASeq power analysis allows us to estimate the number of samples we need to detect differential gene expression at a certain statistical power.
+
+*Sample size estimation*
+
+* The number of biological replicates we need to attain our desired statistical power
+
+*Power estimation*
+
+* Likelihood of finding statistical significance
+
+
+To calculate power to compare 2 groups you will need:
+
+
+* Depth
+  * Depth of sequencing: Number of reads generated for each sample
+  * Expected count (μ): Average number of reads per transcript for a sample
+
+* Coefficient of variation of counts within each group (cv or cv/cv2)
+  * Measure of data dispersion (stdev/mean)
+  * Reflects biological and technical variability
+  * If cv2 is not specified it is assumed that both groups have the same value
+
+* Effect (relative expression) we want to detect (∆).
+  * Fold change between two groups
+
+* Target false positive (α) and false negative (β) rate (or power = 1 − β)
+  * Power is the probability of correctly rejecting the null when its actually false (true positives)
+
+* Number of samples n in each group (n or n2)
+  * If n2 is not specified it is assumed that both groups have the same value
+
+
+*Resources*
+
+https://bioconductor.org/packages/release/bioc/html/RNASeqPower.html
+
+https://jillashey.github.io/JillAshey_Putnam_Lab_Notebook/RNASeq-PowerAnalysis/
+
+
+
