@@ -3,7 +3,7 @@ output:
   html_document: default
   pdf_document: default
 ---
-# Abundance Estimation
+# Feature Counts
 
 Make sure you are in a screen.
 
@@ -15,22 +15,29 @@ Look at the format for a .gff file: https://en.wikipedia.org/wiki/General_featur
 
 <!-- ASM674v1 has .1 in the fasta but not in the gff -->
 
-## FeatureCounts
+Take a look at your annotation file.
 
-### Make a subdirectory for the counts {-}
+```{bash, eval=FALSE}
+zcat ~/DGE_workshop/genome/GCF_000001635.27_GRCm39_genomic.gff.gz | more
+```
+
+
+## Counts
+
+Make a subdirectory for the counts
 
 ```{bash, eval=FALSE}
 mkdir ~/DGE_workshop/counts
 ```
 
-But you should still be in the alignments directory. Doublecheck.
+But you should still stay in the alignments directory. Doublecheck.
 
 ```{bash, eval=FALSE}
 pwd
 ```
 
 
-### Generate counts from the alignments directory {-}
+Generate counts from the alignments directory
 
 ```{bash, eval=FALSE}
 conda activate featurecounts
@@ -75,7 +82,7 @@ sed -i 's/.sam.sorted.bam//g' DESEQ2_matrix.tsv
 
 Now check the names again using the head command from above.
 
-Let's create a working subdirectory for DESeq2 and move the file we just made into it, to be ready for the next chapter.
+Let's create a working subdirectory for DESeq2 and move the file we just made into it.
 
 ```{bash, eval=FALSE}
 mkdir ~/DGE_workshop/DESeq2
