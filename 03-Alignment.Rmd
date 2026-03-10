@@ -65,14 +65,14 @@ conda activate hisat2
 
 Use the program HISAT2 to create indices:  
 
-<span style="color:red">Time will not allow for us to complete this command, so we will cancel the command after checking it works.</span>
+<span style="color:blue">Time will not allow for us to complete this command, so we will cancel the command after checking it works.</span>
 ```{bash, eval=FALSE}
 hisat2-build -p 10 GCF_000001635.27_GRCm39_genomic.fna GRCm39.index
 ```
 
 Make the output directory that your newly-created alignment files will be saved to.  
 
-This directory will be called "alignments" and <span style="color:red">**MUST BE IN YOUR DGE_workshop DIRECTORY**</span>
+This directory will be called "alignments" and <span style="color:blue">**MUST BE IN YOUR DGE_workshop DIRECTORY**</span>
 
 Again, if your directories and paths are incorrect, the following commands will not work.
 
