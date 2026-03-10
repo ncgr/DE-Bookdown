@@ -190,8 +190,8 @@ for file in *.sam; do samtools view -u ${file} | samtools sort -o ${file}.sorted
 Rename the output files
 
 ```{bash, eval=FALSE}
-for f in *.fastp.sam.sorted; do
-    mv "$f" "${f/.fastp.sam.sorted/.sorted.bam}"
+for f in *.sam.sorted; do
+    mv "$f" "${f%.sam.sorted}.sorted.bam"
 done
 ```
 
