@@ -1,5 +1,7 @@
 # Linux Basics
 
+<!-- Might want to add in 'sort' at some point-->
+
 ## Server Info
 
 ### What are the NCGR Server, Linux, and bash?
@@ -377,12 +379,15 @@ ln -s /home/data/linux/virus_info.txt .
 
 Let's use head to get the first 30 lines and put it in a file called "30_virus_info.txt". The "-n" option will allow us to change the number of lines from the default of 10.
 
+
+
 <!-- Doing this so the column header doesn't scroll off (and we can't pipe it into more or head because we haven't taught the students about pipes yet); also good practice for head -->
 
 ```{bash, eval=FALSE}
-head -30 virus_info.txt > 30_virus_info.txt
+head -n 30 virus_info.txt > 30_virus_info.txt
 ```
 
+> **_NOTE:_** The "-n" option works similarly in 'tail'.
 
 Use 'more' to look at the file to see how the columns get shifted.
 
@@ -450,9 +455,9 @@ You can limit the search to the beginning or end of the line using "^" or "$", r
 grep "^>" covid.fasta
 ```
 
-### awk
+### Subsetting
 
-'awk' is a scripting tool that is very powerful. Here, we will use it to subset (and rearrange) columns.
+'awk' is a scripting tool that is very powerful. Here, we will use it to subset (and rearrange) columns as well as subsetting rows based on their values, but you will cover additional things that you can do with awk later in this workshop.
 
 + **A**ho, **W**einberger and **K**ernighan 
     + the authors of the language
@@ -480,6 +485,44 @@ You can also rearrange columns.
 
 ```{bash, eval=FALSE}
 awk -F "\t" '{print $6 "\t" $1 "\t" $5}' 30_virus_info.txt
+```
+
+In addition, you can use 'cut' to subset columns. By default, 'cut' uses tab as a delimiter (but you can change it with the "-d" option). However, you can't rearrange the columns.
+
+* Grab the accession, length, and year (columns 1, 5, and 6).
+
+```{bash, eval=FALSE}
+cut -f 1,5-6 30_virus_info.txt
+```
+
+'awk' can also be used to grab rows based on their values in a certain column by putting in a conditional statement before the curly brackets.
+
+Grab the lines in "30_virus_info.txt" that have a genome length (column 5) >= 29900. Here we will just print to the screen but you could redirect (">") it into a file if desired.
+
+```{bash, eval=FALSE}
+awk -F "\t" '$5>=29900{print}' 30_virus_info.txt
+```
+
+## Substitutions
+
+We can use 'sed' (**s**tream **e**ditor) to do substitutions in files. The format is: 
+
+sed 's/thing_to_be_replaced/thing_to_replace_it_with/g' <filename>
+
+The "g" (**g**lobal) option at the end tells sed to replace every instance, not just the first instance on a line.
+
+For practice, we'll replace the year "2020" with "1920" in the "30_virus_info.txt" file. 
+
+```{bash, eval=FALSE}
+sed 's/2020/1920/g' 30_virus_info.txt
+```
+
+The code above prints the output to the screen but you could also redirect (">") it into another file. In addition, you can use the "-i" option to edit the file "in place".
+
+```{bash, eval=FALSE}
+sed -i 's/2020/1920/g' 30_virus_info.txt
+
+cat 30_virus_info.txt
 ```
 
 
@@ -669,3 +712,74 @@ screen -rd singlecell
 
 More information for screen and keyboard shortcuts are here: https://www.geeksforgeeks.org/linux-unix/screen-command-in-linux-with-examples/
 
+
+## Exercises
+
+### Setup
+
+1. If you are in a screen, exit it.
+
+2. Create a new screen called "exercises".
+
+3. Create a directory in your home directory called "linux_exercises".
+
+4. Navigate into that directory.
+
+5. Check what directory you are in.
+
+6. Copy "pandemics.txt", "sarscov2_variants.txt", and "virus_info.txt" from "/home/data/linux" into your current directory.
+
+7. Make sure that the files are there and that their file sizes are not zero (hint: list the files using the "-l" option).
+
+### File manipulation
+
+**Using file "virus_info.txt":**
+
+1. How many genomes have a genome size less than 29,800 nucleotides?
+
+**Using file "pandemics.txt":**
+
+2. Look at the file in a way that makes the columns lined up and easy to read (hint: the file is tab delimited but there are also spaces).
+
+<!-- column -t -s $'\t' pandemics.csv -->
+
+3. Using awk, print to standard output (stdout) the number of pandemics in the file that have occured since 2000.
+
+**Using file "sarscov2_variants.txt":**
+
+4. Look at the file to figure out what is in it. If you don't understand the terms in the column names, look them up or ask another student before proceeding. The data here is from https://libguides.mskcc.org/SARS2/EvolutionsStages.
+
+5. Use awk to answer the following questions:
+
+* Which SARS-CoV-2 variants have more than 500 Confirmed cases per 100,000?
+* Which SARS-CoV-2 variants have fewer than 2 Confirmed deaths per 100,000?
+* Which SARS-CoV-2 variants have a Case Fatality Rate (CFR) greater than or equal to 0.02?
+* What interesting observations did you find as you answered these questions?
+
+6. Spaces can be a pain in tab-delimited files. Use sed to replace all the spaces with underscores and then look at the file to make sure that it worked.
+
+7. Create a new file called "2column_sarscov2_variants.txt" that has only the Variant and Confirmed deaths per 100,000 columns.
+
+### History
+
+1. Save your history to a file called "history.txt".
+
+2. Use the history and tail commands (hint: you will need to use a pipe) to save the most recent 25 commands to a file called "recent_history.txt"
+
+3. Use the history and grep commands to print the "column" commans you used to the screen.
+
+### File transfer
+
+1. Transfer your two history files to your local machine. Make sure they are there and that you can open them up.
+
+2. Transfer them back to logrus.
+
+### Working with multiple files
+
+1. Count the number of lines in your history files (hint: you can do it in one line using *history.txt)
+
+2. Count the number of lines in all files in your directory that have the word "Wuhan" (Wuhan is original SARS-CoV-2 isolate named after the city it was found in).
+
+3. Use a for loop to loop through all files and print the filename (hint: "echo $i") and then search for lines with "Wuhan".
+
+<!-- for i in *; do echo $i; grep Wuhan $i; done -->
