@@ -32,7 +32,7 @@ library(ggplot2)
 ```
 
 ```{R, eval=FALSE}
-expr = read.table("SfromCcomplete.tsv", header = TRUE)
+expr = read.table("SfromC.tsv", header = TRUE)
 head(expr)
 ```
 
