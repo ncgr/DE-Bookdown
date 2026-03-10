@@ -63,7 +63,7 @@ Prepare the DESeq2-specific object.
 DESeqDataset = DESeqDataSetFromMatrix(countData=sampleCounts, colData=sampleTable, design=~condition)
 ``` 
 
-Optional step 1: Count genes with totals > 0 across all samples.
+Count genes with totals > 0 across all samples.
 
 ```{R, eval=FALSE}
 GeneCounts = counts(DESeqDataset)
@@ -71,7 +71,9 @@ idx.nz = apply(GeneCounts,1,function(x){all(x>0)})
 sum(idx.nz)
 ``` 
 
-Optional step 2: Generate library size normalization factors.
+Generate library size normalization factors.
+
+> **_NOTE:_** DESeq2 will estimate these size factors if you don't but it is good to explicitly look at them.
 
 ```{R, eval=FALSE}
 DESeqSF = estimateSizeFactors(DESeqDataset)
