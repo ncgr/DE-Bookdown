@@ -65,17 +65,17 @@ In groups, try changing the parameters and then we'll come back and discuss how 
 Let's get these parameters for the mouse data and try to calculate its power.
 
 
-First, load the normalied read counts.
-
-I had exported them like this and added them to your directories.
+First, load the normalized read counts.
 
 <!-- I added in a column header for the gene column manually-->
+
+I exported them as follows to /home/data/diffexpr/normcounts.mouse.tsv:
 
 write.table(as.data.frame(counts(dds,normalized=TRUE)),row.names=TRUE, quote=FALSE, sep="\t", file="normcounts.tsv")
 
 
 ```{R, eval=FALSE}
-ncnt = read.table("normcounts.tsv", header=TRUE)
+ncnt = read.table("/home/data/diffexpr/normcounts.mouse.tsv", header=TRUE)
 ```
 
 Take a look at the normalized counts.
