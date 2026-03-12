@@ -11,7 +11,7 @@ An RNASeq power analysis allows us to estimate the number of samples we need to 
 * Likelihood of finding statistical significance
 
 
-To calculate power to compare 2 groups you will need:
+To calculate power when comparing 2 groups you will need:
 
 
 * Depth
@@ -32,8 +32,135 @@ To calculate power to compare 2 groups you will need:
 * Number of samples n in each group (n or n2)
   * If n2 is not specified it is assumed that both groups have the same value
 
+Ideally, you would calculate the power up front, preferably using data from a pilot project, though you could also estimate the above values from publicly available data from the same or a related species and a similar treatment. You can also retroactively figure out what you power was using data from your experiment.
 
-*Resources*
+**Testing Parameters**
+
+Let's get a feel for how some of the parameters affect our power.
+
+Start in your DGE_workshop directory.
+
+```{R, eval=FALSE}
+cd ~/DGE_workshop/DESeq2
+```
+
+Load the library.
+
+```{R, eval=FALSE}
+library(RNASeqPower)
+```
+
+Often a power calculation is used to calculate the number of samples you need to achieve a given power.
+
+```{R, eval=FALSE}
+rnapower(depth=20, cv=0.8, effect= c(0.5,2,4,10), alpha=0.05, power=c(0.8))
+```
+
+In groups, try changing the parameters and then we'll come back and discuss how each parameter affected the power. Try to answer this question:
+
+* Is it better to get twice as much depth (40X) on 6 samples (3 per treatment; n=3) or get more biological reps at 20X coverage?
+
+**Mouse Data**
+
+Let's get these parameters for the mouse data and try to calculate its power.
+
+
+First, load the normalied read counts.
+
+I had exported them like this and added them to your directories.
+
+<!-- I added in a column header for the gene column manually-->
+
+write.table(as.data.frame(counts(dds,normalized=TRUE)),row.names=TRUE, quote=FALSE, sep="\t", file="normcounts.tsv")
+
+
+```{R, eval=FALSE}
+ncnt = read.table("normcounts.tsv", header=TRUE)
+```
+
+Take a look at the normalized counts.
+
+```{R, eval=FALSE}
+head(ncnt)
+```
+
+Let's get the average depth (mean of the counts), starting by getting the mean for each sample.
+
+```{R, eval=FALSE}
+m=colMeans(as.matrix(ncnt[,-1]))
+```
+
+Take a look.
+
+```{R, eval=FALSE}
+m
+```
+
+All the samples are close to 300X average depth so we'll use d=300.
+
+But first, we need the coefficient of variation (cv). To calculate the cv we need to calculate the standard deviation.
+
+```{R, eval=FALSE}
+sd=colSds(as.matrix(ncnt[,-1]),useNames=TRUE)
+```
+
+Now we can calculate cv=sd/m for each sample.
+
+<!-- It doesn't seem to matter what order cv and cv2 are in though I haven't tested it -->
+
+```{R, eval=FALSE}
+cv=sd/m
+```
+
+
+And let's get coefficients of variation for the two groups (control and treatment).
+
+```{R, eval=FALSE}
+ccv=mean(cv[1:3])
+
+tcv=mean(cv[4:6])
+```
+
+Take a look at them.
+
+```{R, eval=FALSE}
+csd
+
+tsd
+```
+
+They are pretty close. We could put them in individually as cv and cv2 but let's just use cv=17.8, which will be applied to both groups.
+
+Now we can calculate the number of samples we should have had in each group in order to get a power of 0.8 and alpha of 0.5, given our read depth and coefficient of variation. We'll use a range of effect sizes.
+
+```{R, eval=FALSE}
+rnapower(depth=300, cv=17.8, effect=c(0.5,2,4,10), alpha=0.05, power=0.8)
+```
+
+Now, let's calculate the power for the number of samples that we had.
+
+```{R, eval=FALSE}
+rnapower(depth=300, cv=17.8, effect=c(0.5,2,4,10), alpha=0.05, n=3)
+```
+
+This is definitely an underpowered study.
+
+
+**Online calculators**
+
+You can also calculate power using online calculators such as:
+
+https://cqs-vumc.shinyapps.io/rnaseqsamplesizeweb/
+
+But note that the method used can overestimate the required sample size.
+
+
+**Complex models**
+
+Calculating power for more complex models that go beyond pairwise comparisons is much more complicated and requires simulations. It is beyond the scope of this workshop but check there are some links in the "Resources" section that address it.
+
+
+**Resources**
 
 https://bioconductor.org/packages/release/bioc/html/RNASeqPower.html
 
