@@ -166,5 +166,14 @@ https://bioconductor.org/packages/release/bioc/html/RNASeqPower.html
 
 https://jillashey.github.io/JillAshey_Putnam_Lab_Notebook/RNASeq-PowerAnalysis/
 
+<!-- Take a closer look at this and maybe switch to their recommendation-->
+https://pmc.ncbi.nlm.nih.gov/articles/PMC9952882/
+
+<!--Says RNAseqpower doesn't take into account multiple testing-->
+https://academic.oup.com/bib/article/19/4/713/2920205
+
+<!-- Could switch to covid dataset and just use mouse to show how underpowered it is -->
+
+<!-- Need to dig into the last two more -->
 
 
