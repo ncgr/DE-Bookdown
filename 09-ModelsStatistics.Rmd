@@ -118,12 +118,13 @@ The LRT could be run like this (after running the full model as usual):
 dds_lrt_time = DESeq(dds, test="LRT", reduced = ~ treatment + time)
 ```
 
-
+<!-- Move this into DEseq or visualization
 The we can pull out genes that have similar patterns using something like this:
 
 ```{R, eval=FALSE}
 geneclusters = degPatterns(log2normCounts, metadata = meta, time="time", col="treatment")
 ```
+-->
 
 ## More resources
 
