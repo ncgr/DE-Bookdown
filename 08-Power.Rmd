@@ -1,5 +1,7 @@
 # Power Analysis
 
+<!-- Add power curve-->
+
 An RNASeq power analysis allows us to estimate the number of samples we need to detect differential gene expression at a certain statistical power.
 
 *Sample size estimation*
@@ -44,10 +46,17 @@ Start in your DGE_workshop directory.
 cd ~/DGE_workshop/DESeq2
 ```
 
-Load the library.
+Open R.
+
+```{R, eval=FALSE}
+R
+```
+
+Load the RNASeqPower library. You also need the DESeq2 library because it will allow us to easily calculate each sample's standard deviation.
 
 ```{R, eval=FALSE}
 library(RNASeqPower)
+library(DESeq2)
 ```
 
 Often a power calculation is used to calculate the number of samples you need to achieve a given power.
@@ -56,8 +65,9 @@ Often a power calculation is used to calculate the number of samples you need to
 rnapower(depth=20, cv=0.8, effect= c(0.5,2,4,10), alpha=0.05, power=c(0.8))
 ```
 
-In groups, try changing the parameters and then we'll come back and discuss how each parameter affected the power. Try to answer this question:
+In groups, try changing the parameters and then we'll come back and discuss how each parameter affected the power. Try to answer these questions:
 
+* How many samples does it take to get power to to 0.9 or 1.0 with an effect size of 2, keeping other parameters the same?
 * Is it better to get twice as much depth (40X) on 6 samples (3 per treatment; n=3) or get more biological reps at 20X coverage?
 
 **Mouse Data**
@@ -65,18 +75,14 @@ In groups, try changing the parameters and then we'll come back and discuss how 
 Let's get these parameters for the mouse data and try to calculate its power.
 
 
-First, load the normalized read counts.
-
-<!-- I added in a column header for the gene column manually-->
-
-I exported them as follows to /home/data/diffexpr/normcounts.mouse.tsv:
-
-write.table(as.data.frame(counts(dds,normalized=TRUE)),row.names=TRUE, quote=FALSE, sep="\t", file="normcounts.tsv")
+First, load the normalized read counts. If you don't have your own copy get this file: /home/data/diffexpr/normcounts.mouse.tsv
 
 
 ```{R, eval=FALSE}
-ncnt = read.table("/home/data/diffexpr/normcounts.mouse.tsv", header=TRUE)
+ncnt = read.table("~/DGE_workshop/DESeq2/normcounts.mouse.tsv", header=TRUE)
 ```
+
+<!-- The file is also in /home/data/diffexpr/ -->
 
 Take a look at the normalized counts.
 
@@ -124,14 +130,14 @@ tcv=mean(cv[4:6])
 Take a look at them.
 
 ```{R, eval=FALSE}
-csd
+ccv
 
-tsd
+tcv
 ```
 
 They are pretty close. We could put them in individually as cv and cv2 but let's just use cv=17.8, which will be applied to both groups.
 
-Now we can calculate the number of samples we should have had in each group in order to get a power of 0.8 and alpha of 0.5, given our read depth and coefficient of variation. We'll use a range of effect sizes.
+Now we can calculate the number of samples we should have had in each group in order to get a power of 0.8 and alpha of 0.05, given our read depth and coefficient of variation. We'll use a range of effect sizes.
 
 ```{R, eval=FALSE}
 rnapower(depth=300, cv=17.8, effect=c(0.5,2,4,10), alpha=0.05, power=0.8)
@@ -142,6 +148,12 @@ Now, let's calculate the power for the number of samples that we had.
 ```{R, eval=FALSE}
 rnapower(depth=300, cv=17.8, effect=c(0.5,2,4,10), alpha=0.05, n=3)
 ```
+
+<!-- This would be better to look at a power curve to answer the question -->
+
+Question:
+
+* What effect size can we expect to find with 0.8 power and 0.05 alpha?
 
 This is definitely an underpowered study.
 
@@ -177,3 +189,8 @@ https://academic.oup.com/bib/article/19/4/713/2920205
 <!-- Need to dig into the last two more -->
 
 
+### Bonus Exercise {-}
+
+Calculate retrospectively the power when comparing expression between "COVID-19 pneumonia" and "Other pneumonia in the pneumonia study (see Coexpression chapter for more information). The first 72 patients were diagnosed as "COVID-19 pneumonia". The last 102 patients were diagnosed as "Other pneumonia".
+
+/home/data/diffexpr/covid.normcounts.tsv
