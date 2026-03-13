@@ -74,15 +74,7 @@ done
 ```
 
 
-Download the .html report to your computer and open it in an internet browser (right-click on the file and select browser)
-
-
-You should be able to do this on your own but here is a hint for mac users (windows users should be able to download from the MobaXTerm GUI).
-
-Mac users: From **your local terminal**:
-```{bash, eval=FALSE}
-scp -P 2403 agomez@inbre.ncgr.org:~/DGE_workshop/reads/SRR23869771.html
-```
+Download the .html report to your computer using FileZilla and open it in an internet browser (right-click on the file and select browser)
 
 
 ## Checking Sequence Metrics

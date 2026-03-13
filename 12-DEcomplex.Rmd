@@ -21,13 +21,15 @@ Leaves were cut into 7 equal segments from base to tip and the middle 5 segments
 4 biological replicates (80 samples total)
 
 The read counts are here:  
-/home/data/de-2403/rice/GSE295637_2025.Robertson_Wilkins.BatchCorrectedFPKM.csv
+/home/data/diffexpr/rice/GSE295637_2025.Robertson_Wilkins.BatchCorrectedFPKM.csv
 
 These steps were already performed:  
 + Perform read QC  
 + Align reads to the genome  
 + Get read counts  
 + Normalize read counts  
+
+<!-- Note that DESeq2 wants raw read counts so technically these are not the correct input -->
 
 What strategies would you use to analyze the data?
 

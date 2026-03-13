@@ -1,0 +1,196 @@
+# Power Analysis
+
+<!-- Add power curve-->
+
+An RNASeq power analysis allows us to estimate the number of samples we need to detect differential gene expression at a certain statistical power.
+
+*Sample size estimation*
+
+* The number of biological replicates we need to attain our desired statistical power
+
+*Power estimation*
+
+* Likelihood of finding statistical significance
+
+
+To calculate power when comparing 2 groups you will need:
+
+
+* Depth
+  * Depth of sequencing: Number of reads generated for each sample
+  * Expected count (μ): Average number of reads per transcript for a sample
+
+* Coefficient of variation of counts within each group (cv or cv/cv2)
+  * Measure of data dispersion (stdev/mean)
+  * Reflects biological and technical variability
+  * If cv2 is not specified it is assumed that both groups have the same value
+
+* Effect (relative expression) we want to detect (∆).
+  * Fold change between two groups
+
+* Target false positive (α) and false negative (β) rate (or power = 1 − β)
+  * Power is the probability of correctly rejecting the null when its actually false (true positives)
+
+* Number of samples n in each group (n or n2)
+  * If n2 is not specified it is assumed that both groups have the same value
+
+Ideally, you would calculate the power up front, preferably using data from a pilot project, though you could also estimate the above values from publicly available data from the same or a related species and a similar treatment. You can also retroactively figure out what you power was using data from your experiment.
+
+**Testing Parameters**
+
+Let's get a feel for how some of the parameters affect our power.
+
+Start in your DGE_workshop directory.
+
+```{R, eval=FALSE}
+cd ~/DGE_workshop/DESeq2
+```
+
+Open R.
+
+```{R, eval=FALSE}
+R
+```
+
+Load the RNASeqPower library. You also need the DESeq2 library because it will allow us to easily calculate each sample's standard deviation.
+
+```{R, eval=FALSE}
+library(RNASeqPower)
+library(DESeq2)
+```
+
+Often a power calculation is used to calculate the number of samples you need to achieve a given power.
+
+```{R, eval=FALSE}
+rnapower(depth=20, cv=0.8, effect= c(0.5,2,4,10), alpha=0.05, power=c(0.8))
+```
+
+In groups, try changing the parameters and then we'll come back and discuss how each parameter affected the power. Try to answer these questions:
+
+* How many samples does it take to get power to to 0.9 or 1.0 with an effect size of 2, keeping other parameters the same?
+* Is it better to get twice as much depth (40X) on 6 samples (3 per treatment; n=3) or get more biological reps at 20X coverage?
+
+**Mouse Data**
+
+Let's get these parameters for the mouse data and try to calculate its power.
+
+
+First, load the normalized read counts. If you don't have your own copy get this file: /home/data/diffexpr/normcounts.mouse.tsv
+
+
+```{R, eval=FALSE}
+ncnt = read.table("~/DGE_workshop/DESeq2/normcounts.mouse.tsv", header=TRUE)
+```
+
+<!-- The file is also in /home/data/diffexpr/ -->
+
+Take a look at the normalized counts.
+
+```{R, eval=FALSE}
+head(ncnt)
+```
+
+Let's get the average depth (mean of the counts), starting by getting the mean for each sample.
+
+```{R, eval=FALSE}
+m=colMeans(as.matrix(ncnt[,-1]))
+```
+
+Take a look.
+
+```{R, eval=FALSE}
+m
+```
+
+All the samples are close to 300X average depth so we'll use d=300.
+
+But first, we need the coefficient of variation (cv). To calculate the cv we need to calculate the standard deviation.
+
+```{R, eval=FALSE}
+sd=colSds(as.matrix(ncnt[,-1]),useNames=TRUE)
+```
+
+Now we can calculate cv=sd/m for each sample.
+
+<!-- It doesn't seem to matter what order cv and cv2 are in though I haven't tested it -->
+
+```{R, eval=FALSE}
+cv=sd/m
+```
+
+
+And let's get coefficients of variation for the two groups (control and treatment).
+
+```{R, eval=FALSE}
+ccv=mean(cv[1:3])
+
+tcv=mean(cv[4:6])
+```
+
+Take a look at them.
+
+```{R, eval=FALSE}
+ccv
+
+tcv
+```
+
+They are pretty close. We could put them in individually as cv and cv2 but let's just use cv=17.8, which will be applied to both groups.
+
+Now we can calculate the number of samples we should have had in each group in order to get a power of 0.8 and alpha of 0.05, given our read depth and coefficient of variation. We'll use a range of effect sizes.
+
+```{R, eval=FALSE}
+rnapower(depth=300, cv=17.8, effect=c(0.5,2,4,10), alpha=0.05, power=0.8)
+```
+
+Now, let's calculate the power for the number of samples that we had.
+
+```{R, eval=FALSE}
+rnapower(depth=300, cv=17.8, effect=c(0.5,2,4,10), alpha=0.05, n=3)
+```
+
+<!-- This would be better to look at a power curve to answer the question -->
+
+Question:
+
+* What effect size can we expect to find with 0.8 power and 0.05 alpha?
+
+This is definitely an underpowered study.
+
+
+**Online calculators**
+
+You can also calculate power using online calculators such as:
+
+https://cqs-vumc.shinyapps.io/rnaseqsamplesizeweb/
+
+But note that the method used can overestimate the required sample size.
+
+
+**Complex models**
+
+Calculating power for more complex models that go beyond pairwise comparisons is much more complicated and requires simulations. It is beyond the scope of this workshop but check there are some links in the "Resources" section that address it.
+
+
+**Resources**
+
+https://bioconductor.org/packages/release/bioc/html/RNASeqPower.html
+
+https://jillashey.github.io/JillAshey_Putnam_Lab_Notebook/RNASeq-PowerAnalysis/
+
+<!-- Take a closer look at this and maybe switch to their recommendation-->
+https://pmc.ncbi.nlm.nih.gov/articles/PMC9952882/
+
+<!--Says RNAseqpower doesn't take into account multiple testing-->
+https://academic.oup.com/bib/article/19/4/713/2920205
+
+<!-- Could switch to covid dataset and just use mouse to show how underpowered it is -->
+
+<!-- Need to dig into the last two more -->
+
+
+### Bonus Exercise {-}
+
+Calculate retrospectively the power when comparing expression between "COVID-19 pneumonia" and "Other pneumonia in the pneumonia study (see Coexpression chapter for more information). The first 72 patients were diagnosed as "COVID-19 pneumonia". The last 102 patients were diagnosed as "Other pneumonia".
+
+/home/data/diffexpr/covid.normcounts.tsv

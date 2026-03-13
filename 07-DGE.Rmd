@@ -63,6 +63,8 @@ Prepare the DESeq2-specific object.
 DESeqDataset = DESeqDataSetFromMatrix(countData=sampleCounts, colData=sampleTable, design=~condition)
 ``` 
 
+<!-- This doesn't match what DESeq2 is reporting after the differential expression, presumable because of normalizations. Removing because it is confusing.
+
 Count genes with totals > 0 across all samples.
 
 ```{R, eval=FALSE}
@@ -71,6 +73,9 @@ idx.nz = apply(GeneCounts,1,function(x){all(x>0)})
 sum(idx.nz)
 ``` 
 
+-->
+ 
+ 
 Generate library size normalization factors.
 
 > **_NOTE:_** DESeq2 will estimate these size factors if you don't but it is good to explicitly look at them.
@@ -134,6 +139,8 @@ dev.off()
 ``` 
 
 ![](./Figures/multidensity_postnorm.png){width=100%}
+
+
 ## DESeq2
 
 Designate reference level for each factor
@@ -141,7 +148,9 @@ Designate reference level for each factor
 ```{R, eval=FALSE}
 colData(DESeqDataset)$condition = relevel(DESeqDataset$condition, "control")
 ```
+
 Run DESeq2
+
 ```{R, eval=FALSE}
 dds = DESeq(DESeqDataset)
 resultsNames(dds)
@@ -181,10 +190,16 @@ Now, let's grab the rows where padj <= 0.05. There are lots of ways to do this. 
 stress_from_control_sorted_sub = subset(stress_from_control_sorted, padj <= 0.05)
 ```
 
-Finally, let's export a file with counts appended to it.
+Finally, let's export a file of differentially expressed genes with counts appended to it.
 
 ```{R, eval=FALSE}
 write.table(merge(as.data.frame(stress_from_control_sorted_sub),as.data.frame(counts(dds,normalized=TRUE)), by="row.names"), row.names=FALSE, quote=FALSE, sep="\t", file="SfromC.tsv")
+```
+
+In addition, let's save the normalized read counts for all the genes.
+
+```{R, eval=FALSE}
+write.table(as.data.frame(counts(dds, normalized=TRUE)), row.names=TRUE, quote=FALSE, sep="\t", file="normcounts.mouse.tsv"")
 ```
 
 

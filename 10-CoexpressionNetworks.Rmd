@@ -385,7 +385,7 @@ heatmap.data$superinfection = as.numeric(heatmap.data$superinfection)
 age and days_from_first_intubation are already numeric so we can leave them as is. But days_from_first_intubation has one entry that is Inf (infinity), presumably meaning that the person was never intubated. This messes up downstream analyses because some of them don't consider Inf as a numeric value. Plus the one patient that wasn't intubated is in a category all their own. Let's replace that Inf value with NA.
 
 ```{R, eval=FALSE}
-heatmap.data$days_from_first_intubation[heatmap.data$days_from_first_intubation>=Inf]=N
+heatmap.data$days_from_first_intubation[heatmap.data$days_from_first_intubation>=Inf]=NA
 ```
 
 <!--
