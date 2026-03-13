@@ -36,7 +36,7 @@ As you found out, the mouse dataset is underpowered. It doesn't have enough diff
 
 We'll use differential expression results that I ran for you on the pneumonia study (see the Coexpression chapter). Then we'll try using the coexpression modules from the same study.
 
-First, let's get the data. There are 442 genes whose expression is significantly higher in COVID-19 pneumonias compared to other pneumonias, and 917 whose expression is significantly lower.
+First, let's get the data. There are 209 genes whose expression is significantly higher (p≤0.01) in COVID-19 pneumonias compared to other pneumonias, and 528 whose expression is significantly lower.
 
 1) Copy the file with differentially expressed genes (p<=0.01) onto your local computer using FileZilla (/home/data/diffexpr/covid_v_other_pneumonia.sig01.tsv).
 
@@ -86,6 +86,8 @@ The criterion to determine the leading term can be changed via the “Leading Gr
 
 ## CluePedia
 
+<!-- Need to figure this out a little better and how to see the log2FC colors work (need to show genes) -->
+
 Select the "CluePedia" tab, and click the network icon. This will add miniature gene nodes within the edges between nodes. As of now, however, it is not apparent which of them are upregulated and which are downregulated.
 
 Navigate to File –> Import –> Table from File, and select the document from which the gene list was originally input. In the new window, chose “To selected networks only”. Import data as "Node Table Columns". Under the “Key Column for Network” menu, pick “Input Gene ID”, then “OK”.
@@ -109,3 +111,11 @@ Change the species to "Homo sapiens".
 Click on "Start Revigo".
 
 After we explore the results, try rerunning it, changing "How large would you like the resulting list to be" to different values.
+
+## geneontology.org
+
+Go back to the covid_v_other_pneumonia.sig01.tsv file and copy the gene names. Run a gene ontology enrichment at https://geneontology.org/.
+
+## Modules
+
+Now run enrichment analyses on the green and turquoise modules, which were up and down regulated in COVID-19 pneumonias, respectively, compared to other peumonias. Earlier you generated linux files with the gene names ("green.txt" and "turquoise.txt")
