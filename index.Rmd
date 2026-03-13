@@ -13,6 +13,8 @@ link-citations: yes
 github-repo: ncgr/DE-Bookdown
 ---
 
+<!-- Do we use IGV? Should we use it to visualize alignments and to visualize some of the differentially expressed genes? -->
+
 # License and Copyright{-}
 
 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0
@@ -74,6 +76,8 @@ Everyone will need Cytoscape (a web-based pathway analysis tool).  Please perfor
 
 * Download Cytoscape: instructions at https://cytoscape.org/
   * Then click "Download".
+
+<!-- Maybe add in that they need ClueGO and CluePedia add-ons and to accept the academic license. If they work in industry, though, they would need to email them to ask about a commercial license. Maybe get in some alternate options. Already have GO enrichment alternates. Might be able to do kegg directly. This link might help: https://www.metwarebio.com/kegg-pathway-analysis-complete-guide/. Also maybe ReactomePA -->
 
 
 ## Agenda
