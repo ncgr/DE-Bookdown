@@ -7,7 +7,7 @@ output:
 
 ## Cytoscape and ClueGO
 
-The ClueGO plugin of Cytoscape can run both **pathway enrichment** and **ontology enrichment** analysis. In other words, we can check which pathways and ontologies are overrepresented by our set of interesting genes (for example, differentially expressed genes or genes from interesting expression modules). And we can see if any of those pathways and ontologies contain more genes of interest than we would expect if we had instead grabbed the same number of random genes to feed into the enrichment analysis.
+The ClueGO plugin of Cytoscape can run both **pathway enrichment** and **ontology enrichment** analysis. In other words, we can check which pathways and ontologies are overrepresented by our set of interesting genes (for example, differentially expressed genes or genes from interesting expression modules). Essentially, we are looking to see if any of those pathways and ontologies contain more genes of interest than we would expect if we had instead grabbed the same number of random genes to feed into the enrichment analysis.
 
 Here we will use the KEGG (Kyoto Encyclopedia of Genes and Genomes) PATHWAY database (https://www.genome.jp/kegg/pathway.html) to look for enriched pathways. And we will use GO (gene ontology) ontologies (https://geneontology.org/) to look for enriched ontologies. Feel free to try other pathway and ontology options.
 
@@ -30,29 +30,43 @@ Gene ontologies describe the function of genes in biological systems using a str
 + Cellular Component
 
 
-Open the Cytoscape app, and load the ClueGO plug-in: Apps --> App Manager
+## Running ClueGO
 
-Change the species to mouse.
+As you found out, the mouse dataset is underpowered. It doesn't have enough differentially expressed genes to find significantly enriched pathways or ontologies.
 
-Open the results table, copy the DEGs, and paste into clueGO.
+We'll use differential expression results that I ran for you on the pneumonia study (see the Coexpression chapter). Then we'll try using the coexpression modules from the same study.
 
-Select in the "Visual Style" box sets the factors that will determine node properties. Keep the default selection, "Groups".
+First, let's get the data. There are 442 genes whose expression is significantly higher in COVID-19 pneumonias compared to other pneumonias, and 917 whose expression is significantly lower.
 
-Pick ontologies and set differing node shapes.
+1) Copy the file with differentially expressed genes (p<=0.01) onto your local computer using FileZilla (/home/data/diffexpr/covid_v_other_pneumonia.sig01.tsv).
 
-Clicking on the "Evidence" button will display a decision tree clarifying evidence codes. Keep "All" checked for now.
+2) Open it in excel or something similar and copy the gene names.
 
-Check the "Show only Pathways with pV <=" box and change it to 0.01. If you want the details on how p-values are calculated for GO terms, click the “?” icon.
+Now, let's run ClueGO.
 
-Expand the "Statistical Options" menu. In the first box, change the selection from the default ("Enrichment/Depletion") to "Enrichment.
+1) Open the Cytoscape app, and load the ClueGO plug-in: Apps --> App Manager
 
-Run the analysis! It will take several minutes. When it’s finished, look to the bottom right of the screen. Select the "ClueGO Results (Cluster #1)" tab, and click the indicated icon to save ClueGO results tables to your machine.
+2) Make sure the species is set to human (*Homo sapiens*)
 
-Open the new directory. Among the several files, we can find a .png with GO terms represented with a horizontal bar graph as they are shown in the “Cluster #1” tab of in the software. Adjacent bars of the same color are terms that belong to the same group.
+3) Paste the genes into clueGO in the box under the species.
 
-The most generally useful file is “NodeAttributeTables.txt”. The fields here indicate annotation source, p-values, and gene composition and for each gene. Note the "GOLevels” column and the “Overview Term” column on the far right. Let’s return to Cytoscape to clarify what these mean.
+4) Under "Ontologies/Pathways", keep the "Biological Process" gene ontology and click the kegg pathways. Select different node shapes.
 
-Each GO term has one or more associated levels. Only those with a level within the values in the “GO Tree Interval” have the potential to appear in the results. The boundaries of this window can be changed directly, or by dragging the “Network Specificity” bar.
+5) Click "Show Only Pathways with PV ≤" and put in 0.01.
+
+6) Expand the "Statistical Options" menu. In the first box, change the selection from the default ("Enrichment/Depletion") to "Enrichment.
+
+7) Click the “Use GO Term Fusion” box. It’s typically a good idea to check this box as it will improve runtime and simplify the results by eliminating redundancy.
+
+8) Run the analysis by clicking start. It will take several minutes.
+
+Look at the results.
+
+1) When it’s finished, look to the bottom right of the screen. Select the "ClueGO Results (Cluster #1)" tab, and click the icon "Save ClueGO results tables" to your local computer
+
+2) Open the new directory. Open the .png (not the overview) with GO terms represented with a horizontal bar graph as they are shown in the “Cluster #1” tab of in the software. Adjacent bars of the same color are terms that belong to the same group.
+
+3) The most generally useful file is “NodeAttributeTables.txt”. Open it in excel or something similar. Filter the file for lines where "Overview Term" is "TRUE". This will cut down on the amount of data to look through. Both gene ontology and kegg pathways will show up in this file.
 
 Go to https://www.genome.jp/kegg/ and take a look at one of the pathways.
 
@@ -62,25 +76,21 @@ Go to https://www.genome.jp/kegg/ and take a look at one of the pathways.
 
 Let's inspect some additional options.
 
-It’s typically a good idea to check the “Use GO Term Fusion” box. This will improve runtime and simplify the results by eliminating redundancy.
-
-Below the “GO Tree Interval” box, there are two others. The “GO Term/Pathway Selection” box will set the criterion for what is a qualifying GO term.
+Under "Advanced Term / Pathway Selection", The “GO Term/Pathway Selection” box will set the criterion for what is a qualifying GO term.
 
 The “GO Term/Pathway Network Connectivity” scroll tab will set the kappa score threshold for what the edges that appear between nodes. Kappa score is a measure of relation any and all GO terms based on the number of associated genes they have in common. For more details regarding this calculation, click on the “?” icon.
 
-Expand the “Grouping Options” box. Recall the variable (True/False) of the last column (Overview Term) in the node attribute table file we looked at. Those with a “True” value (as well as a check mark next to the GO id in the “Clue GO Results” tab in Cytoscape) are the leading term in the group, only meaning it is the group with the lowest p-value.
+Expand the “Grouping Options” box. Recall the variable (True/False) of the last column (Overview Term) in the node attribute table file we looked at. Those with a “True” value (as well as a check mark next to the GO id in the “Clue GO Results” tab in Cytoscape) are the leading term in the group, meaning it is the group with the lowest p-value.
 
 The criterion to determine the leading term can be changed via the “Leading Group Term based on” selection. The threshold of commonality for what constitutes a group can also be adjusted, if so chosen.
-
-Let's run the analysis again, selecting the KEGG ontology instead of the GO ontologies.
 
 ## CluePedia
 
 Select the "CluePedia" tab, and click the network icon. This will add miniature gene nodes within the edges between nodes. As of now, however, it is not apparent which of them are upregulated and which are downregulated.
 
-Navigate to File –> Import –> Table from File, and select the document from which the gene list was originally input. In the new window, chose “To selected networks only”. Under the “Key Column for Network” menu, pick “Input Gene ID”, then “OK”.
+Navigate to File –> Import –> Table from File, and select the document from which the gene list was originally input. In the new window, chose “To selected networks only”. Import data as "Node Table Columns". Under the “Key Column for Network” menu, pick “Input Gene ID”, then “OK”.
 
-In the control panel, on the left side of Cytoscape, select ”Style”. For column, choose “Log2Fold change” and for mapping type, select “Continuous Mapping” and click the spectrum map.
+In the control panel, on the left side of Cytoscape, select ”Style”. Click the "+". For column, choose “Log2Fold change” and for mapping type, select “Continuous Mapping” and click the spectrum map.
 
 In the window that appears, drag the handle position to 0 and change the color to grey or white. Then, drag the margins in to about a log2FoldChange of 2 and change their color. Change the arrows on the extremes to the same color.
 
