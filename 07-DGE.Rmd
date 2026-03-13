@@ -5,6 +5,8 @@ output:
 ---
 # Differential Gene Expression Analysis
 
+<!-- Get the covid-19 pneumonia study into here at the end; also for the power chapter. -->
+
 Make sure you are in a screen.
 
 ## R data import
