@@ -331,7 +331,7 @@ nGenes = ncol(ncnt)
 
 Perform a correlation
 
-<!-- is the p for pearson? or pairwise complete obs?) -->
+<!-- is the p for pearson? or pairwise complete obs?); should this be the wgcna correlation? -->
 
 ```{R, eval=FALSE}
 module.trait.corr = cor(module_eigengenes, metafinal, use = 'p')
