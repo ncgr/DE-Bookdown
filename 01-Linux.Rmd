@@ -772,7 +772,7 @@ More information for screen and keyboard shortcuts are here: https://www.geeksfo
 
 1. Transfer your two history files to your local machine. Make sure they are there and that you can open them up.
 
-2. Transfer them back to logrus.
+2. Transfer them back to the server.
 
 ### Working with multiple files
 
