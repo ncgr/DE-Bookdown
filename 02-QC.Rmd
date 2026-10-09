@@ -42,7 +42,7 @@ conda activate sra-tools
 
 for i in `cat SRRlist.txt`; do
   fasterq-dump --outdir . ${line}
-done < ~/home/data/diffexpr/SRRlist.txt
+done < /home/data/diffexpr/SRRlist.txt
 ```
 
 Softlink the pre-downloaded data (after you cancel the command above):
