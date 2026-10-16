@@ -138,6 +138,7 @@ _____
 
 <span style="color: lightgray;">MORNING</span>\
 
+<span style="color: forestgreen;">Feature Counts (cont)</span> (Elyse)\ 
 
 <span style="color: forestgreen;">Differential Gene Expression Analysis</span> (Joann)
 
@@ -146,8 +147,6 @@ _____
 
 <span style="color: forestgreen;">Differential Gene Expression Analysis (cont)</span> (Joann)\
 
-<span style="color: forestgreen;">Enrichment Analysis</span> (Joann)\
-
 _____
 
 **Thursday**
@@ -155,15 +154,16 @@ _____
 
 <span style="color: lightgray;">MORNING</span>\
 
+<span style="color: forestgreen;">Enrichment Analysis</span> (Joann)\
+
 <span style="color: forestgreen;">Visualization</span> (Elyse)\
 
 
 <span style="color: lightgray;">AFTERNOON</span>\
 
+<span style="color: forestgreen;">Visualization (cont)</span> (Elyse)\
+
 <span style="color: forestgreen;">Interactive Visualization</span> (Elyse)\
-
-<span style="color: forestgreen;">Coexpression Networks</span> (Joann)\
-
 
 _____
 
@@ -176,8 +176,9 @@ _____
 <span style="color: forestgreen;">Model Design</span> (Joann)\
 
 
-
 <span style="color: lightgray;">AFTERNOON</span>\
+
+<span style="color: forestgreen;">Coexpression Networks</span> (Joann)\
 
 <span style="color: forestgreen;">Rice Dataset</span> (Joann)\
 
