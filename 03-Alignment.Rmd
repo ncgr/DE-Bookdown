@@ -99,7 +99,7 @@ Run hisat2 to align fastq files to the genome index. We'll use the fastq files t
 ```{bash, eval=FALSE}
 for file in *.fastp.fastq.gz; do
   base=`basename $file .fastp.fastq.gz`
-  hisat2 -x ~/DGE_workshop/genome/GRCm39.index --threads 10 -U "$file" -S ~/DGE_workshop/alignments/"${base}.sam"
+  hisat2 -x /home/data/de-2403/genome/GRCm39.index --threads 10 -U "$file" -S ~/DGE_workshop/alignments/"${base}.sam"
 done
 ```
 
