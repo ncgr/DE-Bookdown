@@ -7,12 +7,10 @@ output:
 
 ## Reference acquisition
 
-Create a new directory named "genome" **within the DGE_workshop directory**
-
-**MAKE SURE YOUR ARE IN THE CORRECT DIRECTORY BEFORE YOU MAKE THIS DIRECTORY**</span>
+Create a new directory named "genome" within your DGE_workshop directory.
 
 ```{bash, eval=FALSE}
-mkdir genome
+mkdir ~/DGE_workshop/genome
 ```
 
 
@@ -65,25 +63,20 @@ conda activate hisat2
 
 Use the program HISAT2 to create indices:  
 
-<span style="color:blue">Time will not allow for us to complete this command, so we will cancel the command after checking it works.</span>
+<span style="color:blue">Time will not allow for us to complete this command, so we will cancel the command using "ctrl-c" after checking it works.</span>
 ```{bash, eval=FALSE}
 hisat2-build -p 10 GCF_000001635.27_GRCm39_genomic.fna GRCm39.index
 ```
 
-Make the output directory that your newly-created alignment files will be saved to.  
-
-This directory will be called "alignments" and <span style="color:blue">**MUST BE IN YOUR DGE_workshop DIRECTORY**</span>
-
-Again, if your directories and paths are incorrect, the following commands will not work.
-
-Why won't they work?
-
-From the correct directory, make a directory called alignments:
+Make a directory called alignments within the DGE_workshop directory and go into it.
 ```{bash, eval=FALSE}
-mkdir alignments
+mkdir ~/DGE_workshop/alignments
+
+# We are using the full path below which will work no matter where you are but if you are already in the ~/DGE_workshop/ directory you could simply use "cd alignments"
+cd ~/DGE_workshop/alignments
 ```
 
-From the **reads directory** run the hisat command to generate alignments.  
+Go into the alignments directory and run the hisat command to generate read alignments to the reference.  
 
 What file is your index file?  
 How do you know?  
@@ -97,9 +90,9 @@ Why not?
 Run hisat2 to align fastq files to the genome index. We'll use the fastq files that fastp filtered to remove low quality reads.
 
 ```{bash, eval=FALSE}
-for file in *.fastp.fastq.gz; do
+for file in ~/DGE_workshop/reads/*.fastp.fastq.gz; do
   base=`basename $file .fastp.fastq.gz`
-  hisat2 -x /home/data/de-2403/genome/GRCm39.index --threads 10 -U "$file" -S ~/DGE_workshop/alignments/"${base}.sam"
+  hisat2 -x /home/data/de-2403/genome/GRCm39.index --threads 10 -U "$file" -S "${base}.sam"
 done
 ```
 
