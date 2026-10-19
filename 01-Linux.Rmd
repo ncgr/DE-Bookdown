@@ -762,16 +762,19 @@ More information for screen and keyboard shortcuts are here: https://www.geeksfo
 
 4. Look at the file to figure out what is in it. If you don't understand the terms in the column names, look them up or ask another student before proceeding. The data here is from https://libguides.mskcc.org/SARS2/EvolutionsStages.
 
-5. Use awk to answer the following questions:
+5. There are commas in the numbers that will be a problem when awk tries to do mathematical operations. Use sed to try to remove the commas (replace them with nothing).
+
+6. Use awk to answer the following questions:
 
 * Which SARS-CoV-2 variants have more than 500 Confirmed cases per 100,000?
 * Which SARS-CoV-2 variants have fewer than 2 Confirmed deaths per 100,000?
 * Which SARS-CoV-2 variants have a Case Fatality Rate (CFR) greater than or equal to 0.02?
+<!-- Use NR>1&&$4>=0.02 so it excludes the header. -->
 * What interesting observations did you find as you answered these questions?
 
-6. Spaces can be a pain in tab-delimited files. Use sed to replace all the spaces with underscores and then look at the file to make sure that it worked.
+7. Spaces can be a pain in tab-delimited files. Use sed to replace all the spaces with underscores and then look at the file to make sure that it worked.
 
-7. Create a new file called "2column_sarscov2_variants.txt" that has only the Variant and Confirmed deaths per 100,000 columns.
+8. Create a new file called "2column_sarscov2_variants.txt" that has only the Variant and Confirmed deaths per 100,000 columns.
 
 ### History
 
@@ -779,7 +782,7 @@ More information for screen and keyboard shortcuts are here: https://www.geeksfo
 
 2. Use the history and tail commands (hint: you will need to use a pipe) to save the most recent 25 commands to a file called "recent_history.txt"
 
-3. Use the history and grep commands to print the "column" commans you used to the screen.
+3. Use the history and grep commands to print the "column" commands you used to the screen.
 
 ### File transfer
 
