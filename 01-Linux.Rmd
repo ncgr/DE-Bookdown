@@ -284,7 +284,7 @@ Change the connection from ftp (file transfer protocol) to sftp (ssh file transf
 
 + Under host, type "inbre.ncgr.org".
 
-+ Under host, type "2403".
++ Under port, type "2403".
 
 + Put in your username.
 
@@ -613,7 +613,10 @@ zgrep '^@cluster' SP1.fq.gz | head
 
 Suppose we want to run a command for a **group of files** in a directory. We can use a for loop to target all of them at once. We will do a simple example using the 'echo' command, which will print something to the screen (but you will see more complex examples later in this workshop).
 
-Syntax: for variablename in filenameexpression; do command ${variablename}; done
+Syntax:  
+for variablename in filenameexpression; do. 
+  command ${variablename};  
+done
 
 ```{bash, eval=FALSE}
 for file in *; do
@@ -632,6 +635,16 @@ done
 + The part up to the first semicolon targets every file in the working directory with the "*" wildcard
 + The second part will sequentially echo each file in the working directory 
 + The third part is required to terminate the loop
+
+Now let's do something a little more meaningful in the for loop. We'll do a line count on each file then head each file.
+
+```{bash, eval=FALSE}
+for file in *; do
+  wc -l ${file};
+  head -n 2 ${file}
+  echo
+done
+```
 
 
 ## Screen
