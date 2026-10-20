@@ -190,6 +190,8 @@ for f in *.sam.sorted; do
 done
 ```
 
+## Paired end reads
+
 So far we have only used single end data. Let's use some paired end data.
 
 We'll use data from this yeast study comparing growth in two different conditions (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3488244/).
