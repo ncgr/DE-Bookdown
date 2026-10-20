@@ -82,7 +82,40 @@ done
 Download the .html report to your computer using FileZilla and open it in an internet browser (right-click on the file and select browser)
 
 
-## Checking Sequence Metrics
+## Sequence Metrics
+
+We will use bioawk, a version of awk extended for use with biological data, to calculate the lengths of each of the sequences in the fasta file.
+
+The bioawk "-c" flag indicates the format. The "fastx" format covers both "fasta" and "fastq" (bioawk will figure out which). bioawk will read compressed files (.gz) natively so you do not have to uncompress them or zcat them.
+
+```{bash, eval=FALSE}
+bioawk -c fastx '{ print $name, length($seq) }' SRR23869771.fastp.fastq.gz
+```
+
+Exercises:
+1) How would you print out just the sequence rows using bioawk?  
+2) How would you count the number of sequences?
+
+<details>
+  <summary>Click for Answer</summary>
+1)
+```{bash, eval=FALSE}
+bioawk -c fastx '{ print $seq }' SRR23869771.fastp.fastq.gz
+```
+
+2)
+```{bash, eval=FALSE}
+bioawk -c fastx '{ print $seq) }' SRR23869771.fastp.fastq.gz | wc -l
+```
+or
+```{bash, eval=FALSE}
+bioawk -c fastx '{ print $name) }' SRR23869771.fastp.fastq.gz | wc -l
+```
+</details>
+\
+
+
+You can find similar sequence metrics with awk but it gets a lot more complicated:
 
 awk "NR" variable:  
 There are several built-in awk variables.  
