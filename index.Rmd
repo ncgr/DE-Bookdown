@@ -130,15 +130,13 @@ Sequencing Technologies and Lab Protocols (Elyse)\
 
 <span style="color: forestgreen;">Read Alignment</span> (Elyse)\
 
-<span style="color: forestgreen;">Feature Counts</span> (Elyse)\ 
-
 _____
 
 **Wednesday**
 
 <span style="color: lightgray;">MORNING</span>\
 
-<span style="color: forestgreen;">Feature Counts (cont)</span> (Elyse)\ 
+<span style="color: forestgreen;">Feature Counts</span> (Elyse)\ 
 
 <span style="color: forestgreen;">Differential Gene Expression Analysis</span> (Joann)
 
