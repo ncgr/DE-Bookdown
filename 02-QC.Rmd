@@ -92,7 +92,7 @@ The bioawk "-c" flag indicates the format. The "fastx" format covers both "fasta
 bioawk -c fastx '{ print $name, length($seq) }' SRR23869771.fastp.fastq.gz
 ```
 
-Exercises:
+Exercises:  
 1) How would you print out just the sequence rows using bioawk?  
 2) How would you count the number of sequences?
 
