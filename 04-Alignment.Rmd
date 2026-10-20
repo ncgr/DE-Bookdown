@@ -253,6 +253,7 @@ for file in *.sorted.bam; do
   echo ${file}
   samtools view -F 0x904 -c ${file}
 done
+```
 </details>
 \
 
