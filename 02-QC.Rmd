@@ -31,24 +31,29 @@ cd ~/DGE_workshop/reads
 
 We have a list of unique identifiers from 6 Sequencing Runs for sample sequences stored in the Sequence Read Archive (SRA) database managed by NCBI. We can use this simple list (in .txt format) to download the sequences that correspond to each of the 6 SRR identifiers in the list.  
 
+<!--
 Though we only have 6 samples, the sequencing **depth** is very high, making the download time ~ 1hr. 
 
 **<span>Time will not allow for us to complete this command, so we will cancel the command after checking it works</span>.** 
-
+-->
 
 Download fastq sequence files from NCBI's SRA:
 ```{bash, eval=FALSE}
+cp /home/data/de-2403/SRRlist.txt .
+
 conda activate sra-tools
 
 for i in `cat SRRlist.txt`; do
-  fasterq-dump --outdir . ${line}
+  fasterq-dump --outdir . $i
 done < /home/data/diffexpr/SRRlist.txt
 ```
 
+<!--
 Softlink the pre-downloaded data (after you cancel the command above):
 ```{bash, eval=FALSE}
 ln -s /home/data/diffexpr/reads/*.gz .
 ```
+-->
 
 ## fastp Quality Control  
 
