@@ -769,7 +769,9 @@ More information for screen and keyboard shortcuts are here: https://www.geeksfo
 * Which SARS-CoV-2 variants have more than 500 Confirmed cases per 100,000?
 * Which SARS-CoV-2 variants have fewer than 2 Confirmed deaths per 100,000?
 * Which SARS-CoV-2 variants have a Case Fatality Rate (CFR) greater than or equal to 0.02?
+
 <!-- Use NR>1&&$4>=0.02 so it excludes the header. -->
+
 * What interesting observations did you find as you answered these questions?
 
 7. Spaces can be a pain in tab-delimited files. Use sed to replace all the spaces with underscores and then look at the file to make sure that it worked.
