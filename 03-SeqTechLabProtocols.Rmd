@@ -6,9 +6,7 @@ In order to understand any sequencing technology, you have to understand basic c
 
 A DNA sequence is a string of As, Gs, Ts, and Cs. This string is synthesized by the formation of phosphodiester bonds between nucleotides (the sugar-phosphate backbone).
 
-Which of the following is DNA and which is RNA?
 
-![](./Figures/DNARNA.png){width=80%}
 
 Here we see thymidine triphosphate being integrated into a strand of DNA. What happens between the OH and the triphosphate?
 
@@ -37,6 +35,11 @@ So what do you think happens if there isn't an oxygen available at the 3' locati
   + Oxford Nanopore
   
 ### Sanger Sequencing
+
+dNTP (deoxynucleotide triphosphate) vs ddNTP (dideoxynucleotide triphosphate)
+
+![](./Figures/DNARNA.png){width=80%}
+
 
 Each reaction has very small amounts of ddNTPs.
 
