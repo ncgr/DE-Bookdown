@@ -150,7 +150,7 @@ However, this count also includes reads which didn't map at all. Filter those ou
 cat SRR23869771.sam | grep -v '^@' | awk '{ if ($3 != "*") print $0}' | awk '{print $1}' | uniq | wc -l
 ```
 
-The "mapped" number from the flagstat output counts all alignments (not reads!) Subtract the secondary alignments from that value to check our result:
+The "mapped" number from the flagstat output counts all alignments (not reads!). Subtract the secondary alignments from that value to check our result:
 35991483 - 14794379
 
 As it happens, there is another convenient samtools function to extract the desired metrics from # a .sam file.
@@ -170,14 +170,16 @@ Therefore, the number of primary alignments can also be found by:
 samtools view -F 0x904 -c SRR23869771.sam 
 ```
 
-Note that this is less than the total number of reads in our file. This operates in an "or" fashion. If we run the above command with "-f", it yields 0, because the postive search runs in an "and" fashion.
+Note that this is less than the total number of reads in our file. This operates in an "or" fashion. If we run the above command with "-f", it yields 0, because the positive search runs in an "and" fashion.
 
 Exercise: Select another sample, and using any of the means above, determine 1) Total read count 2) Total mapped reads 3) Total primary alignments
 
 ## .sam/.bam conversion and alignment sorting
 
 ```{bash, eval=FALSE}
-for file in *.sam; do samtools view -u ${file} | samtools sort -o ${file}.sorted; done
+for file in *.sam; do 
+  samtools view -u ${file} | samtools sort -o ${file}.sorted
+done
 ```
 
 Rename the output files
@@ -188,12 +190,69 @@ for f in *.sam.sorted; do
 done
 ```
 
-Exercise: What average genome coverage do our primary alignments give us?
+So far we have only used single end data. Let's use some paired end data.
 
-Download the 6 read pairs from this study: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SAMN00849440&o=acc_s%3Aa
+We'll use data from this yeast study comparing growth in two different conditions (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3488244/).
 
-This is a yeast study comparing growth in two different conditions (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3488244/).
+The 6 RNA-seq samples are here:   https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SAMN00849440&o=acc_s%3Aa
 
-Review the steps of the workflow up until now.
+The reference genome is here:  
+https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_genomic.fna.gz
 
+See if you can align the 6 samples to the yeast genome and count the number of primary alignments. For paired end data, instead of using `-U unpaired_reads.fq` use `-1 read1.fq -2 read2.fq`.
+
+
+<details>
+  <summary>Click for Answer</summary>
+  There are many ways to do these steps. Here is one way.
+```{bash, eval=FALSE}
+# Make a directory to work in
+mkdir ~/DGE_workshop/yeast_alignments
+
+# Go into that directory
+cd ~/DGE_workshop/yeast_alignments
+
+# Download RNA-seq samples
+for i in SRR453566 SRR453567 SRR453568 SRR453569 SRR453570 SRR453571; do
+  fasterq-dump --outdir . $i
+done
+
+# Download the yeast reference genome
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_genomic.fna.gz
+
+# Unzip your genome file
+gunzip GCF_000146045.2_R64_genomic.fna.gz
+
+# Activate the hisat2 environment (if it isn't already activated)
+conda activate hisat2
+
+# Create the index for the reference file
+hisat2-build -p 10 GCF_000146045.2_R64_genomic.fna GCF_000146045.2_R64_genomic.index
+
+# Compress the fastq files to save space
+gzip *.fastq
+
+# Run the alignments (you could do QC on the data before running)
+for i in SRR453566 SRR453567 SRR453568 SRR453569 SRR453570 SRR453571; do
+  hisat2 -x GCF_000146045.2_R64_genomic.index --threads 10 -1 ${i}_1.fastq.gz -2 ${i}_2.fastq.gz -S "${i}.sam"
+done
+
+# Convert to bam and sort
+for file in *.sam; do
+  samtools view -u ${file} | samtools sort -o ${file}.sorted.bam
+done
+
+# Count the primary alignments (you can use either the .sam or .bam file)
+for file in *.sorted.bam; do
+  echo ${file}
+  samtools flagstat ${file}
+done
+
+# or you could count the primary alignments directly
+for file in *.sorted.bam; do
+  echo ${file}
+  samtools view -F 0x904 -c ${file}
+done
+</details>
+\
 
