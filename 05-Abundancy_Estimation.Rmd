@@ -43,11 +43,19 @@ Generate counts from the alignments directory
 conda activate featurecounts
 
 featureCounts -a ~/DGE_workshop/genome/GCF_000001635.27_GRCm39_genomic.gff.gz \
--o ~/DGE_workshop/counts/count_matrix.tsv --largestOverlap -M --primary \
+-o ~/DGE_workshop/counts/count_matrix.tsv --largestOverlap --primary \
 -T 10 -g gene *.sorted.bam
 ```
 
-What do each of the parameters mean?
+<!-- Removed -M (counting multimapped reads) because hisat2 will only label one read as primary so you can never count more than one alignment for a read. -->
+
+Parameters:  
+* -a annotation file
+* -o output file
+* --largestOverlap Assign each read to the feature that it has the largest overlap with
+* --primary Count primary alignments only
+* -T number of threads
+* -g annotation feature that you want to count reads in
 
 Now move into the counts directory.
 
